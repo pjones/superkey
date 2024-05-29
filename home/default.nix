@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-    ./swayfx.nix
+    ./swayfx
   ];
 }

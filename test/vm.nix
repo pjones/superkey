@@ -60,7 +60,6 @@
       home.homeDirectory = "/home/pjones";
       programs.pjones.swayfx.enable = true;
       programs.pjones.emacsrc.enable = true;
-      wayland.windowManager.sway.checkConfig = false;
     };
   };
 }
