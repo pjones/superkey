@@ -15,6 +15,12 @@ in
       default = false;
       description = "Enable SwayFX and configuration.";
     };
+
+    theme = lib.mkOption {
+      type = lib.types.package;
+      default = null;
+      description = "A theme package that has a config/sway.cfg file";
+    };
   };
 
   config = lib.mkIf cfg.enable {

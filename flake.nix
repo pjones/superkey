@@ -10,6 +10,9 @@
     emacsrc.url = "github:pjones/emacsrc/nixos-24.05";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
+
+    catppuccin.url = "github:catppuccin/i3";
+    catppuccin.flake = false;
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -29,9 +32,17 @@
         import nixpkgs { inherit system; });
     in
     {
-      packages = forAllSystems (system: {
-        vm = self.nixosConfigurations.vm.config.system.build.vm;
-      });
+      packages = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in {
+          vm = self.nixosConfigurations.vm.config.system.build.vm;
+
+          catppuccin = pkgs.callPackage pkgs/catppuccin {
+            src = self.inputs.catppuccin;
+          };
+
+          dracula = pkgs.callPackage pkgs/dracula { };
+        });
 
       nixosModules = {
         default = { pkgs, ... }: {
@@ -57,10 +68,13 @@
       };
 
       homeManagerModules = {
-        default = { ... }: {
+        default = { pkgs, ... }: {
           imports = [
             ./home
           ];
+
+          programs.pjones.swayfx.theme =
+            self.packages.${pkgs.system}.dracula;
         };
 
         vm = { ... }: {

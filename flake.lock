@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "catppuccin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1712143459,
+        "narHash": "sha256-EHZ/D4PrFqwyTpfcst3+hSx6z4saVD1M9CfFqnWI6io=",
+        "owner": "catppuccin",
+        "repo": "i3",
+        "rev": "9c430d7010d73444af5272a596e3a2c058612f71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "catppuccin",
+        "repo": "i3",
+        "type": "github"
+      }
+    },
     "emacsrc": {
       "inputs": {
         "home-manager": [
@@ -81,6 +97,7 @@
     },
     "root": {
       "inputs": {
+        "catppuccin": "catppuccin",
         "emacsrc": "emacsrc",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"

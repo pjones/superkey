@@ -17,6 +17,7 @@ in
         smart_corner_radius on
         shadows on
         default_dim_inactive 0.25
+        include ${cfg.theme}/config/sway.cfg
       '';
     };
   };
