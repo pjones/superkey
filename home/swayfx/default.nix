@@ -19,6 +19,7 @@ in
 
   config = lib.mkIf cfg.enable {
     home.packages = [
+      pkgs.sway-overfocus
       pkgs.wayland-utils
       pkgs.wev
     ];

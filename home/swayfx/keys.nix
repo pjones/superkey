@@ -15,13 +15,16 @@ let
 
   # Window focus and movement:
   windows = lib.foldl' lib.mergeAttrs { } (lib.mapAttrsToList
-    (direction: key: {
-      # Focus a window in the given direction:
-      "${modifier}+${key}" = "focus ${direction}";
+    (direction: key:
+      let dirChar = builtins.substring 0 1 direction;
+      in
+      {
+        # Focus a (split) window in the given direction:
+        "${modifier}+${key}" = "exec sway-overfocus split-${dirChar}w float-${dirChar}w";
 
-      # Move a window in the given direction:
-      "${modifier}+Shift+${key}" = "move ${direction}";
-    })
+        # Move a window in the given direction:
+        "${modifier}+Shift+${key}" = "move ${direction}";
+      })
     motion);
 
   # Switch workspace, move window to workspace:
@@ -66,12 +69,18 @@ in
       inherit (motion) left down up right;
 
       keybindings = windows // workspaces // {
+        # Focus for groups:
+        "${modifier}+n" = "exec sway-overfocus group-rw group-dw";
+        "${modifier}+p" = "exec sway-overfocus group-lw group-uw";
+
         # Misc workspace bindings:
         "${modifier}+apostrophe" = "workspace back_and_forth";
+        "${modifier}+greater" = "workspace next";
+        "${modifier}+less" = "workspace prev";
 
         # Monitors:
-        "${modifier}+greater" = "focus output right";
-        "${modifier}+less" = "focus output left";
+        "${modifier}+period" = "focus output right";
+        "${modifier}+comma" = "focus output left";
 
         # Swap two monitors:
         "${modifier}+d" = builtins.concatStringsSep ";" [
@@ -86,10 +95,10 @@ in
         "${modifier}+f" = "mode focus";
         "${modifier}+g" = "mode jump";
         "${modifier}+m" = "mode mark";
-        "${modifier}+p" = "mode scratchpad";
         "${modifier}+r" = "mode resize";
         "${modifier}+s" = "mode swap";
         "${modifier}+w" = "mode layout";
+        "${modifier}+slash" = "mode scratchpad";
 
         # Launching applications:
         "${modifier}+e" = "exec emacs";
