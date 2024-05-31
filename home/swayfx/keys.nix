@@ -27,23 +27,21 @@ let
       })
     motion);
 
-  # Switch workspace, move window to workspace:
-  workspaces = lib.foldl' lib.mergeAttrs { } (builtins.map
+  # Switch workspace, move window to workspace.  Returns a string so
+  # that workspaces are in the correct order.
+  workspaces = lib.concatMapStringsSep "\n"
     (workspace:
       let
         key = toString (if workspace.number == 10 then 0 else workspace.number);
         name = "${toString workspace.number}:${workspace.name}";
       in
-      {
-        # Switch to a workspace by its number:
-        "${modifier}+${key}" = "workspace number ${name}";
-
-        # Move the focused window/container to a workspace:
-        "${modifier}+Shift+${key}" = "move container to workspace number ${name}";
-      })
+      ''
+        bindsym ${modifier}+${key} workspace number ${name}
+        bindsym ${modifier}+Shift+${key} move container to workspace number ${name}
+      '')
     (lib.zipListsWith (number: name: { inherit number name; })
       (lib.range 1 10)
-      [ "GTD" "Social" "Hacking" "Media" "Meetings" "School" "RFA1" "RFA2" "Spare" "Web" ]));
+      [ "GTD" "Social" "Hacking" "Media" "Meetings" "School" "RFA1" "RFA2" "Spare" "Web" ]);
 
   # Ensure modes have an escape hatch:
   mkMode = bindings: bindings // {
@@ -68,7 +66,7 @@ in
       inherit modifier;
       inherit (motion) left down up right;
 
-      keybindings = windows // workspaces // {
+      keybindings = windows // {
         # Focus for groups:
         "${modifier}+n" = "exec sway-overfocus group-rw group-dw";
         "${modifier}+p" = "exec sway-overfocus group-lw group-uw";
@@ -151,5 +149,8 @@ in
         "r" = "floating disable; mode default";
       };
     };
+
+    wayland.windowManager.sway.extraConfig =
+      lib.concatStringsSep "\n" [ workspaces ];
   };
 }
