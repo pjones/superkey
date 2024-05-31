@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./keys.nix
+    ./theme.nix
   ];
 
   options.programs.pjones.swayfx = {
@@ -39,8 +40,6 @@ in
       extraConfig = ''
         default_orientation auto
         force_display_urgency_hint 1000
-        smart_borders on
-        smart_gaps on
         popup_during_fullscreen smart
       '';
     };
