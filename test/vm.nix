@@ -53,7 +53,7 @@
     home-manager.users.pjones = { ... }: {
       imports = [
         self.homeManagerModules.vm
-        self.inputs.emacsrc.homeManagerModules.default
+        self.inputs.emacsrc.homeManagerModules.wayland
       ];
 
       home.username = "pjones";
