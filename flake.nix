@@ -1,5 +1,5 @@
 {
-  description = "Peter's SwayFX Configuration";
+  description = "Peter's Wayland Configuration";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
@@ -11,8 +11,7 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    catppuccin.url = "github:catppuccin/i3";
-    catppuccin.flake = false;
+    waybar.url = "github:Alexays/Waybar";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -36,11 +35,6 @@
         let pkgs = nixpkgsFor.${system};
         in {
           vm = self.nixosConfigurations.vm.config.system.build.vm;
-
-          catppuccin = pkgs.callPackage pkgs/catppuccin {
-            src = self.inputs.catppuccin;
-          };
-
           dracula = pkgs.callPackage pkgs/dracula { };
         });
 
@@ -48,7 +42,7 @@
         default = { pkgs, ... }: {
           programs.sway = {
             enable = true;
-            package = pkgs.swayfx.override { isNixOS = true; };
+            package = null;
           };
         };
 
@@ -73,15 +67,18 @@
             ./home
           ];
 
-          programs.pjones.swayfx.theme =
+          waynix.theme =
             self.packages.${pkgs.system}.dracula;
         };
 
-        vm = { ... }: {
+        vm = { pkgs, ... }: {
           imports = [
             { home.stateVersion = stateVersion; }
             self.homeManagerModules.default
           ];
+
+          programs.waybar.package =
+            self.inputs.waybar.packages.${pkgs.system}.default;
         };
       };
 

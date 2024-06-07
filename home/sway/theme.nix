@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  cfg = config.programs.pjones.swayfx;
+  cfg = config.waynix.sway;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -13,11 +13,7 @@ in
       };
 
       extraConfig = ''
-        corner_radius 8
-        smart_corner_radius on
-        shadows on
-        default_dim_inactive 0.25
-        include ${cfg.theme}/config/sway.cfg
+        include ${config.waynix.theme}/sway/sway.cfg
       '';
     };
   };

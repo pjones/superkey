@@ -10,8 +10,11 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/config
-    cp sway.cfg $out/config/sway.cfg
+    mkdir -p $out/sway
+    cp sway.cfg $out/sway/sway.cfg
+
+    mkdir -p $out/waybar
+    cp waybar.css $out/waybar/
 
     runHook postInstall
   '';

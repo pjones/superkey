@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  cfg = config.programs.pjones.swayfx;
+  cfg = config.waynix.sway;
 
   # Some default keys:
   modifier = "Mod4";
@@ -99,7 +99,7 @@ in
         "${modifier}+slash" = "mode scratchpad";
 
         # Launching applications:
-        "${modifier}+e" = "exec emacs";
+        "${modifier}+e" = "exec e -c";
       };
 
       floating = {

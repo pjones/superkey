@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "catppuccin": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1712143459,
-        "narHash": "sha256-EHZ/D4PrFqwyTpfcst3+hSx6z4saVD1M9CfFqnWI6io=",
-        "owner": "catppuccin",
-        "repo": "i3",
-        "rev": "9c430d7010d73444af5272a596e3a2c058612f71",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "i3",
-        "type": "github"
-      }
-    },
     "emacsrc": {
       "inputs": {
         "home-manager": [
@@ -28,17 +12,33 @@
         "telega": "telega"
       },
       "locked": {
-        "lastModified": 1717186381,
-        "narHash": "sha256-CchuM1Ve3f1XbkVMy33RhPEyMj4G44upMmxDkvVby48=",
+        "lastModified": 1717453095,
+        "narHash": "sha256-QNdeSXfhWUlOBxUzfMySh6ECLXSH7T1njujYN18Js3s=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "ec60d1902dedc2eca7999908cc7e313f0b863a65",
+        "rev": "fb928e1425bc4cd3ba2a1a726da748f80ffaecb1",
         "type": "github"
       },
       "original": {
         "owner": "pjones",
         "ref": "nixos-24.05",
         "repo": "emacsrc",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
         "type": "github"
       }
     },
@@ -79,6 +79,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1711163522,
+        "narHash": "sha256-YN/Ciidm+A0fmJPWlHBGvVkcarYWSC+s3NTPk/P+q3c=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "44d0940ea560dee511026a53f0e2e2cde489b4d4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "passmm": {
       "flake": false,
       "locked": {
@@ -97,10 +113,10 @@
     },
     "root": {
       "inputs": {
-        "catppuccin": "catppuccin",
         "emacsrc": "emacsrc",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "waybar": "waybar"
       }
     },
     "telega": {
@@ -117,6 +133,25 @@
         "owner": "zevlg",
         "repo": "telega.el",
         "rev": "5b49be485ae95d33b3e09c5cac4ff7e569a510f2",
+        "type": "github"
+      }
+    },
+    "waybar": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1717742102,
+        "narHash": "sha256-M/D1bF9H9bH+RYRlF4zW6LWX7yB8ckJ8ieRLsrTttqA=",
+        "owner": "Alexays",
+        "repo": "Waybar",
+        "rev": "f4da2039159ac466d42182f8335c860f5b223b54",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Alexays",
+        "repo": "Waybar",
         "type": "github"
       }
     }

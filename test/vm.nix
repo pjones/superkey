@@ -1,6 +1,11 @@
 { self }:
 
 { lib, pkgs, modulesPath, ... }:
+let
+  waybarWrapper = home: pkgs.writeShellScript "waybar-wrapper" ''
+    ${home.programs.waybar.package}/bin/waybar -l debug
+  '';
+in
 {
   imports = [
     self.inputs.home-manager.nixosModules.home-manager
@@ -50,16 +55,27 @@
       extraGroups = [ "wheel" ];
     };
 
-    home-manager.users.pjones = { ... }: {
-      imports = [
-        self.homeManagerModules.vm
-        self.inputs.emacsrc.homeManagerModules.wayland
-      ];
+    home-manager = {
+      backupFileExtension = "backup";
+      useGlobalPkgs = true;
+      useUserPackages = true;
 
-      home.username = "pjones";
-      home.homeDirectory = "/home/pjones";
-      programs.pjones.swayfx.enable = true;
-      programs.pjones.emacsrc.enable = true;
+      users.pjones = { config, ... }: {
+        imports = [
+          self.homeManagerModules.vm
+          self.inputs.emacsrc.homeManagerModules.wayland
+        ];
+
+        home.username = "pjones";
+        home.homeDirectory = "/home/pjones";
+        waynix.enable = true;
+        programs.pjones.emacsrc.enable = true;
+
+        # Enable waybar debugging:
+        # GTK_DEBUG = "interactive"; # Styling waybar.
+        systemd.user.services.waybar.Service.ExecStart =
+          lib.mkForce (waybarWrapper config);
+      };
     };
   };
 }

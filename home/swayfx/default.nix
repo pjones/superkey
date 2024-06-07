@@ -1,53 +1,29 @@
-{ lib, pkgs, config, ... }:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.programs.pjones.swayfx;
-in
-{
-  imports = [
-    ./keys.nix
-    ./theme.nix
-  ];
+  cfg = config.waynix.swayfx;
 
-  options.programs.pjones.swayfx = {
+in
+
+{
+  options.waynix.swayfx = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = false;
-      description = "Enable SwayFX and configuration.";
-    };
-
-    theme = lib.mkOption {
-      type = lib.types.package;
-      default = null;
-      description = "A theme package that has a config/sway.cfg file";
+      default = config.waynix.enable;
+      description = "Enable SwayFX and related configuration";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.sway-overfocus
-      pkgs.wayland-utils
-      pkgs.wev
-    ];
-
     wayland.windowManager.sway = {
-      enable = true;
       package = pkgs.swayfx.override { isNixOS = true; };
-      checkConfig = false; # Currently broken
 
-      config = {
-        workspaceLayout = "default";
-
-        focus.followMouse = "yes";
-        focus.newWindow = "smart";
-        focus.wrapping = "yes";
-        focus.mouseWarping = "output";
-      };
-
+      # Sway configuration that only SwayFX understands:
       extraConfig = ''
-        default_orientation auto
-        force_display_urgency_hint 1000
-        popup_during_fullscreen smart
+        corner_radius 8
+        smart_corner_radius on
+        shadows on
+        default_dim_inactive 0.25
       '';
     };
   };
