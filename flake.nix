@@ -7,11 +7,18 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    waybar.url = "github:Alexays/Waybar";
+
     emacsrc.url = "github:pjones/emacsrc/nixos-24.05";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    waybar.url = "github:Alexays/Waybar";
+    desktop-scripts.url = "github:pjones/desktop-scripts";
+    desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
+
+    rofirc.url = "github:pjones/rofirc/wayland";
+    rofirc.inputs.nixpkgs.follows = "nixpkgs";
+    rofirc.inputs.desktop-scripts.follows = "desktop-scripts";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -28,9 +35,17 @@
 
       # Attribute set of nixpkgs for each system:
       nixpkgsFor = forAllSystems (system:
-        import nixpkgs { inherit system; });
+        import nixpkgs {
+          inherit system;
+          overlays = builtins.attrValues self.overlays;
+        });
     in
     {
+      overlays = {
+        desktop-scripts = self.inputs.desktop-scripts.overlays.desktop-scripts;
+        rofirc = self.inputs.rofirc.overlays.default;
+      };
+
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {

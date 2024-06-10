@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ./sway
@@ -18,5 +18,16 @@
       default = null;
       description = "A theme package.";
     };
+  };
+
+  config = lib.mkIf config.waynix.enable {
+    home.packages = with pkgs; [
+      jq
+      pjones.desktop-scripts
+      pjones.rofirc-wayland
+      wayland-utils
+      wev
+      wl-clipboard
+    ];
   };
 }

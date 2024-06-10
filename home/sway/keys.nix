@@ -100,6 +100,7 @@ in
 
         # Launching applications:
         "${modifier}+e" = "exec e -c";
+        "${modifier}+space" = "exec rofi-launcher.sh";
       };
 
       floating = {
