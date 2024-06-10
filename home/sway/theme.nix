@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  cfg = config.waynix.sway;
+  cfg = config.superkey.sway;
 in
 {
   config = lib.mkIf cfg.enable {
@@ -13,7 +13,7 @@ in
       };
 
       extraConfig = ''
-        include ${config.waynix.theme}/sway/sway.cfg
+        include ${config.superkey.theme}/sway/sway.cfg
       '';
     };
   };

@@ -6,7 +6,7 @@
     ./waybar
   ];
 
-  options.waynix = {
+  options.superkey = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = false;
@@ -20,7 +20,7 @@
     };
   };
 
-  config = lib.mkIf config.waynix.enable {
+  config = lib.mkIf config.superkey.enable {
     home.packages = with pkgs; [
       jq
       pjones.desktop-scripts

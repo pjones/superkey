@@ -1,13 +1,13 @@
 { lib, pkgs, config, ... }:
 
 let
-  cfg = config.waynix.waybar;
+  cfg = config.superkey.waybar;
 in
 {
-  options.waynix.waybar = {
+  options.superkey.waybar = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.waynix.enable;
+      default = config.superkey.enable;
       description = "Enable Waybar and related configuration";
     };
   };
@@ -70,7 +70,7 @@ in
     };
 
     xdg.configFile."waybar/style.css" = {
-      source = "${config.waynix.theme}/waybar/waybar.css";
+      source = "${config.superkey.theme}/waybar/waybar.css";
       onChange = ''
         ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
       '';

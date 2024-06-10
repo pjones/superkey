@@ -68,7 +68,7 @@ in
 
         home.username = "pjones";
         home.homeDirectory = "/home/pjones";
-        waynix.enable = true;
+        superkey.enable = true;
         programs.pjones.emacsrc.enable = true;
 
         # Enable waybar debugging:

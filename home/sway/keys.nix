@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  cfg = config.waynix.sway;
+  cfg = config.superkey.sway;
 
   # Some default keys:
   modifier = "Mod4";

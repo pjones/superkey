@@ -1,7 +1,7 @@
 { lib, pkgs, config, ... }:
 
 let
-  cfg = config.waynix.sway;
+  cfg = config.superkey.sway;
 in
 {
   imports = [
@@ -9,10 +9,10 @@ in
     ./theme.nix
   ];
 
-  options.waynix.sway = {
+  options.superkey.sway = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.waynix.enable;
+      default = config.superkey.enable;
       description = "Enable Sway and related configuration.";
     };
   };

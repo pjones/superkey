@@ -82,7 +82,7 @@
             ./home
           ];
 
-          waynix.theme =
+          superkey.theme =
             self.packages.${pkgs.system}.dracula;
         };
 

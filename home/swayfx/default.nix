@@ -1,15 +1,15 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.waynix.swayfx;
+  cfg = config.superkey.swayfx;
 
 in
 
 {
-  options.waynix.swayfx = {
+  options.superkey.swayfx = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.waynix.enable;
+      default = config.superkey.enable;
       description = "Enable SwayFX and related configuration";
     };
   };
