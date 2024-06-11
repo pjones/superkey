@@ -31,5 +31,15 @@
       wev # Wayland event viewer
       wl-clipboard # Command-line copy/paste utilities for Wayland
     ];
+
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-wlr ];
+      configPackages = [ config.wayland.windowManager.sway.package ];
+      config = {
+        sway.default = [ "wlr" "gtk" ];
+        common.default = [ "gtk" ];
+      };
+    };
   };
 }
