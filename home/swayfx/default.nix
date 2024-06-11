@@ -2,7 +2,7 @@
 
 let
   cfg = config.superkey.swayfx;
-
+  swaycfg = config.wayland.windowManager.sway;
 in
 
 {
@@ -16,7 +16,13 @@ in
 
   config = lib.mkIf cfg.enable {
     wayland.windowManager.sway = {
-      package = pkgs.swayfx.override { isNixOS = true; };
+      package = pkgs.swayfx.override {
+        isNixOS = true;
+        extraSessionCommands = swaycfg.extraSessionCommands;
+        extraOptions = swaycfg.extraOptions;
+        withBaseWrapper = swaycfg.wrapperFeatures.base;
+        withGtkWrapper = swaycfg.wrapperFeatures.gtk;
+      };
 
       # Sway configuration that only SwayFX understands:
       extraConfig = ''

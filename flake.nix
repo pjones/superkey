@@ -59,6 +59,13 @@
             enable = true;
             package = null;
           };
+
+          environment.systemPackages = with pkgs; [
+            adwaita-qt # A style to bend Qt applications to look like they belong into GNOME Shell
+            adwaita-qt6 # A style to bend Qt applications to look like they belong into GNOME Shell
+            gnome.gnome-themes-extra # Dark theme
+            qt5.qtwayland # Qt5 support for Wayland.
+          ];
         };
 
         vm = import test/vm.nix { inherit self; };
