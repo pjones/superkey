@@ -3,6 +3,7 @@
   imports = [
     ./sway
     ./swayfx
+    ./swaync
     ./waybar
   ];
 
@@ -22,12 +23,13 @@
 
   config = lib.mkIf config.superkey.enable {
     home.packages = with pkgs; [
-      jq
-      pjones.desktop-scripts
-      pjones.rofirc-wayland
-      wayland-utils
-      wev
-      wl-clipboard
+      jq # A lightweight and flexible command-line JSON processor
+      libnotify # A library that sends desktop notifications to a notification daemon
+      pjones.desktop-scripts # Scripts for Xorg and Wayland.
+      pjones.rofirc-wayland # Rofi launcher
+      wayland-utils # Wayland utilities (wayland-info)
+      wev # Wayland event viewer
+      wl-clipboard # Command-line copy/paste utilities for Wayland
     ];
   };
 }

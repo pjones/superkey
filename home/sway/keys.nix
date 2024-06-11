@@ -147,6 +147,7 @@ in
       modes.scratchpad = mkMode {
         "p" = "scratchpad show";
         "m" = "move window to scratchpad; mode default";
+        "n" = "exec swaync-client -t; mode default";
         "r" = "floating disable; mode default";
       };
     };
