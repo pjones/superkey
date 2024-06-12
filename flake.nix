@@ -60,6 +60,9 @@
             package = null;
           };
 
+          # Needed so swayidle can start when systemd locks/sleeps.
+          services.systemd-lock-handler.enable = true;
+
           services.pipewire.enable = true;
           services.pipewire.pulse.enable = true;
           services.pipewire.alsa.enable = true;

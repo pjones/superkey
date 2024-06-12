@@ -3,6 +3,7 @@
   imports = [
     ./sway
     ./swayfx
+    ./swaylock
     ./swaync
     ./waybar
   ];
