@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 {
   imports = [
+    ./clipboard
     ./sway
     ./swayfx
     ./swaylock
