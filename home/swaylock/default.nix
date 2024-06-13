@@ -62,7 +62,7 @@ in
       extraArgs = [ "-w" ];
 
       timeouts = [
-        { timeout = lockTimeout; command = "${lockCmd}/bin/lock"; }
+        { timeout = lockTimeout; command = "loginctl lock-session"; }
         {
           timeout = blankTimeout;
           command = "${swaymsg} 'output * power off'";
