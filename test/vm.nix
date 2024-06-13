@@ -68,8 +68,12 @@ in
 
         home.username = "pjones";
         home.homeDirectory = "/home/pjones";
-        superkey.enable = true;
         programs.pjones.emacsrc.enable = true;
+
+        superkey = {
+          enable = true;
+          primaryOutput = "Virtual-1";
+        };
 
         # Enable waybar debugging:
         # GTK_DEBUG = "interactive"; # Styling waybar.

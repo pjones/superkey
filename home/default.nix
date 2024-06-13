@@ -6,6 +6,7 @@
     ./swaylock
     ./swaync
     ./waybar
+    ./wpaperd
   ];
 
   options.superkey = {
@@ -19,6 +20,13 @@
       type = lib.types.package;
       default = null;
       description = "A theme package.";
+    };
+
+    primaryOutput = lib.mkOption {
+      type = lib.types.str;
+      description = ''
+        The name of the primary output (display), For example: eDP-1.
+      '';
     };
   };
 
