@@ -59,9 +59,16 @@ let
       value = "${command char}; mode default";
     })
     marks));
+
 in
 {
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [
+      brightnessctl # This program allows you read and control device brightness
+      pamixer # Pulseaudio command line mixer
+      playerctl # Command-line utility for controlling media players
+    ];
+
     wayland.windowManager.sway.config = {
       inherit modifier;
       inherit (motion) left down up right;
@@ -101,7 +108,21 @@ in
         # Launching applications:
         "${modifier}+e" = "exec e -c";
         "${modifier}+space" = "exec rofi-launcher.sh";
-        "Cancel" = "exec loginctl lock-session";
+        Cancel = "exec loginctl lock-session";
+        Print = "exec screenshot";
+
+        # Audio:
+        XF86AudioLowerVolume = "exec pamixer --decrease 5";
+        XF86AudioRaiseVolume = "exec pamixer --increase 5";
+        XF86AudioMute = "exec pamixer --toggle-mute";
+        XF86AudioPlay = "exec playerctl play-pause";
+        XF86AudioPrev = "exec playerctl previous";
+        XF86AudioNext = "exec playerctl next";
+        XF86Launch6 = "exec desktop-paswitch";
+
+        # Screen Brightness:
+        XF86MonBrightnessUp = "exec brightnessctl set +5%";
+        XF86MonBrightnessDown = "exec brightnessctl set 5%-";
       };
 
       floating = {

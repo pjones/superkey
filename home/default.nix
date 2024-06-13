@@ -2,6 +2,7 @@
 {
   imports = [
     ./clipboard
+    ./screenshot
     ./sway
     ./swayfx
     ./swaylock
