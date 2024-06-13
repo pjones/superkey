@@ -20,8 +20,30 @@
         "type": "github"
       }
     },
+    "desktop-scripts_2": {
+      "inputs": {
+        "nixpkgs": [
+          "emacsrc",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1718056506,
+        "narHash": "sha256-K9jgvIJjakXYSVaO7NG8ZDsK6aGe+pM+EACnoceiG4w=",
+        "owner": "pjones",
+        "repo": "desktop-scripts",
+        "rev": "ad8e084b5745f0106c3a019777d6b083d2941778",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "desktop-scripts",
+        "type": "github"
+      }
+    },
     "emacsrc": {
       "inputs": {
+        "desktop-scripts": "desktop-scripts_2",
         "home-manager": [
           "home-manager"
         ],
@@ -32,11 +54,11 @@
         "telega": "telega"
       },
       "locked": {
-        "lastModified": 1717453095,
-        "narHash": "sha256-QNdeSXfhWUlOBxUzfMySh6ECLXSH7T1njujYN18Js3s=",
+        "lastModified": 1718233755,
+        "narHash": "sha256-957joqOKnddW/7bybV/wMDjcXhGce5cSx+RWeyRdMOM=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "fb928e1425bc4cd3ba2a1a726da748f80ffaecb1",
+        "rev": "e7c5660c41b5e474ab2c90b98022bf8e83a9b187",
         "type": "github"
       },
       "original": {
@@ -168,17 +190,17 @@
     "telega": {
       "flake": false,
       "locked": {
-        "lastModified": 1698733686,
-        "narHash": "sha256-LW+1qqjtMvtGW3ZtAVo/vBw4uIx3q/cBXRX7Qiis6+A=",
+        "lastModified": 1715276147,
+        "narHash": "sha256-Fpcta1oyuE95ysHnTRFnoaFBp1bnQkmc9ko92gRhKVs=",
         "owner": "zevlg",
         "repo": "telega.el",
-        "rev": "5b49be485ae95d33b3e09c5cac4ff7e569a510f2",
+        "rev": "99477b075f4032a49283d730e909a26f11606ee5",
         "type": "github"
       },
       "original": {
         "owner": "zevlg",
         "repo": "telega.el",
-        "rev": "5b49be485ae95d33b3e09c5cac4ff7e569a510f2",
+        "rev": "99477b075f4032a49283d730e909a26f11606ee5",
         "type": "github"
       }
     },
