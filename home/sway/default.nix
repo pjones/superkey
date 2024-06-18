@@ -41,6 +41,26 @@ in
           style = "SemiBold";
           size = 10.0;
         };
+
+        input."*" = {
+          # https://math.dartmouth.edu/~sarunas/Linux_Compose_Key_Sequences.html
+          xkb_layout = "us";
+          xkb_variant = "altgr-intl";
+          xkb_options = "compose:menu,level3:ralt_switch";
+        };
+
+        input."type:touchpad" = {
+          click_method = "button_areas";
+          tap = "disabled";
+          drag = "disabled";
+          dwt = "enabled"; # Disabled while typing.
+          middle_emulation = "enabled";
+          natural_scroll = "disabled";
+        };
+
+        seat."*" = {
+          hide_cursor = "when-typing enable";
+        };
       };
 
       extraConfig = ''
