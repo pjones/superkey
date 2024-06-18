@@ -2,6 +2,15 @@
 
 {
   config = {
+    services.greetd = {
+      enable = true;
+      restart = true;
+
+      settings.default_session = {
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+      };
+    };
+
     programs.sway = {
       enable = true;
       package = null;
