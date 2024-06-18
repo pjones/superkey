@@ -74,6 +74,9 @@ in
       inherit (motion) left down up right;
 
       keybindings = windows // {
+        # Commonly used features:
+        "${modifier}+c" = "fullscreen toggle";
+
         # Focus for groups:
         "${modifier}+n" = "exec sway-overfocus group-rw group-dw";
         "${modifier}+p" = "exec sway-overfocus group-lw group-uw";
@@ -102,7 +105,7 @@ in
         "${modifier}+m" = "mode mark";
         "${modifier}+r" = "mode resize";
         "${modifier}+s" = "mode swap";
-        "${modifier}+w" = "mode layout";
+        "${modifier}+w" = "mode window";
         "${modifier}+slash" = "mode scratchpad";
 
         # Launching applications:
@@ -129,7 +132,7 @@ in
         inherit modifier;
       };
 
-      modes.layout = mkMode {
+      modes.window = mkMode {
         "0" = "kill; mode default";
         "1" = "fullscreen toggle; mode default";
         "2" = "split vertical; mode default";
