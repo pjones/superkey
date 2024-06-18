@@ -2,9 +2,13 @@
 
 let
   cfg = config.superkey.swaylock;
+  colors = config.superkey.theme.colors;
 
   lockTimeout = cfg.lockAfterMin * 60;
   blankTimeout = lockTimeout + 60;
+
+  # Format a color for swaylock:
+  color = str: alpha: builtins.substring 1 (builtins.stringLength str - 1) str + alpha;
 
   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
 
@@ -53,7 +57,35 @@ in
         indicator-caps-lock = true;
         scaling = "fit";
         indicator-radius = 200;
+        font = "Hermit";
+        font-size = "24";
         color = "000000FF";
+        bs-hl-color = color colors.comment "AA";
+        caps-lock-key-hl-color = color colors.red "FF";
+        inside-color = color colors.background "AA";
+        inside-clear-color = color colors.background "AA";
+        inside-caps-lock-color = color colors.red "FF";
+        inside-ver-color = color colors.purple "AA";
+        inside-wrong-color = color colors.orange "AA";
+        key-hl-color = color colors.green "AA";
+        layout-text-color = color colors.foreground "FF";
+        layout-bg-color = "00000000";
+        layout-border-color = "00000000";
+        text-color = color colors.foreground "FF";
+        text-caps-lock-color = color colors.foreground "FF";
+        text-ver-color = color colors.foreground "FF";
+        text-wrong-color = color colors.background "FF";
+        line-color = color colors.background "FF";
+        line-clear-color = color colors.background "FF";
+        line-caps-lock-color = color colors.background "FF";
+        line-ver-color = color colors.background "FF";
+        line-wrong-color = color colors.background "FF";
+        ring-color = color colors.background "AA";
+        ring-clear-color = "00000000";
+        ring-caps-lock-color = color colors.red "FF";
+        ring-ver-color = color colors.purple "AA";
+        ring-wrong-color = color colors.orange "AA";
+        separator-color = color colors.background "FF";
       };
     };
 

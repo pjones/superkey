@@ -1,4 +1,5 @@
-{ stdenvNoCC
+{ lib
+, stdenvNoCC
 }:
 
 stdenvNoCC.mkDerivation {
@@ -6,6 +7,10 @@ stdenvNoCC.mkDerivation {
   version = "git";
   src = ./.;
   dontBuild = true;
+
+  passthru = {
+    colors = lib.importJSON ./colors.json;
+  };
 
   installPhase = ''
     runHook preInstall

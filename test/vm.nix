@@ -3,6 +3,8 @@
 { lib, pkgs, modulesPath, ... }:
 let
   waybarWrapper = home: pkgs.writeShellScript "waybar-wrapper" ''
+    # Enable waybar debugging:
+    # export GTK_DEBUG="interactive"
     ${home.programs.waybar.package}/bin/waybar -l debug
   '';
 in
@@ -75,8 +77,6 @@ in
           primaryOutput = "Virtual-1";
         };
 
-        # Enable waybar debugging:
-        # GTK_DEBUG = "interactive"; # Styling waybar.
         systemd.user.services.waybar.Service.ExecStart =
           lib.mkForce (waybarWrapper config);
       };

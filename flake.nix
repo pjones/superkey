@@ -55,6 +55,10 @@
 
       nixosModules = {
         default = { pkgs, ... }: {
+          imports = [
+            self.inputs.desktop-scripts.nixosModules.default
+          ];
+
           programs.sway = {
             enable = true;
             package = null;
@@ -98,6 +102,7 @@
       homeManagerModules = {
         default = { pkgs, ... }: {
           imports = [
+            self.inputs.desktop-scripts.homeManagerModules.default
             ./home
           ];
 

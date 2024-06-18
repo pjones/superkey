@@ -35,6 +35,12 @@ in
         focus.newWindow = "smart";
         focus.wrapping = "yes";
         focus.mouseWarping = "output";
+
+        fonts = {
+          names = [ "Overpass" ];
+          style = "SemiBold";
+          size = 10.0;
+        };
       };
 
       extraConfig = ''

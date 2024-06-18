@@ -14,8 +14,9 @@
 * {
   border: none;
   border-radius: 0;
-  font-size: 11pt;
   min-height: 0;
+  font-family: "Overpass Nerd Font SemiBold", sans-serif;
+  font-size: 10pt;
 }
 
 window#waybar {
@@ -25,27 +26,37 @@ window#waybar {
   border-bottom: 2px solid @background;
 }
 
-#workspaces button {
+window#waybar.battery-critical {
+  background: @red;
+}
+
+#wireplumber,
+#clock,
+#idle_inhibitor,
+#mpris,
+#mode,
+#backlight,
+#battery,
+#keyboard-state,
+#custom-audio_idle_inhibitor,
+button {
   padding: 0 10px;
   background: @background;
   color: @foreground;
 }
 
-#workspaces button:hover {
+button:hover {
   box-shadow: inherit;
   text-shadow: inherit;
   background-image: linear-gradient(0deg, @selection, @background-darker);
-}
-
-#workspaces button.focused {
-  background-image: linear-gradient(0deg, @purple, @selection);
 }
 
 #workspaces button.urgent {
   background-image: linear-gradient(0deg, @red, @background-darker);
 }
 
-#clock {
-  padding: 0 4px;
-  background: @background;
+#mode {
+  background: @red;
+  border-bottom: 2px solid @orange;
+  font-weight: bold;
 }
