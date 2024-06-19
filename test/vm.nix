@@ -10,12 +10,15 @@ let
 in
 {
   imports = [
-    self.inputs.home-manager.nixosModules.home-manager
     (modulesPath + "/profiles/qemu-guest.nix")
     (modulesPath + "/virtualisation/qemu-vm.nix")
+    (import ./common.nix { inherit self; })
   ];
 
   config = {
+    networking.hostName = "superkey";
+    networking.networkmanager.enable = true;
+
     virtualisation = {
       diskSize = lib.mkDefault 8000; # MB
       memorySize = lib.mkDefault 2048; # MB
@@ -40,46 +43,13 @@ in
     nixpkgs.flake.setNixPath = false;
     nix.nixPath = lib.mkForce [ "nixpkgs=${pkgs.path}" ];
 
-    environment.sessionVariables = {
-      # WLR_NO_HARDWARE_CURSORS = "1";
-      # WLR_RENDERER_ALLOW_SOFTWARE = "1";
-      WLR_RENDERER = "pixman";
-    };
-
-    hardware.opengl.enable = true;
     security.sudo.wheelNeedsPassword = false;
     services.openssh.enable = true;
     services.qemuGuest.enable = true;
 
-    users.users.pjones = {
-      isNormalUser = true;
-      password = "password";
-      extraGroups = [ "wheel" ];
-    };
-
-    home-manager = {
-      backupFileExtension = "backup";
-      useGlobalPkgs = true;
-      useUserPackages = true;
-
-      users.pjones = { config, ... }: {
-        imports = [
-          self.homeManagerModules.vm
-          self.inputs.emacsrc.homeManagerModules.wayland
-        ];
-
-        home.username = "pjones";
-        home.homeDirectory = "/home/pjones";
-        programs.pjones.emacsrc.enable = true;
-
-        superkey = {
-          enable = true;
-          primaryOutput = "Virtual-1";
-        };
-
-        systemd.user.services.waybar.Service.ExecStart =
-          lib.mkForce (waybarWrapper config);
-      };
+    home-manager.users.pjones = { config, ... }: {
+      systemd.user.services.waybar.Service.ExecStart =
+        lib.mkForce (waybarWrapper config);
     };
   };
 }

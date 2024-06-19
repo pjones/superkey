@@ -1,7 +1,11 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-  config = {
+  options.superkey = {
+    enable = lib.mkEnableOption "Enable Wayland configuration.";
+  };
+
+  config = lib.mkIf config.superkey.enable {
     services.greetd = {
       enable = true;
       restart = true;
@@ -19,6 +23,7 @@
     # Needed so swayidle can start when systemd locks/sleeps.
     services.systemd-lock-handler.enable = true;
 
+    # Sound:
     services.pipewire.enable = true;
     services.pipewire.pulse.enable = true;
     services.pipewire.alsa.enable = true;

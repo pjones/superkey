@@ -165,6 +165,12 @@ in
           on-click = "";
           format-icons = [ "" "" "" ];
         };
+
+        tray = {
+          spacing = 5;
+          icon-size = 16;
+          show-passive-items = true;
+        };
       };
     };
 

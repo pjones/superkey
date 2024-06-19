@@ -27,7 +27,9 @@
       stateVersion = "24.05";
 
       # List of supported systems:
-      supportedSystems = nixpkgs.lib.platforms.unix;
+      supportedSystems = [
+        "x86_64-linux"
+      ];
 
       # Function to generate a set based on supported systems:
       forAllSystems = f:
@@ -41,11 +43,13 @@
         });
     in
     {
+      ##########################################################################
       overlays = {
         desktop-scripts = self.inputs.desktop-scripts.overlays.desktop-scripts;
         rofirc = self.inputs.rofirc.overlays.default;
       };
 
+      ##########################################################################
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
@@ -53,6 +57,44 @@
           dracula = pkgs.callPackage pkgs/dracula { };
         });
 
+      ##########################################################################
+      apps = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in {
+          # Launch a VM running Peter's configuration:
+          default = {
+            type = "app";
+            program = "${self.packages.${system}.vm}/bin/run-superkey-vm";
+          };
+
+          # Run a VM then take a screenshot and store it locally:
+          # screenshot =
+          #   let
+          #     script = pkgs.writeShellScript "screenshot" ''
+          #       cp \
+          #         ${self.checks.${system}.herbstluftwm}/screen.png \
+          #         support/screenshot.png
+          #     '';
+          #   in
+          #   {
+          #     type = "app";
+          #     program = "${script}";
+          #   };
+        });
+
+      ##########################################################################
+      nixosConfigurations = {
+        vm = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            { nixpkgs.pkgs = nixpkgsFor.x86_64-linux; }
+            { system.stateVersion = stateVersion; }
+            self.nixosModules.vm
+          ];
+        };
+      };
+
+      ##########################################################################
       nixosModules = {
         default = {
           imports = [
@@ -66,18 +108,7 @@
         };
       };
 
-      nixosConfigurations = {
-        vm = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            { nixpkgs.pkgs = nixpkgsFor.x86_64-linux; }
-            { system.stateVersion = stateVersion; }
-            self.nixosModules.vm
-            self.nixosModules.default
-          ];
-        };
-      };
-
+      ##########################################################################
       homeManagerModules = {
         default = { pkgs, ... }: {
           imports = [
@@ -100,6 +131,7 @@
         };
       };
 
+      ##########################################################################
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {

@@ -38,6 +38,7 @@ window#waybar.battery-critical {
 #backlight,
 #battery,
 #keyboard-state,
+#tray,
 #custom-audio_idle_inhibitor,
 button {
   padding: 0 10px;

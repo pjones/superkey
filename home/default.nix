@@ -12,11 +12,7 @@
   ];
 
   options.superkey = {
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = "Enable Wayland configuration.";
-    };
+    enable = lib.mkEnableOption "Enable Wayland configuration.";
 
     theme = lib.mkOption {
       type = lib.types.package;
