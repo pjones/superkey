@@ -5,25 +5,38 @@ let
   colors = config.superkey.theme.colors;
 
   lockTimeout = cfg.lockAfterMin * 60;
+  secureTimeout = cfg.secureAfterMin * 60;
   blankTimeout = lockTimeout + 60;
 
   # Format a color for swaylock:
   color = str: alpha: builtins.substring 1 (builtins.stringLength str - 1) str + alpha;
 
+  # Path to tools we need:
   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
+  desktop-pre-suspend = "${pkgs.pjones.desktop-scripts}/bin/desktop-pre-suspend";
 
   # Script that locks the screen after finding a suitable background
   # image.
   lockCmd = pkgs.writeShellApplication {
     name = "lock";
-    runtimeInputs = [ config.programs.swaylock.package ];
+    runtimeInputs = [
+      pkgs.pjones.desktop-scripts
+      config.programs.swaylock.package
+    ];
     text = ''
+      # Ensure swaylock *always* starts:
+      trap "exec swaylock -f" ERR
+
+      default_lock_image=${../../support/images/lock.png}
       args=("-f")
 
-      if [ -e "${cfg.imagePath}" ]; then
+      if [ -d "${cfg.imagePath}" ]; then
+        image=$(desktop-random-file -i -d "${cfg.imagePath}" -D "$default_lock_image")
+        args+=("--image" "$image")
+      elif [ -e "${cfg.imagePath}" ]; then
         args+=("--image" "${cfg.imagePath}")
       else
-        args+=("--image" "${../../support/images/lock.png}")
+        args+=("--image" "$default_lock_image")
       fi
 
       exec swaylock "''${args[@]}"
@@ -37,14 +50,26 @@ in
       default = 30;
       description = ''
         Automatically lock the screen after the given number of
-        minutes.
+        minutes of being idle.
+      '';
+    };
+
+    secureAfterMin = lib.mkOption {
+      type = lib.types.int;
+      default = 120;
+      description = ''
+        Automatically remove SSH/GPG keys after this many minutes of
+        being idle.
       '';
     };
 
     imagePath = lib.mkOption {
       type = lib.types.str;
-      default = "$HOME/.lock-screen";
-      description = "Path to the image to use for the lock screen.";
+      default = "${config.home.homeDirectory}/documents/pictures/backgrounds/lock-screen";
+      description = ''
+        Path to the image or directory of images to use for the lock
+        screen.
+      '';
     };
   };
 
@@ -95,6 +120,7 @@ in
 
       timeouts = [
         { timeout = lockTimeout; command = "loginctl lock-session"; }
+        { timeout = secureTimeout; command = desktop-pre-suspend; }
         {
           timeout = blankTimeout;
           command = "${swaymsg} 'output * power off'";
