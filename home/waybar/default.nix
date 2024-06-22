@@ -25,11 +25,12 @@ in
 
       settings.main = {
         output = config.superkey.primaryOutput;
+        name = lib.mkDefault "main";
         mode = "dock";
         layer = "top";
         exclusive = true;
         position = "bottom";
-        height = 24;
+        height = lib.mkDefault 24;
 
         modules-left = [
           "sway/workspaces"
@@ -110,30 +111,21 @@ in
           format = "<span color='${colors.green}' segment='sentence'> </span> {:%A, %d %B %Y <span color='${colors.green}' segment='sentence'> </span> %H:%M (%Z)}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
 
-          timezones = [
-            "Etc/UTC"
-            "America/New_York"
-            "America/Denver"
-            "America/Los_Angeles"
-          ];
-
           calendar = {
             mode = "year";
             mode-mon-col = 3;
             weeks-pos = "right";
             on-scroll = 1;
             format = {
-              months = "<span>{}</span>";
+              months = "<span color='${colors.pink}'>{}</span>";
               days = "<span>{}</span>";
               weeks = "<span>{}</span>";
               weekdays = "<span>{}</span>";
-              today = "<span color='${colors.green}'>{}</span>";
+              today = "<span color='${colors.green}'><b>{}</b></span>";
             };
           };
 
           actions = {
-            on-click = "tz_down";
-            on-click-right = "tz_up";
             on-scroll-up = "shift_up";
             on-scroll-down = "shift_down";
           };
@@ -142,20 +134,20 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "<span color='${colors.red}'>󰐩 </span>";
+            activated = "<span color='${colors.yellow}'>󰐩 </span>";
             deactivated = "<span color='${colors.green}'>󰐨 </span>";
           };
         };
 
         "custom/audio_idle_inhibitor" = {
-          format = "<span color='${colors.orange}'>{icon}</span>";
-          exec = "sway-audio-idle-inhibit --dry-print-both-waybar";
+          format = "{icon}";
+          exec = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit --dry-print-both-waybar";
           return-type = "json";
           format-icons = {
-            none = "";
-            output = "󰜟";
-            input = "";
-            output-input = "";
+            none = "<span color='${colors.green}'>󰤽</span>";
+            output = "<span color='${colors.yellow}'>󰜟</span>";
+            input = "<span color='${colors.yellow}'></span>";
+            output-input = "<span color='${colors.yellow}'></span>";
           };
         };
 

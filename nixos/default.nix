@@ -6,6 +6,8 @@
   };
 
   config = lib.mkIf config.superkey.enable {
+    pjones.desktop-scripts.enable = true;
+
     services.greetd = {
       enable = true;
       restart = true;
@@ -18,6 +20,7 @@
     programs.sway = {
       enable = true;
       package = null;
+      extraPackages = [ ];
     };
 
     # Needed so swayidle can start when systemd locks/sleeps.
@@ -29,9 +32,6 @@
     services.pipewire.alsa.enable = true;
 
     environment.systemPackages = with pkgs; [
-      adwaita-qt # A style to bend Qt applications to look like they belong into GNOME Shell
-      adwaita-qt6 # A style to bend Qt applications to look like they belong into GNOME Shell
-      gnome.gnome-themes-extra # Dark theme
       qt5.qtwayland # Qt5 support for Wayland.
     ];
 

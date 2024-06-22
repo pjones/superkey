@@ -8,11 +8,12 @@ in
     wayland.windowManager.sway = {
       config = {
         gaps.inner = 5;
-        gaps.smartGaps = true;
-        gaps.smartBorders = "on";
+        gaps.outer = 20;
+        gaps.smartBorders = "off";
       };
 
       extraConfig = ''
+        smart_gaps inverse_outer # Home Manager module broken.
         include ${config.superkey.theme}/sway/sway.cfg
       '';
     };

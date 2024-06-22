@@ -83,8 +83,8 @@ in
 
         # Misc workspace bindings:
         "${modifier}+apostrophe" = "workspace back_and_forth";
-        "${modifier}+greater" = "workspace next";
-        "${modifier}+less" = "workspace prev";
+        "${modifier}+Shift+period" = "workspace next";
+        "${modifier}+Shift+comma" = "workspace prev";
 
         # Monitors:
         "${modifier}+period" = "focus output right";
@@ -111,6 +111,7 @@ in
         # Launching applications:
         "${modifier}+e" = "exec e -c";
         "${modifier}+space" = "exec rofi-launcher.sh";
+        "${modifier}+semicolon" = "exec swaync-client -t; mode default";
         Cancel = "exec loginctl lock-session";
         Print = "exec screenshot";
 
@@ -162,6 +163,14 @@ in
       modes.swap = mkMarkMode (char: "swap container with mark ${char}");
       modes.jump = mkMarkMode (char: "[con_mark=\"${char}\"] focus");
 
+      modes.mark_scratchpad = mkMarkMode (char:
+        "mark --add S${char}; move window to scratchpad"
+      );
+
+      modes.restore_scratchpad = mkMarkMode (char:
+        "mark --toggle S${char}; floating disable"
+      );
+
       modes.resize = mkMode {
         "${motion.left}" = "resize shrink width 10 px";
         "${motion.down}" = "resize grow height 10 px";
@@ -169,12 +178,12 @@ in
         "${motion.right}" = "resize grow width 10 px";
       };
 
-      modes.scratchpad = mkMode {
-        "p" = "scratchpad show";
-        "m" = "move window to scratchpad; mode default";
-        "n" = "exec swaync-client -t; mode default";
-        "r" = "floating disable; mode default";
-      };
+      modes.scratchpad =
+        (mkMarkMode (char: "[con_mark=\"S${char}\"] scratchpad show")) // {
+          "slash" = "scratchpad show";
+          "Shift+period" = "mode mark_scratchpad";
+          "Shift+comma" = "mode restore_scratchpad";
+        };
     };
 
     wayland.windowManager.sway.extraConfig =

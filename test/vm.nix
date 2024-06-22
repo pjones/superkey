@@ -18,6 +18,7 @@ in
   config = {
     networking.hostName = "superkey";
     networking.networkmanager.enable = true;
+    time.timeZone = lib.mkDefault "America/Phoenix";
 
     virtualisation = {
       diskSize = lib.mkDefault 8000; # MB

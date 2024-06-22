@@ -64,6 +64,7 @@ in
       };
 
       extraConfig = ''
+        default_border normal
         default_orientation auto
         force_display_urgency_hint 1000
         popup_during_fullscreen smart
@@ -71,8 +72,6 @@ in
 
       extraSessionCommands = ''
         export _JAVA_AWT_WM_NONREPARENTING=1
-        export GTK2_RC_FILES=${pkgs.gnome.gnome-themes-extra}/share/themes/Adwaita-dark/gtk-2.0/gtkrc
-        export GTK_THEME=Adwaita:dark
         export QT_QPA_PLATFORM=wayland
         export QT_STYLE_OVERRIDE=Adwaita-Dark
         export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"

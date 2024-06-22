@@ -106,6 +106,9 @@
         vm = import test/vm.nix {
           inherit self;
         };
+
+        jekyll = import devices/jekyll.nix;
+        medusa = import devices/medusa.nix;
       };
 
       ##########################################################################
@@ -118,6 +121,9 @@
 
           superkey.theme =
             self.packages.${pkgs.system}.dracula;
+
+          programs.waybar.package =
+            self.inputs.waybar.packages.${pkgs.system}.default;
         };
 
         vm = { pkgs, ... }: {
@@ -125,9 +131,6 @@
             { home.stateVersion = stateVersion; }
             self.homeManagerModules.default
           ];
-
-          programs.waybar.package =
-            self.inputs.waybar.packages.${pkgs.system}.default;
         };
       };
 

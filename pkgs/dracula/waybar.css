@@ -15,35 +15,47 @@
   border: none;
   border-radius: 0;
   min-height: 0;
+}
+
+window#waybar {
+  opacity: 0.8;
+  background: @background-darker;
+  color: @foreground;
+  border-bottom: 0.15em solid @background;
   font-family: "Overpass Nerd Font SemiBold", sans-serif;
   font-size: 10pt;
 }
 
-window#waybar {
-  opacity: 0.9;
-  background: @background-darker;
-  color: @foreground;
-  border-bottom: 2px solid @background;
-}
-
-window#waybar.battery-critical {
-  background: @red;
+window#waybar.hidpi {
+  font-size: 6pt;
 }
 
 #wireplumber,
 #clock,
-#idle_inhibitor,
 #mpris,
 #mode,
 #backlight,
 #battery,
 #keyboard-state,
 #tray,
+#idle_inhibitor,
 #custom-audio_idle_inhibitor,
 button {
-  padding: 0 10px;
+  padding: 0 0.75em;
   background: @background;
   color: @foreground;
+}
+
+window#waybar.battery-critical #battery {
+  background: @red;
+}
+
+#idle_inhibitor {
+  padding-right: 0;
+}
+
+#custom-audio_idle_inhibitor {
+  padding-left: 0;
 }
 
 button:hover {
@@ -58,6 +70,6 @@ button:hover {
 
 #mode {
   background: @red;
-  border-bottom: 2px solid @orange;
+  border-bottom: 0.15em solid @orange;
   font-weight: bold;
 }

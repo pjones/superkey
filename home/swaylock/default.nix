@@ -13,6 +13,7 @@ let
 
   # Path to tools we need:
   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
+  loginctl = "${pkgs.systemd}/bin/loginctl";
   desktop-pre-suspend = "${pkgs.pjones.desktop-scripts}/bin/desktop-pre-suspend";
 
   # Script that locks the screen after finding a suitable background
@@ -119,7 +120,7 @@ in
       extraArgs = [ "-w" ];
 
       timeouts = [
-        { timeout = lockTimeout; command = "loginctl lock-session"; }
+        { timeout = lockTimeout; command = "${loginctl} lock-session"; }
         { timeout = secureTimeout; command = desktop-pre-suspend; }
         {
           timeout = blankTimeout;
