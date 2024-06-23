@@ -6,6 +6,10 @@
       enable = true;
 
       settings = {
+        timeout = 10;
+        timeout-low = 5;
+        timeout-critical = 0;
+
         widgets = [
           "inhibitors"
           "title"

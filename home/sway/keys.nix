@@ -111,7 +111,6 @@ in
         # Launching applications:
         "${modifier}+e" = "exec e -c";
         "${modifier}+space" = "exec rofi-launcher.sh";
-        "${modifier}+semicolon" = "exec swaync-client -t; mode default";
         Cancel = "exec loginctl lock-session";
         Print = "exec screenshot";
 
@@ -181,9 +180,10 @@ in
 
       modes.scratchpad =
         (mkMarkMode (char: "[con_mark=\"S${char}\"] scratchpad show")) // {
-          "slash" = "scratchpad show";
-          "Shift+period" = "mode mark_scratchpad";
+          "semicolon" = "exec swaync-client -t; mode default";
           "Shift+comma" = "mode restore_scratchpad";
+          "Shift+period" = "mode mark_scratchpad";
+          "slash" = "scratchpad show";
         };
     };
 
