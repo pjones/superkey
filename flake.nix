@@ -54,7 +54,16 @@
         let pkgs = nixpkgsFor.${system};
         in {
           vm = self.nixosConfigurations.vm.config.system.build.vm;
-          dracula = pkgs.callPackage pkgs/dracula { };
+
+          themes = {
+            dracula = pkgs.callPackage pkgs/theme {
+              colors = pkgs/theme/dracula.json;
+            };
+
+            outrun = pkgs.callPackage pkgs/theme {
+              colors = pkgs/theme/outrun.json;
+            };
+          };
         });
 
       ##########################################################################
@@ -120,7 +129,7 @@
           ];
 
           superkey.theme =
-            self.packages.${pkgs.system}.dracula;
+            self.packages.${pkgs.system}.themes.outrun;
 
           programs.waybar.package =
             self.inputs.waybar.packages.${pkgs.system}.default;

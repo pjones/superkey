@@ -138,6 +138,7 @@ in
         "1" = "fullscreen toggle; mode default";
         "2" = "split vertical; mode default";
         "3" = "split horizontal; mode default";
+        "b" = "border toggle; mode default";
         "d" = "layout default; mode default";
         "h" = "layout splith; mode default";
         "s" = "layout stacking; mode default";

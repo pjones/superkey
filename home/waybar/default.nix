@@ -53,7 +53,7 @@ in
         ];
 
         "sway/workspaces" = {
-          format = "<span color='${colors.green}'>󰍹 </span> {name}";
+          format = "<span color='${colors.base0B}'>󰍹 </span> {name}";
           all-outputs = true;
           current-only = true;
         };
@@ -66,14 +66,14 @@ in
           capslock = true;
           format = "{icon}";
           format-icons = {
-            locked = "<span color='${colors.red}'>󰪛 </span> Caps Lock";
+            locked = "<span color='${colors.base08}'>󰪛 </span> Caps Lock";
             unlocked = "";
           };
         };
 
         mpris = {
-          format = "<span color='${colors.green}'>{status_icon} </span> {dynamic}";
-          format-paused = "<span color='${colors.yellow}'>{status_icon} </span> {dynamic}";
+          format = "<span color='${colors.base0B}'>{status_icon} </span> {dynamic}";
+          format-paused = "<span color='${colors.base0A}'>{status_icon} </span> {dynamic}";
           format-stopped = "";
           dynamic-order = [ "artist" "title" "album" ];
           dynamic-len = 45;
@@ -85,7 +85,7 @@ in
         };
 
         backlight = {
-          format = "<span color='${colors.green}'>{icon} </span> {percent}%";
+          format = "<span color='${colors.base0B}'>{icon} </span> {percent}%";
           format-icons = [ "󰃞" "󰃟" "󰃠" ];
         };
 
@@ -95,10 +95,10 @@ in
               "<span color='${color}'>{icon} </span> {capacity}% ({time}@{power})";
           in
           {
-            format = "<span color='${colors.green}'> </span> {timeTo}";
-            format-discharging = mkFormat colors.green;
-            format-warning = mkFormat colors.orange;
-            format-critical = mkFormat colors.foreground;
+            format = "<span color='${colors.base0B}'> </span> {timeTo}";
+            format-discharging = mkFormat colors.base0B;
+            format-warning = mkFormat colors.base0E;
+            format-critical = mkFormat colors.base05;
             format-time = "{H}:{m}";
             format-icons = [ "" "" "" "" "" ];
             states = {
@@ -108,7 +108,7 @@ in
           };
 
         clock = {
-          format = "<span color='${colors.green}' segment='sentence'> </span> {:%A, %d %B %Y <span color='${colors.green}' segment='sentence'> </span> %H:%M (%Z)}";
+          format = "<span color='${colors.base0B}' segment='sentence'> </span> {:%A, %d %B %Y <span color='${colors.base0B}' segment='sentence'> </span> %H:%M (%Z)}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
 
           calendar = {
@@ -117,11 +117,11 @@ in
             weeks-pos = "right";
             on-scroll = 1;
             format = {
-              months = "<span color='${colors.pink}'>{}</span>";
+              months = "<span color='${colors.base09}'>{}</span>";
               days = "<span>{}</span>";
               weeks = "<span>{}</span>";
               weekdays = "<span>{}</span>";
-              today = "<span color='${colors.green}'><b>{}</b></span>";
+              today = "<span color='${colors.base0B}'><b>{}</b></span>";
             };
           };
 
@@ -134,8 +134,8 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "<span color='${colors.yellow}'>󰐩 </span>";
-            deactivated = "<span color='${colors.green}'>󰐨 </span>";
+            activated = "<span color='${colors.base0A}'>󰐩 </span>";
+            deactivated = "<span color='${colors.base0B}'>󰐨 </span>";
           };
         };
 
@@ -144,16 +144,16 @@ in
           exec = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit --dry-print-both-waybar";
           return-type = "json";
           format-icons = {
-            none = "<span color='${colors.green}'>󰤽</span>";
-            output = "<span color='${colors.yellow}'>󰜟</span>";
-            input = "<span color='${colors.yellow}'></span>";
-            output-input = "<span color='${colors.yellow}'></span>";
+            none = "<span color='${colors.base0B}'>󰤽</span>";
+            output = "<span color='${colors.base0A}'>󰜟</span>";
+            input = "<span color='${colors.base0A}'></span>";
+            output-input = "<span color='${colors.base0A}'></span>";
           };
         };
 
         wireplumber = {
-          format = "<span color='${colors.green}'>{icon} </span> {volume}%";
-          format-muted = "<span color='${colors.red}'></span>";
+          format = "<span color='${colors.base0B}'>{icon} </span> {volume}%";
+          format-muted = "<span color='${colors.base08}'></span>";
           on-click = "";
           format-icons = [ "" "" "" ];
         };
@@ -167,7 +167,14 @@ in
     };
 
     xdg.configFile."waybar/style.css" = {
-      source = "${config.superkey.theme}/waybar/waybar.css";
+      source = "${config.superkey.theme}/theme/waybar.css";
+      onChange = ''
+        ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
+      '';
+    };
+
+    xdg.configFile."waybar/colors.css" = {
+      source = "${config.superkey.theme}/theme/colors.css";
       onChange = ''
         ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
       '';

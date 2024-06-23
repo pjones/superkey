@@ -64,8 +64,10 @@ in
       };
 
       extraConfig = ''
-        default_border normal
+        default_border pixel 3
+        default_floating_border pixel 3
         default_orientation auto
+        titlebar_padding 10 5
         force_display_urgency_hint 1000
         popup_during_fullscreen smart
       '';

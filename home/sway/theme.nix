@@ -14,7 +14,7 @@ in
 
       extraConfig = ''
         smart_gaps inverse_outer # Home Manager module broken.
-        include ${config.superkey.theme}/sway/sway.cfg
+        include ${config.superkey.theme}/theme/sway.cfg
       '';
     };
   };
