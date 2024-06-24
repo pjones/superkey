@@ -20,7 +20,8 @@ let
       in
       {
         # Focus a (split) window in the given direction:
-        "${modifier}+${key}" = "exec sway-overfocus split-${dirChar}w float-${dirChar}w";
+        "${modifier}+${key}" =
+          "exec sway-overfocus split-${dirChar}t float-${dirChar}t";
 
         # Move a window in the given direction:
         "${modifier}+Shift+${key}" = "move ${direction}";
@@ -148,12 +149,13 @@ in
       };
 
       modes.focus = mkMode {
-        "${motion.down}" = "focus child; mode default";
-        "${motion.left}" = "focus prev; mode default";
-        "${motion.right}" = "focus next; mode default";
-        "${motion.up}" = "focus parent; mode default";
+        "${motion.down}" = "focus down; mode default";
+        "${motion.left}" = "focus left; mode default";
+        "${motion.right}" = "focus right; mode default";
+        "${motion.up}" = "focus up; mode default";
         "c" = "focus child; mode default";
         "f" = "focus floating; mode default";
+        "n" = "focus next; mode default";
         "p" = "focus parent; mode default";
         "t" = "focus tiling; mode default";
         "u" = "[urgent=latest] focus; mode default";
