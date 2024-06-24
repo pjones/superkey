@@ -78,6 +78,7 @@ in
         export QT_STYLE_OVERRIDE=Adwaita-Dark
         export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
         export SDL_VIDEODRIVER=wayland
+        export SSH_AUTH_SOCK=''${XDG_RUNTIME_DIR:=/run/user/$(id -u)}/ssh-agent
       '';
     };
   };
