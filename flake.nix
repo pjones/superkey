@@ -55,14 +55,12 @@
         in {
           vm = self.nixosConfigurations.vm.config.system.build.vm;
 
-          themes = {
-            dracula = pkgs.callPackage pkgs/theme {
-              colors = pkgs/theme/dracula.json;
-            };
+          theme-dracula = pkgs.callPackage pkgs/theme {
+            colors = pkgs/theme/dracula.json;
+          };
 
-            outrun = pkgs.callPackage pkgs/theme {
-              colors = pkgs/theme/outrun.json;
-            };
+          theme-outrun = pkgs.callPackage pkgs/theme {
+            colors = pkgs/theme/outrun.json;
           };
         });
 
@@ -129,7 +127,7 @@
           ];
 
           superkey.theme =
-            self.packages.${pkgs.system}.themes.outrun;
+            self.packages.${pkgs.system}.theme-outrun;
 
           programs.waybar.package =
             self.inputs.waybar.packages.${pkgs.system}.default;
