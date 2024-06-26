@@ -58,6 +58,10 @@ in
           natural_scroll = "disabled";
         };
 
+        input."type:tablet_tool" = {
+          map_to_output = config.superkey.primaryOutput;
+        };
+
         seat."*" = {
           hide_cursor = "when-typing enable";
         };
