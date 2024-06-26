@@ -112,7 +112,7 @@ in
         # Launching applications:
         "${modifier}+e" = "exec e -c";
         "${modifier}+space" = "exec rofi-launcher.sh";
-        Cancel = "exec loginctl lock-session";
+        Cancel = "exec ${pkgs.procps}/bin/pkill -u $USER -USR1 swayidle";
         Print = "exec screenshot";
 
         # Audio:

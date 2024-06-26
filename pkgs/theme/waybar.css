@@ -42,7 +42,7 @@ window#waybar.battery-critical #battery {
   padding-right: 0;
 }
 
-#custom-audio_idle_inhibitor {
+#tray {
   padding-left: 0;
 }
 

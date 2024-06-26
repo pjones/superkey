@@ -14,10 +14,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.sway-audio-idle-inhibit
-    ];
-
     programs.waybar = {
       enable = true;
       systemd.enable = true;
@@ -48,7 +44,6 @@ in
           "battery"
           "clock"
           "idle_inhibitor"
-          "custom/audio_idle_inhibitor"
           "tray"
         ];
 
@@ -139,18 +134,6 @@ in
           };
         };
 
-        "custom/audio_idle_inhibitor" = {
-          format = "{icon}";
-          exec = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit --dry-print-both-waybar";
-          return-type = "json";
-          format-icons = {
-            none = "<span color='${colors.base0B}'>󰤽</span>";
-            output = "<span color='${colors.base0A}'>󰜟</span>";
-            input = "<span color='${colors.base0A}'></span>";
-            output-input = "<span color='${colors.base0A}'></span>";
-          };
-        };
-
         wireplumber = {
           format = "<span color='${colors.base0B}'>{icon} </span> {volume}%";
           format-muted = "<span color='${colors.base08}'></span>";
@@ -178,21 +161,6 @@ in
       onChange = ''
         ${pkgs.procps}/bin/pkill -u $USER -USR2 waybar || true
       '';
-    };
-
-    systemd.user.services.sway-audio-idle-inhibit = {
-      Unit = {
-        Description = "Inhibit the screen locker when using audio";
-        PartOf = [ "graphical-session.target" ];
-      };
-
-      Service = {
-        Type = "simple";
-        ExecStart = "${pkgs.sway-audio-idle-inhibit}/bin/sway-audio-idle-inhibit";
-        Restart = "on-failure";
-      };
-
-      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 }
