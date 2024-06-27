@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1718056506,
-        "narHash": "sha256-K9jgvIJjakXYSVaO7NG8ZDsK6aGe+pM+EACnoceiG4w=",
+        "lastModified": 1719267551,
+        "narHash": "sha256-XhLi0lMZsjmbgokaOh+GpvZRQ52WCup3VOmHvQixkws=",
         "owner": "pjones",
         "repo": "desktop-scripts",
-        "rev": "ad8e084b5745f0106c3a019777d6b083d2941778",
+        "rev": "466c8de0352ddddea76ed5f8c501a8ddcb7b0eb4",
         "type": "github"
       },
       "original": {
@@ -54,11 +54,11 @@
         "telega": "telega"
       },
       "locked": {
-        "lastModified": 1718233755,
-        "narHash": "sha256-957joqOKnddW/7bybV/wMDjcXhGce5cSx+RWeyRdMOM=",
+        "lastModified": 1719525299,
+        "narHash": "sha256-33mvBTxWALlgOEIGGq+pVtW0FurTTpvCD9Q05czLjWw=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "e7c5660c41b5e474ab2c90b98022bf8e83a9b187",
+        "rev": "e35da42cb1f176723ab5b58fb94108347041a158",
         "type": "github"
       },
       "original": {

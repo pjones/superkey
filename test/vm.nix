@@ -34,11 +34,6 @@ in
         host.port = 2222;
         guest.port = 22;
       }];
-
-      qemu.options = [
-        "-vga none"
-        "-device virtio-gpu-pci"
-      ];
     };
 
     nixpkgs.flake.setNixPath = false;

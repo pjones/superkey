@@ -75,18 +75,24 @@
           };
 
           # Run a VM then take a screenshot and store it locally:
-          # screenshot =
-          #   let
-          #     script = pkgs.writeShellScript "screenshot" ''
-          #       cp \
-          #         ${self.checks.${system}.herbstluftwm}/screen.png \
-          #         support/screenshot.png
-          #     '';
-          #   in
-          #   {
-          #     type = "app";
-          #     program = "${script}";
-          #   };
+          screenshot =
+            let
+              script = pkgs.writeShellScript "screenshot" ''
+                cp --force \
+                  ${self.checks.${system}.sway}/screen.png \
+                  support/screenshot.png
+              '';
+            in
+            {
+              type = "app";
+              program = "${script}";
+            };
+
+          # Interactive version of the sway test:
+          swayTest = {
+            type = "app";
+            program = "${self.checks.${system}.sway.driverInteractive}/bin/nixos-test-driver";
+          };
         });
 
       ##########################################################################
@@ -142,6 +148,13 @@
       };
 
       ##########################################################################
+      checks = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in {
+          sway = import test/sway.nix { inherit pkgs self; };
+        });
+
+      ##########################################################################
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system}; in
         {
@@ -149,7 +162,7 @@
             NIX_PATH = "nixpkgs=${pkgs.path}";
 
             buildInputs = [
-              pkgs.neofetch
+              pkgs.fastfetch
               pkgs.nixpkgs-fmt
             ];
           };
