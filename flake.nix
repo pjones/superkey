@@ -54,6 +54,7 @@
         let pkgs = nixpkgsFor.${system};
         in {
           vm = self.nixosConfigurations.vm.config.system.build.vm;
+          force-lock = pkgs.callPackage pkgs/force-lock { };
 
           theme-dracula = pkgs.callPackage pkgs/theme {
             colors = pkgs/theme/dracula.json;
@@ -134,8 +135,12 @@
             ./home
           ];
 
-          superkey.theme =
-            self.packages.${pkgs.system}.theme-outrun;
+          superkey = {
+            theme = self.packages.${pkgs.system}.theme-outrun;
+
+            swaylock.forceLockCmd =
+              "${self.packages.${pkgs.system}.force-lock}/bin/force-lock.sh";
+          };
 
           programs.waybar.package =
             self.inputs.waybar.packages.${pkgs.system}.default;

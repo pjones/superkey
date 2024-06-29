@@ -112,7 +112,6 @@ in
         # Launching applications:
         "${modifier}+e" = "exec e -c";
         "${modifier}+space" = "exec rofi-launcher.sh";
-        Cancel = "exec ${pkgs.procps}/bin/pkill -u $USER -USR1 swayidle";
         Print = "exec screenshot";
 
         # Audio:
@@ -189,7 +188,8 @@ in
         };
     };
 
-    wayland.windowManager.sway.extraConfig =
-      lib.concatStringsSep "\n" [ workspaces ];
+    wayland.windowManager.sway.extraConfig = ''
+      bindsym --release --no-repeat Cancel exec ${config.superkey.swaylock.forceLockCmd}
+    '' + lib.concatStringsSep "\n" [ workspaces ];
   };
 }

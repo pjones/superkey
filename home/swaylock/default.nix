@@ -72,6 +72,14 @@ in
         screen.
       '';
     };
+
+    forceLockCmd = lib.mkOption {
+      type = lib.types.str;
+      default = "${pkgs.systemd}/bin/loginctl lock-session";
+      description = ''
+        A shell command that will lock the current session.
+      '';
+    };
   };
 
   config = lib.mkIf config.superkey.enable {
