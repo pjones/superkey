@@ -163,7 +163,7 @@ in
         toToml = tomlFormat.generate "wayland-pipewire-idle-inhibit.toml";
       in
       toToml {
-        verbosity = "WARN";
+        verbosity = "INFO";
         media_minimum_duration = 5;
         idle_inhibitor = "wayland";
 
