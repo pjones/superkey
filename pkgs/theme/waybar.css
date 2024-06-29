@@ -6,13 +6,13 @@
   min-height: 0;
   background-color: alpha(@base00, 0.5);
   color: @base05;
+  font-family: "Overpass Nerd Font SemiBold", sans-serif;
 }
 
 window#waybar {
   opacity: 0.8;
-  border-bottom: 0.15em solid @base01;
-  font-family: "Overpass Nerd Font SemiBold", sans-serif;
   font-size: 10pt;
+  border-bottom: 0.15em solid @base01;
 }
 
 window#waybar.hidpi {
@@ -23,6 +23,7 @@ window#waybar.hidpi {
 #clock,
 #mpris,
 #mode,
+#window,
 #backlight,
 #battery,
 #keyboard-state,
@@ -31,7 +32,14 @@ window#waybar.hidpi {
 #custom-audio_idle_inhibitor,
 button {
   padding: 0 0.75em;
-  background-color: @base00;
+  background-color: alpha(@base00, 0.2);
+}
+
+window#waybar.empty #window {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  opacity: 0.0;
 }
 
 window#waybar.battery-critical #battery {
@@ -51,7 +59,9 @@ window#waybar.battery-critical #battery {
 }
 
 #mode {
+  opacity: 1.0;
   background-color: @base08;
   border-bottom: 0.15em solid @base02;
   font-weight: bold;
+  /* text-transform: uppercase; */
 }

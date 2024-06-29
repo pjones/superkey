@@ -29,8 +29,9 @@ in
         height = lib.mkDefault 24;
 
         modules-left = [
-          "sway/workspaces"
           "sway/mode"
+          "sway/workspaces"
+          "sway/window"
         ];
 
         modules-center = [
@@ -47,14 +48,24 @@ in
           "tray"
         ];
 
+        "sway/mode" = {
+          format = "<span>󰀦 </span> Mode: {} <span> 󰀦</span>";
+        };
+
         "sway/workspaces" = {
           format = "<span color='${colors.base0B}'>󰍹 </span> {name}";
           all-outputs = true;
           current-only = true;
         };
 
-        "sway/mode" = {
-          format = "Mode: {}";
+        "sway/window" = {
+          format = "<span color='${colors.base0B}'> </span> {title}";
+          max-length = 50;
+          icon = false;
+          rewrite = {
+            "(.*) - Mozilla Firefox" = "$1";
+            "Emacs:\s+(.*)" = "$1";
+          };
         };
 
         keyboard-state = {
