@@ -35,9 +35,8 @@ can run my configuration in a virtual machine:
 nix run github:pjones/superkey
 ```
 
-Log in as `pjones` with "`password`" as the password.  Use the key
-binding `Super+Space` to start `rofi`.  Other key bindings can be
-found in `home/sway/keys.nix`.
+Use the key binding `Super+Space` to start `rofi`.  Other key bindings
+can be found in `home/sway/keys.nix`.
 
 This virtual machine is pretty bare-bones.  If you want to start a
 virtual machine with this configuration plus my entire workstation
