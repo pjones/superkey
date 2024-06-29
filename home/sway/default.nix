@@ -34,7 +34,7 @@ in
         focus.followMouse = "yes";
         focus.newWindow = "smart";
         focus.wrapping = "yes";
-        focus.mouseWarping = "output";
+        focus.mouseWarping = "container";
 
         fonts = {
           names = [ "Overpass" ];
