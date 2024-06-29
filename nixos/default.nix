@@ -39,5 +39,10 @@
       "/share/xdg-desktop-portal"
       "/share/applications"
     ];
+
+    # Enable the Home Manager module too:
+    home-manager.users.pjones = { ... }: {
+      superkey.enable = true;
+    };
   };
 }

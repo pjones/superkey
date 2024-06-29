@@ -6,18 +6,10 @@ pkgs.nixosTest {
     machine = { pkgs, lib, ... }: {
       imports = [
         (import ./common.nix { inherit self; })
+        ./autologin.nix
       ];
 
-      services.greetd.enable = lib.mkForce false;
-      services.getty.autologinUser = "pjones";
       environment.systemPackages = [ pkgs.fastfetch ];
-
-      programs.bash.loginShellInit = ''
-        if [ "$(tty)" = "/dev/tty1" ]; then
-          sway --validate
-          sway && touch /tmp/sway-exit-ok
-        fi
-      '';
     };
   };
 

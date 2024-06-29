@@ -116,10 +116,12 @@
           ];
         };
 
-        vm = import test/vm.nix {
-          inherit self;
-        };
+        # VM related:
+        vm = import test/vm.nix { inherit self; };
+        autologin = import test/autologin.nix;
+        qemu-sway = import test/qemu-sway.nix;
 
+        # Per-host configuration:
         jekyll = import devices/jekyll.nix;
         medusa = import devices/medusa.nix;
       };
@@ -152,6 +154,7 @@
         let pkgs = nixpkgsFor.${system};
         in {
           sway = import test/sway.nix { inherit pkgs self; };
+          greetd = import test/greetd.nix { inherit pkgs self; };
         });
 
       ##########################################################################

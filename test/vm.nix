@@ -13,6 +13,7 @@ in
     (modulesPath + "/profiles/qemu-guest.nix")
     (modulesPath + "/virtualisation/qemu-vm.nix")
     (import ./common.nix { inherit self; })
+    ./autologin.nix
   ];
 
   config = {
