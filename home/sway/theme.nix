@@ -14,6 +14,7 @@ in
 
       extraConfig = ''
         smart_gaps inverse_outer # Home Manager module broken.
+        for_window [app_id="firefox"] opacity set 0.95
         include ${config.superkey.theme}/theme/sway.cfg
       '';
     };

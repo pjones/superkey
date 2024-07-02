@@ -140,6 +140,7 @@ in
         "b" = "border toggle; mode default";
         "d" = "layout default; mode default";
         "h" = "layout splith; mode default";
+        "o" = "mode opacity";
         "s" = "layout stacking; mode default";
         "space" = "layout toggle all";
         "t" = "layout tabbed; mode default";
@@ -159,6 +160,20 @@ in
         "t" = "focus tiling; mode default";
         "u" = "[urgent=latest] focus; mode default";
       };
+
+      modes.opacity =
+        let
+          set = tenth: {
+            name = toString tenth;
+            value = "opacity set 0.${toString tenth}";
+          };
+        in
+        mkMode
+          {
+            "${motion.down}" = "opacity minus 0.05";
+            "${motion.up}" = "opacity plus 0.05";
+            "o" = "opacity set 1.0; mode default";
+          } // lib.listToAttrs (map set (lib.range 0 9));
 
       modes.mark = mkMarkMode (char: "mark --toggle ${char}");
       modes.swap = mkMarkMode (char: "swap container with mark ${char}");
