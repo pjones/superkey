@@ -176,8 +176,28 @@ in
           } // lib.listToAttrs (map set (lib.range 0 9));
 
       modes.mark = mkMarkMode (char: "mark --toggle ${char}");
-      modes.swap = mkMarkMode (char: "swap container with mark ${char}");
       modes.jump = mkMarkMode (char: "[con_mark=\"${char}\"] focus");
+
+      modes.swap =
+        let
+          swapInDirection = dir: lib.concatStringsSep ";" [
+            "mark --add swap"
+            "focus ${dir}"
+            "swap container with mark swap"
+            "focus ${dir}"
+            "unmark swap"
+          ];
+
+          motionBindings = lib.listToAttrs (
+            lib.mapAttrsToList
+              (direction: key: {
+                name = "${modifier}+${key}";
+                value = swapInDirection direction;
+              })
+              motion);
+        in
+        mkMarkMode (char: "swap container with mark ${char}")
+        // motionBindings;
 
       modes.mark_scratchpad = mkMarkMode (char:
         "mark --add S${char}; move window to scratchpad"
