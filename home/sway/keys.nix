@@ -88,15 +88,15 @@ in
 
         # Misc workspace bindings:
         "${modifier}+apostrophe" = "workspace back_and_forth";
-        "${modifier}+Shift+period" = "workspace next";
-        "${modifier}+Shift+comma" = "workspace prev";
+        "${modifier}+Shift+period" = "workspace next_on_output";
+        "${modifier}+Shift+comma" = "workspace prev_on_output";
 
         # Monitors:
         "${modifier}+period" = "focus output right";
         "${modifier}+comma" = "focus output left";
 
         # Swap two monitors:
-        "${modifier}+d" = builtins.concatStringsSep ";" [
+        "${modifier}+d" = builtins.concatStringsSep "; " [
           "focus output right"
           "move workspace to output left"
           "workspace back_and_forth"
