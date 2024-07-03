@@ -18,10 +18,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      pkgs.sway-overfocus
-    ];
-
     wayland.windowManager.sway = {
       enable = true;
       checkConfig = false; # Currently broken

@@ -13,19 +13,20 @@ let
     right = "l";
   };
 
+  # Focus the next container visually:
+  visualFocus = direction:
+    let dirChar = builtins.substring 0 1 direction;
+    in "sway-overfocus split-${dirChar}t float-${dirChar}t";
+
   # Window focus and movement:
   windows = lib.foldl' lib.mergeAttrs { } (lib.mapAttrsToList
-    (direction: key:
-      let dirChar = builtins.substring 0 1 direction;
-      in
-      {
-        # Focus a (split) window in the given direction:
-        "${modifier}+${key}" =
-          "exec sway-overfocus split-${dirChar}t float-${dirChar}t";
+    (direction: key: {
+      # Focus a (split) window in the given direction:
+      "${modifier}+${key}" = "exec ${visualFocus direction}";
 
-        # Move a window in the given direction:
-        "${modifier}+Shift+${key}" = "move ${direction}";
-      })
+      # Move a window in the given direction:
+      "${modifier}+Shift+${key}" = "move ${direction}";
+    })
     motion);
 
   # Switch workspace, move window to workspace.  Returns a string so
@@ -68,6 +69,8 @@ in
       brightnessctl # This program allows you read and control device brightness
       pamixer # Pulseaudio command line mixer
       playerctl # Command-line utility for controlling media players
+      sway-easyfocus # A tool to help efficiently focus windows in Sway
+      sway-overfocus # "Better" focus navigation for sway
     ];
 
     wayland.windowManager.sway.config = {
@@ -75,8 +78,9 @@ in
       inherit (motion) left down up right;
 
       keybindings = windows // {
-        # Commonly used features:
+        # Windows:
         "${modifier}+c" = "fullscreen toggle";
+        "${modifier}+o" = "exec sway-easyfocus";
 
         # Focus for groups:
         "${modifier}+n" = "exec sway-overfocus group-rw group-dw";
@@ -178,21 +182,28 @@ in
       modes.mark = mkMarkMode (char: "mark --toggle ${char}");
       modes.jump = mkMarkMode (char: "[con_mark=\"${char}\"] focus");
 
+      modes.resize = mkMode {
+        "${motion.left}" = "resize shrink width 10 px";
+        "${motion.down}" = "resize grow height 10 px";
+        "${motion.up}" = "resize shrink height 10 px";
+        "${motion.right}" = "resize grow width 10 px";
+      };
+
       modes.swap =
         let
-          swapInDirection = dir: lib.concatStringsSep ";" [
-            "mark --add swap"
-            "focus ${dir}"
-            "swap container with mark swap"
-            "focus ${dir}"
-            "unmark swap"
-          ];
+          swapInDirection = dir: pkgs.writeShellScript "sway-swap-${dir}" ''
+            swaymsg -- mark --add _swap
+            ${visualFocus dir}
+            swaymsg -- swap container with mark _swap
+            swaymsg -- '[con_mark="_swap"]' focus
+            swaymsg -- unmark _swap
+          '';
 
           motionBindings = lib.listToAttrs (
             lib.mapAttrsToList
               (direction: key: {
                 name = "${modifier}+${key}";
-                value = swapInDirection direction;
+                value = "exec ${swapInDirection direction}";
               })
               motion);
         in
@@ -204,15 +215,8 @@ in
       );
 
       modes.restore_scratchpad = mkMarkMode (char:
-        "mark --toggle S${char}; floating disable"
+        "unmark S${char}; floating disable"
       );
-
-      modes.resize = mkMode {
-        "${motion.left}" = "resize shrink width 10 px";
-        "${motion.down}" = "resize grow height 10 px";
-        "${motion.up}" = "resize shrink height 10 px";
-        "${motion.right}" = "resize grow width 10 px";
-      };
 
       modes.scratchpad =
         (mkMarkMode (char: "[con_mark=\"S${char}\"] scratchpad show")) // {
