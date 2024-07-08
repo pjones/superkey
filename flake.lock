@@ -184,7 +184,25 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "rofirc": "rofirc",
+        "sway-easyfocus": "sway-easyfocus",
         "waybar": "waybar"
+      }
+    },
+    "sway-easyfocus": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1720224963,
+        "narHash": "sha256-ZQg45jmCFK3P7BLnOJmmf31ci+jaala4Xmi10Vd1H78=",
+        "owner": "pjones",
+        "repo": "sway-easyfocus",
+        "rev": "923cc8e1ab557cb469c2df69acc0d3e434357ceb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "ref": "pjones/swap",
+        "repo": "sway-easyfocus",
+        "type": "github"
       }
     },
     "telega": {

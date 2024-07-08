@@ -19,6 +19,9 @@
     rofirc.url = "github:pjones/rofirc/wayland";
     rofirc.inputs.nixpkgs.follows = "nixpkgs";
     rofirc.inputs.desktop-scripts.follows = "desktop-scripts";
+
+    sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
+    sway-easyfocus.flake = false;
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -45,8 +48,22 @@
     {
       ##########################################################################
       overlays = {
-        desktop-scripts = self.inputs.desktop-scripts.overlays.desktop-scripts;
-        rofirc = self.inputs.rofirc.overlays.default;
+        superkey = final: prev: {
+          pjones = (prev.pjones or { }) // {
+            desktop-scripts = self.inputs.desktop-scripts.packages.${prev.system}.desktop-scripts;
+            rofirc-wayland = self.inputs.rofirc.packages.${prev.system}.rofirc-wayland;
+          };
+
+          sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: rec {
+            version = "unstable-2024-07-08";
+            src = self.inputs.sway-easyfocus;
+            cargoDeps = orig.cargoDeps.overrideAttrs {
+              inherit src;
+              name = "${orig.pname}-${version}-vendor.tar.gz";
+              outputHash = "sha256-Aiells9F2ZuCzQ7T9l2Y8k6iNvQAfIzWL98NZ1AHkLo=";
+            };
+          });
+        };
       };
 
       ##########################################################################

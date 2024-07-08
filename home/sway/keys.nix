@@ -81,6 +81,7 @@ in
         # Windows:
         "${modifier}+c" = "fullscreen toggle";
         "${modifier}+o" = "exec sway-easyfocus";
+        "${modifier}+u" = "[urgent=latest] focus; mode default";
 
         # Focus for groups:
         "${modifier}+n" = "exec sway-overfocus group-rw group-dw";
@@ -202,13 +203,19 @@ in
           motionBindings = lib.listToAttrs (
             lib.mapAttrsToList
               (direction: key: {
-                name = "${modifier}+${key}";
+                name = "${key}";
                 value = "exec ${swapInDirection direction}";
               })
               motion);
         in
-        mkMarkMode (char: "swap container with mark ${char}")
-        // motionBindings;
+        motionBindings // mkMode {
+          "o" = "exec sway-easyfocus swap --focus; mode default";
+          "g" = "mode swap_with_mark";
+        };
+
+      modes.swap_with_mark = mkMarkMode (char:
+        "swap container with mark ${char}"
+      );
 
       modes.mark_scratchpad = mkMarkMode (char:
         "mark --add S${char}; move window to scratchpad"
