@@ -62,6 +62,9 @@ let
     })
     marks));
 
+  gromit-toggle =
+    pkgs.writeShellScript "gromit-toggle"
+      (builtins.readFile ../../support/scripts/gromit-mpx-toggle.sh);
 in
 {
   config = lib.mkIf cfg.enable {
@@ -118,6 +121,10 @@ in
         "${modifier}+e" = "exec e -c";
         "${modifier}+space" = "exec rofi-launcher.sh";
         Print = "exec screenshot";
+
+        # Gromit-MPX:
+        F5 = "exec ${gromit-toggle}";
+        F6 = "exec gromit-mpx --clear";
 
         # Audio:
         XF86AudioLowerVolume = "exec pamixer --decrease 5";
