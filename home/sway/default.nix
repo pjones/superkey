@@ -60,6 +60,7 @@ in
 
         seat."*" = {
           hide_cursor = "when-typing enable";
+          idle_inhibit = "keyboard";
         };
       };
 
