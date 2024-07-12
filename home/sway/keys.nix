@@ -55,16 +55,34 @@ let
   marks = import ./alphabet.nix;
 
   # Make a mode out of all marks that run the given command:
-  mkMarkMode = command: mkMode (builtins.listToAttrs (map
+  mkMarkModeMod = mod: command: mkMode (builtins.listToAttrs (map
     (char: {
-      name = char;
+      name = if mod != null then "${mod}+${char}" else char;
       value = "${command char}; mode default";
     })
     marks));
 
+  mkMarkMode = mkMarkModeMod null;
+
   gromit-toggle =
     pkgs.writeShellScript "gromit-toggle"
       (builtins.readFile ../../support/scripts/gromit-mpx-toggle.sh);
+
+  scratchpad-toggle =
+    pkgs.writeShellScript "sway-scratchpad-toggle"
+      (builtins.readFile ../../support/scripts/sway-scratchpad-toggle.sh);
+
+  scratchpad-push =
+    pkgs.writeShellScript "sway-scratchpad-push"
+      (builtins.readFile ../../support/scripts/sway-scratchpad-push.sh);
+
+  scratchpad-pop =
+    pkgs.writeShellScript "sway-scratchpad-pop"
+      (builtins.readFile ../../support/scripts/sway-scratchpad-pop.sh);
+
+  scratchpad-fetch =
+    pkgs.writeShellScript "sway-scratchpad-fetch"
+      (builtins.readFile ../../support/scripts/sway-scratchpad-fetch.sh);
 in
 {
   config = lib.mkIf cfg.enable {
@@ -84,6 +102,9 @@ in
         # Windows:
         "${modifier}+c" = "fullscreen toggle";
         "${modifier}+o" = "exec sway-easyfocus";
+        "${modifier}+Return" = "exec ${scratchpad-toggle}";
+        "${modifier}+Shift+o" = "exec sway-easyfocus swap --focus; mode default";
+        "${modifier}+Tab" = "exec swaync-client -t; mode default";
         "${modifier}+u" = "[urgent=latest] focus; mode default";
 
         # Focus for groups:
@@ -113,9 +134,8 @@ in
         "${modifier}+g" = "mode jump";
         "${modifier}+m" = "mode mark";
         "${modifier}+r" = "mode resize";
-        "${modifier}+s" = "mode swap";
+        "${modifier}+s" = "mode scratchpad";
         "${modifier}+w" = "mode window";
-        "${modifier}+slash" = "mode scratchpad";
 
         # Launching applications:
         "${modifier}+e" = "exec e -c";
@@ -151,13 +171,14 @@ in
         "3" = "split horizontal; mode default";
         "b" = "border toggle; mode default";
         "d" = "layout default; mode default";
+        "f" = "floating toggle; mode default";
         "h" = "layout splith; mode default";
         "o" = "mode opacity";
-        "s" = "layout stacking; mode default";
+        "s" = "mode swap";
+        "Shift+s" = "layout stacking; mode default";
         "space" = "layout toggle all";
         "t" = "layout tabbed; mode default";
         "v" = "layout splitv; mode default";
-        "f" = "floating toggle; mode default";
       };
 
       modes.focus = mkMode {
@@ -187,7 +208,7 @@ in
             "o" = "opacity set 1.0; mode default";
           } // lib.listToAttrs (map set (lib.range 0 9));
 
-      modes.mark = mkMarkMode (char: "mark --toggle ${char}");
+      modes.mark = mkMarkMode (char: "mark --add --toggle ${char}");
       modes.jump = mkMarkMode (char: "[con_mark=\"${char}\"] focus");
 
       modes.resize = mkMode {
@@ -216,28 +237,16 @@ in
               motion);
         in
         motionBindings // mkMode {
-          "o" = "exec sway-easyfocus swap --focus; mode default";
           "g" = "mode swap_with_mark";
         };
 
-      modes.swap_with_mark = mkMarkMode (char:
-        "swap container with mark ${char}"
-      );
-
-      modes.mark_scratchpad = mkMarkMode (char:
-        "mark --add S${char}; move window to scratchpad"
-      );
-
-      modes.restore_scratchpad = mkMarkMode (char:
-        "unmark S${char}; floating disable"
-      );
+      modes.swap_with_mark = mkMarkMode (char: "swap container with mark ${char}");
 
       modes.scratchpad =
-        (mkMarkMode (char: "[con_mark=\"S${char}\"] scratchpad show")) // {
-          "semicolon" = "exec swaync-client -t; mode default";
-          "Shift+comma" = "mode restore_scratchpad";
-          "Shift+period" = "mode mark_scratchpad";
-          "slash" = "scratchpad show";
+        (mkMarkMode (char: "exec ${scratchpad-fetch} ${char}")) //
+        (mkMarkModeMod modifier (char: "exec ${scratchpad-push} ${char}")) // {
+          "BackSpace" = "exec ${scratchpad-pop}; mode default";
+          "Space" = "scratchpad show"; # Cycle through scratchpads.
         };
     };
 
