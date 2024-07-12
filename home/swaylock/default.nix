@@ -110,9 +110,10 @@ in
         layout-bg-color = "00000000";
         layout-border-color = "00000000";
         text-color = color colors.base05 "FF";
+        text-clear-color = color colors.base05 "FF";
         text-caps-lock-color = color colors.base05 "FF";
         text-ver-color = color colors.base05 "FF";
-        text-wrong-color = color colors.base00 "FF";
+        text-wrong-color = color colors.base05 "FF";
         line-color = color colors.base00 "FF";
         line-clear-color = color colors.base00 "FF";
         line-caps-lock-color = color colors.base00 "FF";
