@@ -34,6 +34,7 @@
     home.packages = with pkgs; [
       jq # A lightweight and flexible command-line JSON processor
       libnotify # A library that sends desktop notifications to a notification daemon
+      nwg-displays # Output management utility for Sway
       pjones.desktop-scripts # Scripts for Xorg and Wayland.
       pjones.rofirc-wayland # Rofi launcher
       pulseaudio # Sound server (pactl for zoom)
