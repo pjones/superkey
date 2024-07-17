@@ -143,7 +143,8 @@ in
         Print = "exec screenshot";
 
         # Gromit-MPX:
-        F5 = "exec ${gromit-toggle}";
+        F4 = "exec ${gromit-toggle}";
+        F5 = "exec gromit-mpx --toggle";
         F6 = "exec gromit-mpx --clear";
 
         # Audio:
