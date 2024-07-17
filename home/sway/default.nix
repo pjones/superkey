@@ -32,6 +32,11 @@ in
         focus.wrapping = "yes";
         focus.mouseWarping = "container";
 
+        # Windows that should always be floating:
+        floating.criteria = [
+          { app_id = "udiskie"; }
+        ];
+
         fonts = {
           names = [ "Overpass" ];
           style = "SemiBold";
