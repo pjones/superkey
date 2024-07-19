@@ -35,6 +35,7 @@ in
         # Windows that should always be floating:
         floating.criteria = [
           { app_id = "udiskie"; }
+          { app_id = "nwg-displays"; }
         ];
 
         fonts = {
