@@ -26,6 +26,10 @@ running in an ephemeral virtual machine (`nix flake check`).
 
   * Wallpaper Daemon: [wpaperd][]
 
+  * Monospace Font: [Hermit](https://pcaro.es/p/hermit/)
+
+  * Variable-spaced Font: [Atkinson Hyperlegible][hyperlegible]
+
 ## Try It Out
 
 If you have [Nix][] installed and configured with flake support you
@@ -52,3 +56,4 @@ configuration then take a look at my [tilde][] project.
 [swaylock]: https://github.com/swaywm/swaylock
 [wpaperd]: https://github.com/danyspin97/wpaperd
 [tilde]: https://github.com/pjones/tilde
+[hyperlegible]: https://brailleinstitute.org/freefont

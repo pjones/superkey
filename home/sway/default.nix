@@ -39,7 +39,7 @@ in
         ];
 
         fonts = {
-          names = [ "Overpass" ];
+          names = [ "Atkinson Hyperlegible Regular" ];
           style = "SemiBold";
           size = 10.0;
         };
