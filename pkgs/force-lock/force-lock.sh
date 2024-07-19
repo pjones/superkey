@@ -6,6 +6,9 @@
 set -eu
 set -o pipefail
 
+# Wait just a moment so keyboard release events don't trigger a wake up:
+sleep 0.5
+
 # Tell swayidle to run all idle commands:
 pkill -xu "$USER" -USR1 swayidle
 
