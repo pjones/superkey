@@ -149,7 +149,7 @@ in
           format = "<span color='${colors.base0B}'>{icon} </span> {volume}%";
           format-muted = "<span color='${colors.base08}'></span>";
           on-click = "";
-          format-icons = [ "" "" "" ];
+          format-icons = [ "" "" "" "󰕾" ];
         };
 
         tray = {
