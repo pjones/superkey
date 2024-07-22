@@ -68,6 +68,10 @@ in
           hide_cursor = "when-typing enable";
           idle_inhibit = "keyboard";
         };
+
+        output."*" = {
+          adaptive_sync = "on";
+        };
       };
 
       extraConfig = ''

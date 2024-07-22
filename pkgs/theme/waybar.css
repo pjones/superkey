@@ -16,7 +16,7 @@ window#waybar {
 }
 
 window#waybar.hidpi {
-  font-size: 8pt;
+  font-size: 10pt;
 }
 
 #wireplumber,
@@ -31,7 +31,7 @@ window#waybar.hidpi {
 #idle_inhibitor,
 #custom-audio_idle_inhibitor,
 button {
-  padding: 0 0.75em;
+  padding: 0 0.5em;
   background-color: alpha(@base00, 0.0);
 }
 

@@ -9,12 +9,12 @@
       wayland.windowManager.sway.config = {
         output."eDP-1" = {
           mode = "2256x1504";
-          scale = "2";
+          scale = "1.4";
         };
       };
 
       programs.waybar.settings.main = {
-        height = 18;
+        height = 20;
         name = "hidpi";
       };
     };
