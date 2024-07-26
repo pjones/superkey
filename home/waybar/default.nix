@@ -49,17 +49,17 @@ in
         ];
 
         "sway/mode" = {
-          format = "<span>󰀦 </span> Mode: {} <span> 󰀦</span>";
+          format = "<span>󰀦</span> Mode: {} <span> 󰀦</span>";
         };
 
         "sway/workspaces" = {
-          format = "<span color='${colors.base0B}'>󰍹 </span> {name}";
+          format = "<span color='${colors.base0B}'>󰍹</span> {name}";
           all-outputs = true;
           current-only = true;
         };
 
         "sway/window" = {
-          format = "<span color='${colors.base0B}'> </span> {title}";
+          format = "<span color='${colors.base0B}'></span> {title}";
           max-length = 50;
           icon = false;
           rewrite = {
@@ -72,14 +72,14 @@ in
           capslock = true;
           format = "{icon}";
           format-icons = {
-            locked = "<span color='${colors.base08}'>󰪛 </span> Caps Lock";
+            locked = "<span color='${colors.base08}'>󰪛</span> Caps Lock";
             unlocked = "";
           };
         };
 
         mpris = {
-          format = "<span color='${colors.base0B}'>{status_icon} </span> {dynamic}";
-          format-paused = "<span color='${colors.base0A}'>{status_icon} </span> {dynamic}";
+          format = "<span color='${colors.base0B}'>{status_icon}</span> {dynamic}";
+          format-paused = "<span color='${colors.base0A}'>{status_icon}</span> {dynamic}";
           format-stopped = "";
           dynamic-order = [ "artist" "title" "album" ];
           dynamic-len = 45;
@@ -91,22 +91,21 @@ in
         };
 
         backlight = {
-          format = "<span color='${colors.base0B}'>{icon} </span> {percent}%";
+          format = "<span color='${colors.base0B}'>{icon}</span> {percent}%";
           format-icons = [ "󰃞" "󰃟" "󰃠" ];
         };
 
         battery =
           let
-            mkFormat = color:
-              "<span color='${color}'>{icon} </span> {capacity}% ({time}@{power})";
+            charging = "<span color='${colors.base0B}'></span> {capacity}% ({time})";
+            discharging = "<span color='${colors.base0B}'>{icon}</span> {capacity}% ({time}@{power:4.2f})";
           in
           {
-            format = "<span color='${colors.base0B}'> </span> {timeTo}";
-            format-discharging = mkFormat colors.base0B;
-            format-warning = mkFormat colors.base0E;
-            format-critical = mkFormat colors.base05;
+            format = charging;
+            format-charging = charging;
+            format-discharging = discharging;
             format-time = "{H}:{m}";
-            format-icons = [ "" "" "" "" "" ];
+            format-icons = [ "󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" ];
             states = {
               warning = 30;
               critical = 15;
@@ -114,7 +113,7 @@ in
           };
 
         clock = {
-          format = "<span color='${colors.base0B}' segment='sentence'> </span> {:%A, %d %B %Y <span color='${colors.base0B}' segment='sentence'> </span> %H:%M (%Z)}";
+          format = "<span color='${colors.base0B}' segment='sentence'></span> {:%A, %d %B %Y <span color='${colors.base0B}' segment='sentence'></span> %H:%M (%Z)}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
 
           calendar = {
@@ -140,13 +139,13 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "<span color='${colors.base0A}'>󰐩 </span>";
-            deactivated = "<span color='${colors.base0B}'>󰐨 </span>";
+            activated = "<span color='${colors.base0A}'>󰐩</span>";
+            deactivated = "<span color='${colors.base0B}'>󰐨</span>";
           };
         };
 
         wireplumber = {
-          format = "<span color='${colors.base0B}'>{icon} </span> {volume}%";
+          format = "<span color='${colors.base0B}'>{icon}</span> {volume}%";
           format-muted = "<span color='${colors.base08}'></span>";
           on-click = "";
           format-icons = [ "" "" "" "󰕾" ];

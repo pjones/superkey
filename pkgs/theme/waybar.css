@@ -42,8 +42,14 @@ window#waybar.empty #window {
   opacity: 0.0;
 }
 
-window#waybar.battery-critical #battery {
+#battery.critical.discharging {
   background-color: @base08;
+  border-bottom: 0.15em solid @base09;
+}
+
+#battery.critical.charging {
+  background-color: @base02;
+  border-bottom: 0.15em solid @base03;
 }
 
 #idle_inhibitor {
