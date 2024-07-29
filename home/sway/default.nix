@@ -36,6 +36,7 @@ in
         floating.criteria = [
           { app_id = "udiskie"; }
           { app_id = "nwg-displays"; }
+          { title = "OpenSSH Authentication Passphrase request"; }
         ];
 
         fonts = {
