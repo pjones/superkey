@@ -40,9 +40,9 @@ in
         ];
 
         fonts = {
-          names = [ "Atkinson Hyperlegible Regular" ];
-          style = "SemiBold";
-          size = 10.0;
+          names = [ "Atkinson Hyperlegible" ];
+          style = "Regular";
+          size = 12.0;
         };
 
         input."*" = {
