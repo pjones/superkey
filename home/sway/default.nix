@@ -15,21 +15,17 @@ in
       default = config.superkey.enable;
       description = "Enable Sway and related configuration.";
     };
-
-    agents.ssh-askpass = lib.mkOption {
-      type = lib.types.nullOr lib.types.path;
-      default = null;
-      description = ''
-        Path to a script to use as the ssh-askpass tool.  When set,
-        also asks SSH to prefer this tool.
-      '';
-    };
   };
 
   config = lib.mkIf cfg.enable {
     wayland.windowManager.sway = {
       enable = true;
       checkConfig = false; # Currently broken
+
+      systemd = {
+        enable = true;
+        variables = [ "--all" ];
+      };
 
       config = {
         bars = [ ];
@@ -99,15 +95,11 @@ in
       '';
 
       extraSessionCommands = ''
+        . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
         export _JAVA_AWT_WM_NONREPARENTING=1
         export QT_QPA_PLATFORM=wayland
-        export QT_STYLE_OVERRIDE=Adwaita-Dark
         export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
         export SDL_VIDEODRIVER=wayland
-        export SSH_AUTH_SOCK=''${XDG_RUNTIME_DIR:=/run/user/$(id -u)}/ssh-agent
-      '' + lib.optionalString (cfg.agents.ssh-askpass != null) ''
-        export SSH_ASKPASS=${cfg.agents.ssh-askpass}
-        export SSH_ASKPASS_REQUIRE=prefer
       '';
     };
   };
