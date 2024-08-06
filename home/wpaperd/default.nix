@@ -29,13 +29,13 @@ in
 
     primaryWallpaperDirectory = lib.mkOption {
       type = lib.types.path;
-      default = "${config.home.homeDirectory}/documents/pictures/backgrounds/automatic";
+      default = "${config.home.homeDirectory}/documents/pictures/backgrounds/primary";
       description = "Directory of images to display on the primary output";
     };
 
     secondaryWallpaperDirectory = lib.mkOption {
       type = lib.types.path;
-      default = "${config.home.homeDirectory}/documents/pictures/backgrounds/Abstract";
+      default = "${config.home.homeDirectory}/documents/pictures/backgrounds/secondary";
       description = "Directory of images to display on secondary outputs";
     };
   };
@@ -50,10 +50,10 @@ in
 
       settings = {
         default = {
-          duration = "5m";
+          duration = "1h";
           sorting = "random";
           mode = "center";
-          transition_time = 300;
+          transition_time = 600;
           queue_size = 10;
         };
 
