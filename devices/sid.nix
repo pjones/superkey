@@ -11,6 +11,12 @@
           mode = "2256x1504";
           scale = "1.4";
         };
+
+        output."Samsung Electric Company S32D850 0x304C3341" = {
+          mode = "2560x1440@59.951Hz";
+          pos = "1611 0";
+          scale = "1.0";
+        };
       };
 
       programs.waybar.settings.main = {

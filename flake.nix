@@ -140,8 +140,7 @@
         qemu-sway = import test/qemu-sway.nix;
 
         # Per-host configuration:
-        jekyll = import devices/jekyll.nix;
-        medusa = import devices/medusa.nix;
+        sid = import devices/sid.nix;
       };
 
       ##########################################################################
