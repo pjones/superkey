@@ -28,8 +28,6 @@ in
       };
 
       config = {
-        bars = [ ];
-
         workspaceLayout = "default";
 
         focus.followMouse = "yes";
@@ -82,6 +80,14 @@ in
 
         output."*" = {
           adaptive_sync = "on";
+        };
+
+        # This is so sway can talk to waybar:
+        bars = lib.singleton {
+          id = "bar-0";
+          mode = "dock";
+          position = "bottom";
+          command = "true";
         };
       };
 

@@ -28,6 +28,10 @@ in
         position = "bottom";
         height = lib.mkDefault 24;
 
+        # Use swaymsg to control waybar:
+        ipc = true;
+        id = "bar-0";
+
         modules-left = [
           "sway/mode"
           "sway/workspaces"
