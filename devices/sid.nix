@@ -20,8 +20,11 @@
       };
 
       programs.waybar.settings.main = {
-        height = 20;
-        name = "hidpi";
+        # Additional outputs to put bars on to work around
+        # https://github.com/Alexays/Waybar/issues/2061
+        output = [
+          "Samsung Electric Company S32D850 0x304C3341"
+        ];
       };
     };
   };

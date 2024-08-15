@@ -20,7 +20,7 @@ in
       style = null;
 
       settings.main = {
-        output = config.superkey.primaryOutput;
+        output = [ config.superkey.primaryOutput ];
         name = lib.mkDefault "main";
         mode = "dock";
         layer = "top";
