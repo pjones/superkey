@@ -173,8 +173,8 @@ in
         "b" = "border toggle; mode default";
         "d" = "layout default; mode default";
         "f" = "floating toggle; mode default";
-        "h" = "layout splith; layout tabbed; mode default";
-        "n" = "split vertical; mode default";
+        "h" = "layout splith; mode default";
+        "n" = "split vertical; layout tabbed; mode default";
         "o" = "mode opacity";
         "s" = "mode swap";
         "Shift+s" = "layout stacking; mode default";
