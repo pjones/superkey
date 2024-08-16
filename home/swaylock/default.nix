@@ -87,6 +87,16 @@ in
       pkgs.wayland-pipewire-idle-inhibit
     ];
 
+    xdg.desktopEntries = {
+      lock-screen = {
+        name = "Force Lock Session";
+        exec = "${cfg.forceLockCmd}";
+        icon = "emblem-system";
+        terminal = false;
+        categories = [ "System" ];
+      };
+    };
+
     programs.swaylock = {
       enable = true;
       settings = {
