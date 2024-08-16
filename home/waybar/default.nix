@@ -101,7 +101,7 @@ in
 
         battery =
           let
-            charging = "<span color='${colors.base0B}'></span> {capacity}% ({time})";
+            charging = "<span color='${colors.base0B}'></span> {capacity}% {time}";
             discharging = "<span color='${colors.base0B}'>{icon}</span> {capacity}% ({time}@{power:4.2f})";
           in
           {
