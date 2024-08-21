@@ -22,6 +22,9 @@
 
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
+
+    org-clock-dbus.url = "github:pjones/org-clock-dbus";
+    org-clock-dbus.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, home-manager, ... }:
@@ -49,6 +52,8 @@
       ##########################################################################
       overlays = {
         superkey = final: prev: {
+          org-clock-dbus = self.inputs.org-clock-dbus.packages.${prev.system}.monitor;
+
           pjones = (prev.pjones or { }) // {
             desktop-scripts = self.inputs.desktop-scripts.packages.${prev.system}.desktop-scripts;
             rofirc-wayland = self.inputs.rofirc.packages.${prev.system}.rofirc-wayland;

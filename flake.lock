@@ -136,6 +136,26 @@
         "type": "github"
       }
     },
+    "org-clock-dbus": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1724258487,
+        "narHash": "sha256-zgL0siyTsiyFA+qfcjhjoBPQ97aLPV6181gOyIg22Z0=",
+        "owner": "pjones",
+        "repo": "org-clock-dbus",
+        "rev": "c9dfddc3f9c730d34150fdd79618b74196a40f00",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "org-clock-dbus",
+        "type": "github"
+      }
+    },
     "rofirc": {
       "inputs": {
         "desktop-scripts": [
@@ -166,6 +186,7 @@
         "emacsrc": "emacsrc",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
+        "org-clock-dbus": "org-clock-dbus",
         "rofirc": "rofirc",
         "sway-easyfocus": "sway-easyfocus",
         "waybar": "waybar"

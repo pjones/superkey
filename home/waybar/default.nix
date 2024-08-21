@@ -14,6 +14,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    home.packages = [ pkgs.org-clock-dbus ];
+
     programs.waybar = {
       enable = true;
       systemd.enable = true;
@@ -40,6 +42,7 @@ in
 
         modules-center = [
           "keyboard-state"
+          "custom/org-clock-dbus"
           "mpris"
         ];
 
@@ -79,6 +82,14 @@ in
             locked = "<span color='${colors.base08}'>󰪛</span> Caps Lock";
             unlocked = "";
           };
+        };
+
+        "custom/org-clock-dbus" = {
+          exec = "org-clock-dbus monitor --mode waybar --down-from 25m";
+          return-type = "json";
+          format = "<span color='${colors.base0B}'>{icon}</span> {}";
+          format-icons.running = "";
+          max-length = 100;
         };
 
         mpris = {
