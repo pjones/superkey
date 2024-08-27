@@ -189,6 +189,7 @@ in
         sink_whitelist = [
           { name = "Scarlett"; }
           { name = "Office"; }
+          { name = "Earbuds"; }
           { name = "Built-in"; }
         ];
 
