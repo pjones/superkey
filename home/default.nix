@@ -32,6 +32,7 @@
     pjones.desktop-scripts.enable = true;
 
     home.packages = with pkgs; [
+      helvum # A GTK patchbay for pipewire
       jq # A lightweight and flexible command-line JSON processor
       libnotify # A library that sends desktop notifications to a notification daemon
       nwg-displays # Output management utility for Sway
