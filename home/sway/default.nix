@@ -97,7 +97,7 @@ in
         default_orientation auto
         titlebar_padding 10 5
         force_display_urgency_hint 1000
-        popup_during_fullscreen smart
+        popup_during_fullscreen leave_fullscreen
       '';
 
       extraSessionCommands = ''
