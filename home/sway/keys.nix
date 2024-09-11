@@ -113,8 +113,6 @@ in
 
         # Misc workspace bindings:
         "${modifier}+apostrophe" = "workspace back_and_forth";
-        "${modifier}+Shift+period" = "workspace next_on_output";
-        "${modifier}+Shift+comma" = "workspace prev_on_output";
 
         # Monitors:
         "${modifier}+period" = "focus output right";
@@ -135,6 +133,7 @@ in
         "${modifier}+m" = "mode mark";
         "${modifier}+r" = "mode resize";
         "${modifier}+s" = "mode scratchpad";
+        "${modifier}+t" = "mode workspace";
         "${modifier}+w" = "mode window";
 
         # Launching applications:
@@ -194,6 +193,18 @@ in
         "p" = "focus parent; mode default";
         "t" = "focus tiling; mode default";
         "u" = "[urgent=latest] focus; mode default";
+      };
+
+      modes.workspace = mkMode {
+        # Focus:
+        "${motion.left}" = "workspace next_on_output";
+        "${motion.right}" = "workspace prev_on_output";
+
+        # Move:
+        "Shift+${motion.left}" = "move workspace to output left";
+        "Shift+${motion.right}" = "move workspace to output right";
+        "Shift+${motion.down}" = "move workspace to output down";
+        "Shift+${motion.up}" = "move workspace to output up";
       };
 
       modes.opacity =
