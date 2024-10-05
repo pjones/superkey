@@ -113,7 +113,7 @@ in
         # Windows:
         "${modifier}+c" = "fullscreen toggle";
         "${modifier}+o" = "exec sway-easyfocus";
-        "${modifier}+Return" = "exec ${scratchpad-toggle}";
+        "${modifier}+semicolon" = "exec ${scratchpad-toggle}";
         "${modifier}+Shift+o" = "exec sway-easyfocus swap --focus; mode default";
         "${modifier}+Tab" = "exec swaync-client -t; mode default";
         "${modifier}+u" = "[urgent=latest] focus; mode default";
@@ -149,6 +149,7 @@ in
 
         # Launching applications:
         "${modifier}+e" = "exec e -c";
+        "${modifier}+Return" = "exec eterm";
         "${modifier}+space" = "exec rofi-launcher.sh";
         Print = "exec screenshot";
 
