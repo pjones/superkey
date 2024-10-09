@@ -2,7 +2,7 @@
 { config, lib, ... }:
 
 let
-  external = "Samsung Electric Company S32D850 0x304C3341";
+  external = "Dell Inc. DELL U2419H GY1VSS2";
 in
 {
   config = lib.mkIf config.superkey.enable {
@@ -16,7 +16,7 @@ in
         };
 
         output.${external} = {
-          mode = "2560x1440@59.951Hz";
+          mode = "1920x1080@60.0Hz";
           pos = "1611 0";
           scale = "1.0";
         };
@@ -30,8 +30,8 @@ in
 
       programs.wpaperd.settings = {
         # Treat my main external monitor as a primary monitor:
-        ${external}.path =
-          config.superkey.wpaperd.primaryWallpaperDirectory;
+        ${external}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
+        DP-4.path = config.superkey.wpaperd.primaryWallpaperDirectory;
       };
     };
   };
