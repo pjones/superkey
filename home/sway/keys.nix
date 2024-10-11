@@ -158,15 +158,6 @@ in
         F5 = "exec gromit-mpx --toggle";
         F6 = "exec gromit-mpx --clear";
 
-        # Audio:
-        XF86AudioLowerVolume = "exec pamixer --decrease 5";
-        XF86AudioRaiseVolume = "exec pamixer --increase 5";
-        XF86AudioMute = "exec pamixer --toggle-mute";
-        XF86AudioPlay = "exec playerctl play-pause";
-        XF86AudioPrev = "exec playerctl previous";
-        XF86AudioNext = "exec playerctl next";
-        XF86Launch6 = "exec desktop-paswitch";
-
         # Screen Brightness:
         XF86MonBrightnessUp = "exec brightnessctl set +5%";
         XF86MonBrightnessDown = "exec brightnessctl set 5%-";
@@ -276,6 +267,15 @@ in
     };
 
     wayland.windowManager.sway.extraConfig = ''
+      # Audio:
+      bindsym --locked XF86AudioLowerVolume exec pamixer --decrease 5
+      bindsym --locked XF86AudioMute exec pamixer --toggle-mute
+      bindsym --locked XF86AudioNext exec playerctl next
+      bindsym --locked XF86AudioPlay exec playerctl play-pause
+      bindsym --locked XF86AudioPrev exec playerctl previous
+      bindsym --locked XF86AudioRaiseVolume exec pamixer --increase 5
+      bindsym --locked XF86Launch6 exec desktop-paswitch
+
       bindsym --release --no-repeat Cancel exec ${config.superkey.swaylock.forceLockCmd}
     '' + lib.concatStringsSep "\n" [ workspaces ];
   };
