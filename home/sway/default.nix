@@ -70,7 +70,6 @@ in
 
         seat."*" = {
           hide_cursor = "when-typing enable";
-          idle_inhibit = "keyboard";
 
           xcursor_theme = lib.concatStringsSep " " [
             config.gtk.cursorTheme.name
