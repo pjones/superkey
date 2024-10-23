@@ -23,6 +23,8 @@
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
 
+    wpaperd.url = "github:pjones/wpaperd/pjones/main";
+
     org-clock-dbus.url = "github:pjones/org-clock-dbus";
     org-clock-dbus.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -68,6 +70,8 @@
               outputHash = "sha256-Aiells9F2ZuCzQ7T9l2Y8k6iNvQAfIzWL98NZ1AHkLo=";
             };
           });
+
+          wpaperd = self.inputs.wpaperd.packages.${prev.system}.default;
         };
       };
 
