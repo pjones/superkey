@@ -138,6 +138,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1729256560,
+        "narHash": "sha256-/uilDXvCIEs3C9l73JTACm4quuHUsIHcns1c+cHUJwA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4c2fcb090b1f3e5b47eaa7bd33913b574a11e0a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "org-capture-ref": {
       "flake": false,
       "locked": {
@@ -245,7 +261,29 @@
         "org-clock-dbus": "org-clock-dbus_2",
         "rofirc": "rofirc",
         "sway-easyfocus": "sway-easyfocus",
-        "waybar": "waybar"
+        "waybar": "waybar",
+        "wpaperd": "wpaperd"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "wpaperd",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1729391507,
+        "narHash": "sha256-as0I9xieJUHf7kiK2a9znDsVZQTFWhM1pLivII43Gi0=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "784981a9feeba406de38c1c9a3decf966d853cca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
       }
     },
     "sway-easyfocus": {
@@ -265,6 +303,21 @@
         "type": "github"
       }
     },
+    "systems": {
+      "locked": {
+        "lastModified": 1689347949,
+        "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "rev": "31732fcf5e8fea42e59c2488ad31a0e651500f68",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default-linux",
+        "type": "github"
+      }
+    },
     "waybar": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -281,6 +334,27 @@
       "original": {
         "owner": "Alexays",
         "repo": "Waybar",
+        "type": "github"
+      }
+    },
+    "wpaperd": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3",
+        "rust-overlay": "rust-overlay",
+        "systems": "systems"
+      },
+      "locked": {
+        "dirtyRev": "fdbe10889d8f77b95c4a8812a34804514907f825-dirty",
+        "dirtyShortRev": "fdbe108-dirty",
+        "lastModified": 1729600214,
+        "narHash": "sha256-3SUcQmQoSDSKdQm81fEYlMNIZZTWqWpx1duY63TpRK0=",
+        "type": "git",
+        "url": "file:///home/pjones/src/oss/wpaperd"
+      },
+      "original": {
+        "owner": "pjones",
+        "ref": "pjones/output-desc",
+        "repo": "wpaperd",
         "type": "github"
       }
     }

@@ -53,8 +53,8 @@ in
           duration = "1h";
           sorting = "random";
           mode = "center";
-          transition_time = 600;
-          queue_size = 10;
+          transition-time = 600;
+          queue-size = 10;
         };
 
         any.path = cfg.wpaperd.secondaryWallpaperDirectory;

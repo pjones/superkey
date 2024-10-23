@@ -2,7 +2,9 @@
 { config, lib, ... }:
 
 let
-  external = "Dell Inc. DELL U2419H GY1VSS2";
+  external = {
+    work = "ASUSTek COMPUTER INC PA278QV S8LMQS000351";
+  };
 in
 {
   config = lib.mkIf config.superkey.enable {
@@ -15,8 +17,8 @@ in
           scale = "1.4";
         };
 
-        output.${external} = {
-          mode = "1920x1080@60.0Hz";
+        output.${external.work} = {
+          mode = "2560x1440@59.951Hz";
           pos = "1611 0";
           scale = "1.0";
         };
@@ -25,13 +27,12 @@ in
       programs.waybar.settings.main = {
         # Additional outputs to put bars on to work around
         # https://github.com/Alexays/Waybar/issues/2061
-        output = [ external ];
+        output = [ external.work ];
       };
 
       programs.wpaperd.settings = {
         # Treat my main external monitor as a primary monitor:
-        ${external}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
-        DP-4.path = config.superkey.wpaperd.primaryWallpaperDirectory;
+        ${external.work}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
       };
     };
   };
