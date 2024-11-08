@@ -60,13 +60,13 @@ in
         };
 
         "sway/workspaces" = {
-          format = "<span color='${colors.base0B}'>󰍹</span> {name}";
+          format = "󰍹 {name}";
           all-outputs = true;
           current-only = true;
         };
 
         "sway/window" = {
-          format = "<span color='${colors.base0B}'></span> {title}";
+          format = " {title}";
           max-length = 50;
           icon = false;
           rewrite = {
@@ -79,7 +79,7 @@ in
           capslock = true;
           format = "{icon}";
           format-icons = {
-            locked = "<span color='${colors.base08}'>󰪛</span> Caps Lock";
+            locked = "󰪛 Caps Lock";
             unlocked = "";
           };
         };
@@ -87,14 +87,14 @@ in
         "custom/org-clock-dbus" = {
           exec = "org-clock-dbus monitor --mode waybar --down-from 25m";
           return-type = "json";
-          format = "<span color='${colors.base0B}'>{icon}</span> {}";
+          format = "{icon} {}";
           format-icons.running = "";
           max-length = 100;
         };
 
         mpris = {
-          format = "<span color='${colors.base0B}'>{status_icon}</span> {dynamic}";
-          format-paused = "<span color='${colors.base0A}'>{status_icon}</span> {dynamic}";
+          format = "{status_icon} {dynamic}";
+          format-paused = "{status_icon} {dynamic}";
           format-stopped = "";
           dynamic-order = [ "artist" "title" "album" ];
           dynamic-len = 45;
@@ -106,14 +106,14 @@ in
         };
 
         backlight = {
-          format = "<span color='${colors.base0B}'>{icon}</span> {percent}%";
+          format = "{icon} {percent}%";
           format-icons = [ "󰃞" "󰃟" "󰃠" ];
         };
 
         battery =
           let
-            charging = "<span color='${colors.base0B}'></span> {capacity}% {time}";
-            discharging = "<span color='${colors.base0B}'>{icon}</span> {capacity}% ({time}@{power:4.2f})";
+            charging = " {capacity}% {time}";
+            discharging = "{icon} {capacity}% ({time}@{power:4.2f})";
           in
           {
             format = charging;
@@ -128,7 +128,7 @@ in
           };
 
         clock = {
-          format = "<span color='${colors.base0B}' segment='sentence'></span> {:%A, %d %B %Y <span color='${colors.base0B}' segment='sentence'></span> %H:%M (%Z)}";
+          format = " {:%A, %d %B %Y  %H:%M (%Z)}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
 
           calendar = {
@@ -137,7 +137,7 @@ in
             weeks-pos = "right";
             on-scroll = 1;
             format = {
-              months = "<span color='${colors.base09}'>{}</span>";
+              months = "{}";
               days = "<span>{}</span>";
               weeks = "<span>{}</span>";
               weekdays = "<span>{}</span>";
@@ -154,14 +154,14 @@ in
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "<span color='${colors.base0A}'>󰐩</span>";
-            deactivated = "<span color='${colors.base0B}'>󰐨</span>";
+            activated = "󰐩";
+            deactivated = "󰐨";
           };
         };
 
         wireplumber = {
-          format = "<span color='${colors.base0B}'>{icon}</span> {volume}%";
-          format-muted = "<span color='${colors.base08}'></span>";
+          format = "{icon} {volume}%";
+          format-muted = "";
           on-click = "";
           format-icons = [ "" "" "" "󰕾" ];
         };

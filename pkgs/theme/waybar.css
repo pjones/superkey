@@ -4,15 +4,21 @@
   border: none;
   border-radius: 0;
   min-height: 0;
-  color: @base05;
+  color: @theme_text_color;
   font-family: "AtkinsonHyperlegible Nerd Font", sans-serif;
 }
 
 window#waybar {
   opacity: 0.8;
   font-size: 12pt;
-  border-bottom: 0.15em solid @base01;
-  background-color: alpha(@base00, 0.7);
+
+  border-bottom: 0.15em solid @unfocused_borders;
+  background-color: alpha(#000, 0.0);
+
+  background-image:
+    linear-gradient(0deg,
+                    shade(alpha(@theme_bg_color, 0.8), 0.75),
+                    alpha(@theme_bg_color, 0.7));
 }
 
 window#waybar.hidpi {
@@ -32,7 +38,10 @@ window#waybar.hidpi {
 #custom-audio_idle_inhibitor,
 button {
   padding: 0 0.5em;
-  background-color: alpha(@base00, 0.0);
+}
+
+.module {
+  background-color: alpha(#000, 0.0);
 }
 
 window#waybar.empty #window {

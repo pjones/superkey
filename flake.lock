@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1730984205,
-        "narHash": "sha256-+ORelp2J5Hn5OmqlloZdl2y6kKeGHr6n/UxG3TlDpCU=",
+        "lastModified": 1731243141,
+        "narHash": "sha256-8mYt9b3bVmCw9XAb8ouao62xvQ5IS2eDEi2Hxtq3sQ4=",
         "owner": "pjones",
         "repo": "desktop-scripts",
-        "rev": "fc0ef4b298dda87cc3f6c6dfbf0462513f3bae97",
+        "rev": "f8c0c41758e4f1635f6f9b33557a1d1b4e9130fb",
         "type": "github"
       },
       "original": {
@@ -55,11 +55,11 @@
         "persid": "persid"
       },
       "locked": {
-        "lastModified": 1728134217,
-        "narHash": "sha256-4I7Zn7t3NFujcQUlpezG95n2cgFo/jv2bhBWx+E7mLo=",
+        "lastModified": 1730987800,
+        "narHash": "sha256-9JXEXQIr0cAqB54tU8gWw6X38qkLemAwpdplzJiDCrU=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "c8af494f1fc4a4efc71b0892a9a5fe38759d9237",
+        "rev": "9e6003ae54472933479700a537bb4be5c068d210",
         "type": "github"
       },
       "original": {
