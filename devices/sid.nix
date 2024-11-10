@@ -3,6 +3,7 @@
 
 let
   external = {
+    home = "AOC Q27B3MA 17ZP7HA000040";
     work = "ASUSTek COMPUTER INC PA278QV S8LMQS000351";
   };
 in
@@ -22,17 +23,24 @@ in
           pos = "1611 0";
           scale = "1.0";
         };
+
+        output.${external.home} = {
+          mode = "2560x1440@59.951Hz";
+          pos = "1611 0";
+          scale = "1.0";
+        };
       };
 
       programs.waybar.settings.main = {
         # Additional outputs to put bars on to work around
         # https://github.com/Alexays/Waybar/issues/2061
-        output = [ external.work ];
+        output = [ external.work external.home ];
       };
 
       programs.wpaperd.settings = {
         # Treat my main external monitor as a primary monitor:
         ${external.work}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
+        ${external.home}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
       };
     };
   };
