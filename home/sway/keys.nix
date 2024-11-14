@@ -152,6 +152,7 @@ in
         "${modifier}+Return" = "exec eterm";
         "${modifier}+space" = "exec rofi-launcher.sh";
         Print = "exec screenshot";
+        XF86Launch5 = "exec kdeconnect-cli -n Chet --send-clipboard";
 
         # Gromit-MPX:
         F4 = "exec ${gromit-toggle}";
