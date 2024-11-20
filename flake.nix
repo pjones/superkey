@@ -149,6 +149,7 @@
         qemu-sway = import test/qemu-sway.nix;
 
         # Per-host configuration:
+        falken = import devices/sid.nix;
         sid = import devices/sid.nix;
       };
 
