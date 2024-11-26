@@ -2,6 +2,7 @@
 
 let
   cfg = config.superkey.sway;
+  sendClipboardCommand = "exec kdeconnect-cli -n Chet --send-clipboard";
 
   # Some default keys:
   modifier = "Mod4";
@@ -152,7 +153,8 @@ in
         "${modifier}+Return" = "exec eterm";
         "${modifier}+space" = "exec rofi-launcher.sh";
         Print = "exec screenshot";
-        XF86Launch5 = "exec kdeconnect-cli -n Chet --send-clipboard";
+        XF86Launch5 = sendClipboardCommand;
+        XF86AudioMedia = sendClipboardCommand;
 
         # Gromit-MPX:
         F4 = "exec ${gromit-toggle}";
