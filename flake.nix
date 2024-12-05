@@ -13,7 +13,7 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    desktop-scripts.url = "github:pjones/desktop-scripts";
+    desktop-scripts.url = "github:pjones/desktop-scripts/nixos-24.11";
     desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
 
     rofirc.url = "github:pjones/rofirc/wayland";

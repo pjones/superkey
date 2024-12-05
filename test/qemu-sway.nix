@@ -11,7 +11,7 @@
       SWAYSOCK = "/tmp/sway-ipc.sock";
     };
 
-    hardware.opengl.enable = true;
+    hardware.graphics.enable = true;
     virtualisation.qemu.options = [
       "-vga none"
       "-device virtio-gpu-pci"
