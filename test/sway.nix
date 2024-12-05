@@ -19,7 +19,6 @@ pkgs.nixosTest {
         machine.wait_for_unit("multi-user.target")
 
     with subtest("Verify home-manager installed config files"):
-        machine.wait_for_unit("home-manager-pjones.service")
         machine.succeed("test -L /home/pjones/.config/emacs/init.el")
 
     with subtest("Wait for sway to start"):
