@@ -2,14 +2,14 @@
   description = "Peter's Wayland Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     waybar.url = "github:Alexays/Waybar";
 
-    emacsrc.url = "github:pjones/emacsrc/nixos-24.05";
+    emacsrc.url = "github:pjones/emacsrc/nixos-24.11";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
