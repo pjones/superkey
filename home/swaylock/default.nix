@@ -43,6 +43,30 @@ let
       exec swaylock "''${args[@]}"
     '';
   };
+
+  # Script that is run by swayidle when it's time to blank the screen.
+  onIdleCommand = pkgs.writeShellApplication {
+    name = "on-sway-idle";
+    runtimeInputs = [
+      config.wayland.windowManager.sway.package
+    ];
+    text = ''
+      ${cfg.stopAllInhibitorsCmd} || :
+      swaymsg 'output * power off'
+    '';
+  };
+
+  # Script that is run by swayidle when it's time to wake the screen.
+  onNotIdleCommand = pkgs.writeShellApplication {
+    name = "on-sway-not-idle";
+    runtimeInputs = [
+      config.wayland.windowManager.sway.package
+    ];
+    text = ''
+      swaymsg 'output * power on'
+      ${cfg.startAllInhibitorsCmd} || :
+    '';
+  };
 in
 {
   options.superkey.swaylock = {
@@ -78,6 +102,22 @@ in
       default = "${pkgs.systemd}/bin/loginctl lock-session";
       description = ''
         A shell command that will lock the current session.
+      '';
+    };
+
+    stopAllInhibitorsCmd = lib.mkOption {
+      type = lib.types.str;
+      default = "echo 'No inhibitor stop script specified'";
+      description = ''
+        A shell command that will stop all idle inhibitors.
+      '';
+    };
+
+    startAllInhibitorsCmd = lib.mkOption {
+      type = lib.types.str;
+      default = "echo 'No inhibitor start script specified'";
+      description = ''
+        A shell command that will start all idle inhibitors.
       '';
     };
   };
@@ -147,8 +187,8 @@ in
         { timeout = secureTimeout; command = desktop-pre-suspend; }
         {
           timeout = blankTimeout;
-          command = "${swaymsg} 'output * power off'";
-          resumeCommand = "${swaymsg} 'output * power on'";
+          command = "${onIdleCommand}/bin/on-sway-idle";
+          resumeCommand = "${onNotIdleCommand}/bin/on-sway-not-idle";
         }
       ];
     };

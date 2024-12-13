@@ -164,8 +164,15 @@
           superkey = {
             theme = self.packages.${pkgs.system}.theme-outrun;
 
-            swaylock.forceLockCmd =
-              "${self.packages.${pkgs.system}.force-lock}/bin/force-lock.sh";
+            swaylock =
+              let
+                lockBin = "${self.packages.${pkgs.system}.force-lock}/bin";
+              in
+              {
+                forceLockCmd = "${lockBin}/force-lock.sh";
+                stopAllInhibitorsCmd = "${lockBin}/stop-idle-inhibitors.sh";
+                startAllInhibitorsCmd = "${lockBin}/start-idle-inhibitors.sh";
+              };
           };
 
           programs.waybar.package =
