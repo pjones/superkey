@@ -9,7 +9,7 @@
 }
 
 window#waybar {
-  opacity: 0.8;
+  opacity: 0.9;
   font-size: 12pt;
 
   border-bottom: 0.15em solid @unfocused_borders;
@@ -17,8 +17,8 @@ window#waybar {
 
   background-image:
     linear-gradient(0deg,
-                    shade(alpha(@theme_bg_color, 0.8), 0.75),
-                    alpha(@theme_bg_color, 0.7));
+                    shade(alpha(@theme_bg_color, 0.9), 0.75),
+                    alpha(@theme_bg_color, 0.8));
 }
 
 window#waybar.hidpi {
