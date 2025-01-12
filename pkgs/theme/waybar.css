@@ -62,7 +62,7 @@ window#waybar.empty #window {
 }
 
 #idle_inhibitor {
-  padding-right: 0;
+  padding-right: 0.5em;
 }
 
 #tray {
@@ -80,6 +80,14 @@ window#waybar.empty #window {
   border-bottom: 0.15em solid @base09;
   font-weight: bold;
   /* text-transform: uppercase; */
+}
+
+#keyboard-state .locked {
+  opacity: 1.0;
+  color: @base01;
+  background-color: @base08;
+  border-bottom: 0.15em solid @base09;
+  font-weight: bold;
 }
 
 label {
