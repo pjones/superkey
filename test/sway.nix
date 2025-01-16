@@ -1,5 +1,15 @@
 { self, pkgs }:
-pkgs.nixosTest {
+
+let
+  withXwininfo = pkgs.appendOverlays [
+    (final: prev: {
+      xorg = prev.xorg // {
+        xwininfo = self.packages.${prev.system}.xwininfo-tests;
+      };
+    })
+  ];
+in
+withXwininfo.nixosTest {
   name = "superkey-sway-test";
 
   nodes = {
@@ -9,7 +19,10 @@ pkgs.nixosTest {
         ./autologin.nix
       ];
 
-      environment.systemPackages = [ pkgs.fastfetch ];
+      environment.systemPackages = [
+        pkgs.fastfetch
+        #self.packages.${pkgs.system}.xwininfo
+      ];
     };
   };
 
@@ -25,6 +38,8 @@ pkgs.nixosTest {
         machine.wait_for_file("/run/user/1000/wayland-1")
         machine.wait_for_file("/tmp/sway-ipc.sock")
         machine.wait_until_succeeds("pgrep waybar")
+        machine.wait_for_unit("emacs", "pjones")
+        machine.wait_for_file("/run/user/1000/emacs/server")
 
     with subtest("Run sway tests"):
         machine.copy_from_host(
@@ -34,7 +49,7 @@ pkgs.nixosTest {
         machine.succeed(
             "su - pjones -c 'swaymsg -t command exec bash /tmp/stage.sh'"
         )
-        machine.wait_for_file("/run/user/1000/emacs/1:Hacking")
+        machine.wait_for_window("fastfetch")
 
     with subtest("Test screen locking"):
         machine.succeed(

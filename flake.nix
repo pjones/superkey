@@ -89,6 +89,12 @@
           theme-outrun = pkgs.callPackage pkgs/theme {
             colors = pkgs/theme/outrun.json;
           };
+
+          xwininfo-tests = pkgs.writeShellApplication {
+            name = "xwininfo";
+            runtimeInputs = with pkgs; [ jq swayfx ];
+            text = builtins.readFile ./support/scripts/xwininfo-tests;
+          };
         });
 
       ##########################################################################
