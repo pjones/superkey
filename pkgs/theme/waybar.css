@@ -34,8 +34,7 @@ window#waybar.hidpi {
 #battery,
 #keyboard-state,
 #tray,
-#idle_inhibitor,
-#custom-audio_idle_inhibitor,
+#custom-notification,
 button {
   padding: 0 0.5em;
 }
@@ -61,7 +60,7 @@ window#waybar.empty #window {
   border-bottom: 0.15em solid @base03;
 }
 
-#idle_inhibitor {
+#custom-notification {
   padding-right: 0.5em;
 }
 

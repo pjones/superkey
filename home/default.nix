@@ -37,6 +37,7 @@
       libnotify # A library that sends desktop notifications to a notification daemon
       nwg-displays # Output management utility for Sway
       pjones.desktop-scripts # Scripts for Xorg and Wayland.
+      pjones.presenter-mode # Toggle presenter mode.
       pjones.rofirc-wayland # Rofi launcher
       pulseaudio # Sound server (pactl for zoom)
       wayland-utils # Wayland utilities (wayland-info)

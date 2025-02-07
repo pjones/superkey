@@ -113,6 +113,7 @@ in
       keybindings = windows // {
         # Windows:
         "${modifier}+c" = "fullscreen toggle";
+        "${modifier}+i" = "exec toggle-presenter-mode";
         "${modifier}+o" = "exec sway-easyfocus";
         "${modifier}+semicolon" = "exec ${scratchpad-toggle}";
         "${modifier}+Shift+o" = "exec sway-easyfocus swap --focus; mode default";

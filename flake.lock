@@ -57,11 +57,11 @@
         "persid": "persid"
       },
       "locked": {
-        "lastModified": 1737025546,
-        "narHash": "sha256-gRUTZggUIoLPJIke0sRR2dMC10P4fgAZ4/HPZe1AwUo=",
+        "lastModified": 1738764843,
+        "narHash": "sha256-pDVrqx5wRa6oEpM+izQ00gEl9ht1MtDPqoSwr2meE3g=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "b739d408cd081a825d2293b963f804783ff38fd6",
+        "rev": "8aa2ae8ea9b5afda0991006b37876c3755fbe2a2",
         "type": "github"
       },
       "original": {

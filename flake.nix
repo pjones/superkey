@@ -58,6 +58,7 @@
 
           pjones = (prev.pjones or { }) // {
             desktop-scripts = self.inputs.desktop-scripts.packages.${prev.system}.desktop-scripts;
+            presenter-mode = self.packages.${prev.system}.presenter-mode;
             rofirc-wayland = self.inputs.rofirc.packages.${prev.system}.rofirc-wayland;
           };
 
@@ -81,6 +82,7 @@
         in {
           vm = self.nixosConfigurations.vm.config.system.build.vm;
           force-lock = pkgs.callPackage pkgs/force-lock { };
+          presenter-mode = pkgs.callPackage pkgs/presenter-mode { };
 
           theme-dracula = pkgs.callPackage pkgs/theme {
             colors = pkgs/theme/dracula.json;

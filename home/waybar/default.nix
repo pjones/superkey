@@ -51,7 +51,7 @@ in
           "backlight"
           "battery"
           "clock"
-          "idle_inhibitor"
+          "custom/notification"
           "tray"
         ];
 
@@ -151,12 +151,24 @@ in
           };
         };
 
-        idle_inhibitor = {
+        "custom/notification" = {
+          tooltip = false;
           format = "{icon}";
           format-icons = {
-            activated = "󰐩";
-            deactivated = "󰐨";
+            notification = "<span><sup></sup></span>";
+            none = "";
+            dnd-notification = "<span><sup></sup></span>";
+            dnd-none = "";
+            inhibited-notification = "<span><sup></sup></span>";
+            inhibited-none = "";
+            dnd-inhibited-notification = "<span><sup></sup></span>";
+            dnd-inhibited-none = "";
           };
+          return-type = "json";
+          exec = "swaync-client -swb";
+          on-click = "swaync-client -t -sw";
+          on-click-right = "toggle-presenter-mode";
+          escape = true;
         };
 
         wireplumber = {
