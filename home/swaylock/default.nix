@@ -170,7 +170,7 @@ in
         line-ver-color = color colors.base00 "FF";
         line-wrong-color = color colors.base00 "FF";
         ring-color = color colors.base00 "AA";
-        ring-clear-color = "00000000";
+        ring-clear-color = color colors.base0B "AA";
         ring-caps-lock-color = color colors.base08 "FF";
         ring-ver-color = color colors.base02 "AA";
         ring-wrong-color = color colors.base0E "AA";
