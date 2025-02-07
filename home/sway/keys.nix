@@ -95,6 +95,10 @@ let
   scratchpad-fetch =
     pkgs.writeShellScript "sway-scratchpad-fetch"
       (builtins.readFile ../../support/scripts/sway-scratchpad-fetch.sh);
+
+  sway-move-all-workspaces =
+    pkgs.writeShellScript "sway-move-all-workspaces"
+      (builtins.readFile ../../support/scripts/sway-move-all-workspaces.sh);
 in
 {
   config = lib.mkIf cfg.enable {
@@ -180,6 +184,7 @@ in
         "d" = "layout default; mode default";
         "f" = "floating toggle; mode default";
         "h" = "layout splith; mode default";
+        "m" = "exec ${sway-move-all-workspaces}; mode default";
         "n" = "split vertical; layout tabbed; mode default";
         "o" = "mode opacity";
         "s" = "mode swap";
