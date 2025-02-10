@@ -72,7 +72,9 @@ toggle_tablet_tool() {
     )
   fi
 
-  swaymsg --type command "input $tool_id map_to_output $other_monitor"
+  if [ -n "$tool_id" ] && [ -n "$other_monitor" ]; then
+    swaymsg --type command "input $tool_id map_to_output $other_monitor"
+  fi
 }
 
 ################################################################################
