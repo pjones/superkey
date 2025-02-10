@@ -237,10 +237,28 @@ in
       modes.jump = mkMarkMode (char: "[con_mark=\"${char}\"] focus");
 
       modes.resize = mkMode {
-        "${motion.left}" = "resize shrink width 10 px";
-        "${motion.down}" = "resize grow height 10 px";
-        "${motion.up}" = "resize shrink height 10 px";
-        "${motion.right}" = "resize grow width 10 px";
+        # Absolute height:
+        "0" = "resize set height 15 ppt; mode default";
+        "1" = "resize set height 33 ppt; mode default";
+        "2" = "resize set height 50 ppt; mode default";
+
+        # Absolute width:
+        "3" = "resize set width 33 ppt; mode default";
+        "4" = "resize set width 36 ppt; mode default";
+        "5" = "resize set width 50 ppt; mode default";
+        "6" = "resize set width 66 ppt; mode default";
+        "7" = "resize set width 70 ppt; mode default";
+        "8" = "resize set width 80 ppt; mode default";
+        "9" = "resize set width 90 ppt; mode default";
+
+        "${motion.down}" = "resize grow height 5 ppt";
+        "${motion.left}" = "resize shrink width 5 ppt";
+        "${motion.right}" = "resize grow width 5 ppt";
+        "${motion.up}" = "resize shrink height 5 ppt";
+        "Shift+${motion.down}" = "resize grow height 2 ppt";
+        "Shift+${motion.left}" = "resize shrink width 2 ppt";
+        "Shift+${motion.right}" = "resize grow width 2 ppt";
+        "Shift+${motion.up}" = "resize shrink height 2 ppt";
       };
 
       modes.swap =
