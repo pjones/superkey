@@ -4,6 +4,9 @@ set -eu
 set -o pipefail
 
 ################################################################################
+enable="enable"
+
+################################################################################
 _gsettings() {
   local command=$1
   shift
@@ -25,10 +28,10 @@ set_val() {
 
 ################################################################################
 toggle_dnd() {
-  local enabled=$1
+  local action=$1
   local options=()
 
-  if [ "$enabled" = "false" ]; then
+  if [ "$action" = "$enable" ]; then
     options+=("--dnd-on")
   else
     options+=("--dnd-off")
@@ -39,11 +42,11 @@ toggle_dnd() {
 
 ################################################################################
 toggle_inhibit() {
-  local enabled=$1
+  local action=$1
   local con_id=$2
   local state="none"
 
-  if [ "$enabled" = "false" ]; then
+  if [ "$action" = "$enable" ]; then
     state="open"
   fi
 
@@ -54,7 +57,7 @@ toggle_inhibit() {
 
 ################################################################################
 toggle_tablet_tool() {
-  local enabled=$1
+  local action=$1
   local tool_id
   local other_monitor="*"
 
@@ -64,7 +67,7 @@ toggle_tablet_tool() {
       head -1
   )
 
-  if [ "$enabled" = "false" ]; then
+  if [ "$action" = "$enable" ]; then
     other_monitor=$(
       swaymsg --type get_outputs |
         jq --raw-output '.[] | select(.active and .name != "eDP-1") | .name' |
@@ -79,12 +82,14 @@ toggle_tablet_tool() {
 
 ################################################################################
 main() {
-  local state=false
+  local action=$enable
   local con_id=0
 
-  state=$(get_val enabled)
+  if [ "$(get_val enabled)" != "false" ]; then
+    action=disable
+  fi
 
-  if [ "$state" = "false" ]; then
+  if [ "$action" = "enable" ]; then
     con_id=$(
       swaymsg --type get_tree |
         jq '.. | select(.type?) | select(.focused==true) | .id' || :
@@ -92,16 +97,16 @@ main() {
 
     set_val enabled true
     set_val con-id "$con_id"
-    toggle_dnd "$state"
-    toggle_inhibit "$state" "$con_id"
-    toggle_tablet_tool "$state"
+    toggle_dnd "$action"
+    toggle_inhibit "$action" "$con_id"
+    toggle_tablet_tool "$action"
   else
     con_id=$(get_val con-id)
     set_val enabled false
     set_val con-id 0
-    toggle_dnd "$state"
-    toggle_inhibit "$state" "$con_id"
-    toggle_tablet_tool "$state"
+    toggle_dnd "$action"
+    toggle_inhibit "$action" "$con_id"
+    toggle_tablet_tool "$action"
   fi
 }
 
