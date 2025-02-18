@@ -39,20 +39,42 @@
       pjones.desktop-scripts # Scripts for Xorg and Wayland.
       pjones.presenter-mode # Toggle presenter mode.
       pjones.rofirc-wayland # Rofi launcher
-      pulseaudio # Sound server (pactl for zoom)
       wayland-utils # Wayland utilities (wayland-info)
       wev # Wayland event viewer
       wl-clipboard # Command-line copy/paste utilities for Wayland
     ];
 
-    xdg.portal = {
-      enable = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-gtk ];
-      configPackages = [ config.wayland.windowManager.sway.package ];
-      config = {
-        sway.default = [ "wlr" "gtk" ];
-        common.default = [ "gtk" ];
+    xdg.portal =
+      let
+        default = [
+          "gtk"
+          "wlr"
+          "gnome"
+        ];
+      in
+      {
+        enable = true;
+
+        extraPortals = with pkgs; [
+          xdg-desktop-portal-gnome
+          xdg-desktop-portal-gtk
+          xdg-desktop-portal-wlr
+        ];
+
+        config.common = {
+          inherit default;
+        };
+
+        config.sway = {
+          inherit default;
+
+          # Overrides for Sway:
+          "org.freedesktop.impl.portal.Inhibit" = "none";
+
+          # Overrides for WLR:
+          "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+          "org.freedesktop.impl.portal.Screenshot" = "wlr";
+        };
       };
-    };
   };
 }
