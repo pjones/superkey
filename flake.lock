@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "corg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728370052,
+        "narHash": "sha256-BX78yKSOj4TOPoXkLdyhrjges42h0+Wb8PUYR4XANR4=",
+        "owner": "isamert",
+        "repo": "corg.el",
+        "rev": "16d2b80fb2ff4daf0ab9bf89e5c9f649431337fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "isamert",
+        "repo": "corg.el",
+        "type": "github"
+      }
+    },
     "desktop-scripts": {
       "inputs": {
         "nixpkgs": [
@@ -44,10 +60,12 @@
     },
     "emacsrc": {
       "inputs": {
+        "corg": "corg",
         "desktop-scripts": "desktop-scripts_2",
         "home-manager": [
           "home-manager"
         ],
+        "khalel": "khalel",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": [
           "nixpkgs"
@@ -57,11 +75,11 @@
         "persid": "persid"
       },
       "locked": {
-        "lastModified": 1738764843,
-        "narHash": "sha256-pDVrqx5wRa6oEpM+izQ00gEl9ht1MtDPqoSwr2meE3g=",
+        "lastModified": 1739876756,
+        "narHash": "sha256-xTNNxnTrSum7nUhejFBuwzLgRNhKpwJw7YS/IfKmei8=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "8aa2ae8ea9b5afda0991006b37876c3755fbe2a2",
+        "rev": "99199486e7819134b623251ac54ebc89eb1fff2f",
         "type": "github"
       },
       "original": {
@@ -106,6 +124,22 @@
         "ref": "release-24.11",
         "repo": "home-manager",
         "type": "github"
+      }
+    },
+    "khalel": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1716787658,
+        "narHash": "sha256-p70gZMxfd97S93nFJDiyahsLUnF2S6Q7PBkElKvg8AQ=",
+        "owner": "hperrey",
+        "repo": "khalel",
+        "rev": "14ef50352394cd1d62b80bc17ab14f4f801f47cd",
+        "type": "gitlab"
+      },
+      "original": {
+        "owner": "hperrey",
+        "repo": "khalel",
+        "type": "gitlab"
       }
     },
     "nextflow-mode": {

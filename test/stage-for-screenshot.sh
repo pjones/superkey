@@ -14,5 +14,6 @@ test "$(e -d -- --eval nil)" = "nil"
 # my `eterm' script can't open a window if the terminal window would
 # be the first one loaded by the daemon.
 e -c '/etc/issue'
-swaymsg -t command kill
 eterm -e fastfetch
+swaymsg -t command focus prev
+swaymsg -t command kill
