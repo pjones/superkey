@@ -1,7 +1,7 @@
 # Peter's Wayland Configuration
 
 <p align="center">
-  <img src="./support/screenshot.png"/>
+  <img src="./support/screenshot-dark.png"/>
 </p>
 
 ## Reproducible Configuration

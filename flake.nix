@@ -113,9 +113,7 @@
           screenshot =
             let
               script = pkgs.writeShellScript "screenshot" ''
-                cp --force \
-                  ${self.checks.${system}.sway}/screen.png \
-                  support/screenshot.png
+                cp --force ${self.checks.${system}.sway}/*.png support/
               '';
             in
             {
