@@ -13,12 +13,8 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    desktop-scripts.url = "github:pjones/desktop-scripts/nixos-24.11";
-    desktop-scripts.inputs.nixpkgs.follows = "nixpkgs";
-
     rofirc.url = "github:pjones/rofirc/wayland";
     rofirc.inputs.nixpkgs.follows = "nixpkgs";
-    rofirc.inputs.desktop-scripts.follows = "desktop-scripts";
 
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
@@ -57,9 +53,11 @@
           org-clock-dbus = self.inputs.org-clock-dbus.packages.${prev.system}.monitor;
 
           pjones = (prev.pjones or { }) // {
-            desktop-scripts = self.inputs.desktop-scripts.packages.${prev.system}.desktop-scripts;
+            avatar = self.packages.${prev.system}.pjones-avatar;
+            nerd-hyperlegible = self.packages.${prev.system}.nerd-hyperlegible;
             presenter-mode = self.packages.${prev.system}.presenter-mode;
             rofirc-wayland = self.inputs.rofirc.packages.${prev.system}.rofirc-wayland;
+            superkey-scripts = self.packages.${prev.system}.superkey-scripts;
           };
 
           sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: rec {
@@ -80,9 +78,11 @@
       packages = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
-          vm = self.nixosConfigurations.vm.config.system.build.vm;
           force-lock = pkgs.callPackage pkgs/force-lock { };
+          nerd-hyperlegible = pkgs.callPackage pkgs/nerd-hyperlegible.nix { };
+          pjones-avatar = pkgs.callPackage pkgs/pjones-avatar.nix { };
           presenter-mode = pkgs.callPackage pkgs/presenter-mode { };
+          superkey-scripts = pkgs.callPackage pkgs/scripts { };
 
           theme-dracula = pkgs.callPackage pkgs/theme {
             colors = pkgs/theme/dracula.json;
@@ -91,6 +91,8 @@
           theme-outrun = pkgs.callPackage pkgs/theme {
             colors = pkgs/theme/outrun.json;
           };
+
+          vm = self.nixosConfigurations.vm.config.system.build.vm;
 
           xwininfo-tests = pkgs.writeShellApplication {
             name = "xwininfo";
@@ -144,7 +146,6 @@
       nixosModules = {
         default = {
           imports = [
-            self.inputs.desktop-scripts.nixosModules.default
             ./nixos
           ];
         };
@@ -163,7 +164,6 @@
       homeManagerModules = {
         default = { pkgs, ... }: {
           imports = [
-            self.inputs.desktop-scripts.homeManagerModules.default
             ./home
           ];
 

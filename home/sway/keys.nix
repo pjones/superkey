@@ -301,7 +301,7 @@ in
       bindsym --locked XF86AudioPlay exec playerctl play-pause
       bindsym --locked XF86AudioPrev exec playerctl previous
       bindsym --locked XF86AudioRaiseVolume exec pamixer --increase 5
-      bindsym --locked XF86Launch6 exec desktop-paswitch
+      bindsym --locked XF86Launch6 exec superkey-paswitch.sh
 
       bindsym --release --no-repeat Cancel exec ${config.superkey.swaylock.forceLockCmd}
     '' + lib.concatStringsSep "\n" [ workspaces ];

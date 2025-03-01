@@ -34,7 +34,7 @@ main() {
   shift $((OPTIND - 1))
 
   local workspace
-  workspace=$(desktop-workspace -n | cut -d: -f1)
+  workspace=$(superkey-workspace.sh -n | cut -d: -f1)
   swaymsg -t command "[con_mark=\"SL$workspace\"] scratchpad show"
 }
 

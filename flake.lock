@@ -19,27 +19,6 @@
     "desktop-scripts": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733389298,
-        "narHash": "sha256-LiQkVrMWQy3cyQwvulEZ7ANhNFgh8HYA5KWHWHZWNJ8=",
-        "owner": "pjones",
-        "repo": "desktop-scripts",
-        "rev": "6e50acd41064fe648c2af2bd3f8863091ae8256a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pjones",
-        "ref": "nixos-24.11",
-        "repo": "desktop-scripts",
-        "type": "github"
-      }
-    },
-    "desktop-scripts_2": {
-      "inputs": {
-        "nixpkgs": [
           "emacsrc",
           "nixpkgs"
         ]
@@ -58,10 +37,31 @@
         "type": "github"
       }
     },
+    "desktop-scripts_2": {
+      "inputs": {
+        "nixpkgs": [
+          "rofirc",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1733389298,
+        "narHash": "sha256-LiQkVrMWQy3cyQwvulEZ7ANhNFgh8HYA5KWHWHZWNJ8=",
+        "owner": "pjones",
+        "repo": "desktop-scripts",
+        "rev": "6e50acd41064fe648c2af2bd3f8863091ae8256a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "desktop-scripts",
+        "type": "github"
+      }
+    },
     "emacsrc": {
       "inputs": {
         "corg": "corg",
-        "desktop-scripts": "desktop-scripts_2",
+        "desktop-scripts": "desktop-scripts",
         "home-manager": [
           "home-manager"
         ],
@@ -282,9 +282,7 @@
     },
     "rofirc": {
       "inputs": {
-        "desktop-scripts": [
-          "desktop-scripts"
-        ],
+        "desktop-scripts": "desktop-scripts_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -306,7 +304,6 @@
     },
     "root": {
       "inputs": {
-        "desktop-scripts": "desktop-scripts",
         "emacsrc": "emacsrc",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",

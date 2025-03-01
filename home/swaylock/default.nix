@@ -14,15 +14,15 @@ let
   # Path to tools we need:
   swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
   loginctl = "${pkgs.systemd}/bin/loginctl";
-  desktop-pre-suspend = "${pkgs.pjones.desktop-scripts}/bin/desktop-pre-suspend";
+  pre-suspend-script = "${pkgs.pjones.superkey-scripts}/bin/superkey-pre-suspend.sh";
 
   # Script that locks the screen after finding a suitable background
   # image.
   lockCmd = pkgs.writeShellApplication {
     name = "lock";
     runtimeInputs = [
-      pkgs.pjones.desktop-scripts
       config.programs.swaylock.package
+      pkgs.pjones.superkey-scripts
     ];
     text = ''
       # Ensure swaylock *always* starts:
@@ -32,7 +32,7 @@ let
       args=("-f")
 
       if [ -d "${cfg.imagePath}" ]; then
-        image=$(desktop-random-file -i -d "${cfg.imagePath}" -D "$default_lock_image")
+        image=$(superkey-random-file.sh -i -d "${cfg.imagePath}" -D "$default_lock_image")
         args+=("--image" "$image")
       elif [ -e "${cfg.imagePath}" ]; then
         args+=("--image" "${cfg.imagePath}")
@@ -49,10 +49,11 @@ let
     name = "on-sway-idle";
     runtimeInputs = [
       config.wayland.windowManager.sway.package
+      pkgs.pjones.superkey-scripts
     ];
     text = ''
       ${cfg.stopAllInhibitorsCmd} || :
-      swaymsg 'output * power off'
+      superkey-output.sh -O
     '';
   };
 
@@ -61,9 +62,10 @@ let
     name = "on-sway-not-idle";
     runtimeInputs = [
       config.wayland.windowManager.sway.package
+      pkgs.pjones.superkey-scripts
     ];
     text = ''
-      swaymsg 'output * power on'
+      superkey-output.sh -o
       ${cfg.startAllInhibitorsCmd} || :
     '';
   };
@@ -184,7 +186,7 @@ in
 
       timeouts = [
         { timeout = lockTimeout; command = "${loginctl} lock-session"; }
-        { timeout = secureTimeout; command = desktop-pre-suspend; }
+        { timeout = secureTimeout; command = pre-suspend-script; }
         {
           timeout = blankTimeout;
           command = "${onIdleCommand}/bin/on-sway-idle";
