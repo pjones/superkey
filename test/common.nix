@@ -1,12 +1,12 @@
 { self }:
 
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     self.inputs.home-manager.nixosModules.home-manager
     self.nixosModules.default
-    ./qemu-sway.nix
+    ./qemu-wayland.nix
   ];
 
   config = {
@@ -18,6 +18,11 @@
 
     # Enable NixOS settings:
     superkey.enable = true;
+
+    # Make sure test scripts are installed:
+    environment.systemPackages = [
+      (pkgs.callPackage ./test-scripts.nix { })
+    ];
 
     # Enable Home Manager settings:
     home-manager = {

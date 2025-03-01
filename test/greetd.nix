@@ -15,9 +15,6 @@ pkgs.nixosTest {
         start_all()
         machine.wait_for_unit("multi-user.target")
 
-    with subtest("Verify home-manager installed config files"):
-        machine.succeed("test -L /home/pjones/.config/sway/config")
-
     with subtest("Console login"):
         machine.send_chars("pjones")
         machine.send_key("ret")
@@ -26,11 +23,10 @@ pkgs.nixosTest {
 
     with subtest("Wait for sway to start"):
         machine.wait_for_file("/run/user/1000/wayland-1")
-        machine.wait_for_file("/tmp/sway-ipc.sock")
+        machine.wait_for_file("/tmp/compositor-ipc.sock")
         machine.wait_until_succeeds("pgrep waybar")
 
-    with subtest("Exit sway"):
-        machine.execute("su - pjones -c 'swaymsg -t command exit'")
-        machine.wait_until_fails("pgrep -x sway")
+    with subtest("Exit compositor"):
+        machine.succeed("su - pjones -c check-kill-compositor.sh")
   '';
 }

@@ -20,16 +20,10 @@ let
 
         with subtest("Wait for sway to start"):
             machine.wait_for_file("/run/user/1000/wayland-1")
-            machine.wait_for_file("/tmp/sway-ipc.sock")
+            machine.wait_for_file("/tmp/compositor-ipc.sock")
             machine.wait_until_succeeds("pgrep waybar")
             machine.wait_for_unit("emacs", "pjones")
             machine.wait_for_file("/run/user/1000/emacs/server")
-
-        with subtest("Upload staging script"):
-            machine.copy_from_host(
-                "${./stage-for-screenshot.sh}",
-                "/tmp/stage.sh",
-            )
 
     def superkey_lock():
         with subtest("Test screen locking"):
@@ -46,7 +40,7 @@ let
     def superkey_screenshot(theme="dark"):
         with subtest(f"Screenshot: {theme}"):
             machine.succeed(
-                "su - pjones -c 'swaymsg -t command exec bash /tmp/stage.sh'"
+                "su - pjones -c 'swaymsg -t command exec stage-for-screenshot.sh'"
             )
             machine.wait_for_window("fastfetch")
             machine.sleep(5) # Need other windows to go away and settle
@@ -63,9 +57,7 @@ let
 
     def superkey_exit():
         with subtest("Exit sway"):
-            machine.execute("su - pjones -c 'swaymsg -t command exit'")
-            machine.wait_until_fails("pgrep -x sway")
-            machine.wait_for_file("/tmp/sway-exit-ok")
+            machine.execute("su - pjones -c check-kill-compositor.sh")
   '';
 in
 withXwininfo.nixosTest {

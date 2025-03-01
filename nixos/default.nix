@@ -1,21 +1,37 @@
 { config, lib, pkgs, ... }:
 
+let
+  cfg = config.superkey;
+in
 {
   options.superkey = {
     enable = lib.mkEnableOption "Enable Wayland configuration.";
+
+    compositor = lib.mkOption {
+      type = lib.types.enum [ "sway" ];
+      default = "sway";
+      description = "The name of the compositor to use";
+    };
   };
 
-  config = lib.mkIf config.superkey.enable {
+  config = lib.mkIf cfg.enable {
     services.greetd = {
       enable = true;
       restart = true;
 
-      settings.default_session = {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
-      };
+      settings.default_session =
+        let
+          cmd =
+            if cfg.compositor == "sway"
+            then "sway"
+            else "bash";
+        in
+        {
+          command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${cmd}";
+        };
     };
 
-    programs.sway = {
+    programs.sway = lib.mkIf (cfg.compositor == "sway") {
       enable = true;
       package = null;
       extraPackages = [ ];
@@ -72,6 +88,7 @@
     # Enable the Home Manager module too:
     home-manager.users.pjones = { ... }: {
       superkey.enable = true;
+      superkey.compositor = cfg.compositor;
     };
   };
 }

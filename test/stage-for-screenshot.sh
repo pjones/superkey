@@ -6,10 +6,15 @@ set -o pipefail
 # Send all output to the systemd journal:
 exec > >(systemd-cat -t stage-screen -p emerg) 2>&1
 
-swaymsg -t command rename workspace to 1:Hacking
-swaymsg -t command layout splitv
-swaymsg -t command gaps outer all set 100
-swaymsg -t command 'seat * hide_cursor 100'
+case "$XDG_CURRENT_DESKTOP" in
+sway)
+  swaymsg -t command "[all] kill" || :
+  swaymsg -t command rename workspace to 1:Hacking
+  swaymsg -t command layout splitv
+  swaymsg -t command gaps outer all set 100
+  swaymsg -t command 'seat * hide_cursor 100'
+  ;;
+esac
 
 # Verify that the `e' script can connect to the daemon:
 count=10
@@ -22,9 +27,6 @@ while [ "$count" -gt 0 ]; do
   count=$((count - 1))
   sleep 2
 done
-
-# Close all existing windows:
-swaymsg -t command "[all] kill" || :
 
 # If this script was already run then we need to delete the existing
 # buffers so everything works as expected:
@@ -47,8 +49,13 @@ e -- --eval '(setq inhibit-message t)'
 # be the first one loaded by the daemon.
 e -c '/etc/issue' && sleep 1
 eterm -e fastfetch && sleep 1
-swaymsg -t command focus prev
-swaymsg -t command kill
+
+case "$XDG_CURRENT_DESKTOP" in
+sway)
+  swaymsg -t command focus prev
+  swaymsg -t command kill
+  ;;
+esac
 
 # Move point back to the first character so the entire output from
 # fastfetch is visible:

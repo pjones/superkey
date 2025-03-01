@@ -18,6 +18,31 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    xdg.portal = {
+      enable = true;
+
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr
+      ];
+
+      config.sway = {
+        default = [
+          "gtk"
+          "wlr"
+          "gnome"
+        ];
+
+        # Overrides for Sway:
+        "org.freedesktop.impl.portal.Inhibit" = "none";
+
+        # Overrides for WLR:
+        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+        "org.freedesktop.impl.portal.Screenshot" = "wlr";
+      };
+    };
+
     wayland.windowManager.sway = {
       enable = true;
       checkConfig = false; # Currently broken

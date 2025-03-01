@@ -30,11 +30,7 @@ in
         position = "bottom";
         height = lib.mkDefault 24;
 
-        # Use swaymsg to control waybar:
-        ipc = true;
-        id = "bar-0";
-
-        modules-left = [
+        modules-left = lib.optionals (config.superkey.compositor == "sway") [
           "sway/mode"
           "sway/workspaces"
           "sway/window"
@@ -55,17 +51,17 @@ in
           "tray"
         ];
 
-        "sway/mode" = {
+        "sway/mode" = lib.optionalAttrs (config.superkey.compositor == "sway") {
           format = "<span>󰀦</span> Mode: {} <span> 󰀦</span>";
         };
 
-        "sway/workspaces" = {
+        "sway/workspaces" = lib.optionalAttrs (config.superkey.compositor == "sway") {
           format = "󰍹 {name}";
           all-outputs = true;
           current-only = true;
         };
 
-        "sway/window" = {
+        "sway/window" = lib.optionalAttrs (config.superkey.compositor == "sway") {
           format = " {title}";
           max-length = 50;
           icon = false;

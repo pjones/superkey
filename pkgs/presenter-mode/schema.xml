@@ -6,10 +6,5 @@
       <summary>Presenter Mode</summary>
       <description>Whether presenter mode is turned on.</description>
     </key>
-    <key name="con-id" type="i">
-      <default>0</default>
-      <summary>Sway container ID</summary>
-      <description>The container that is inhibiting idle.</description>
-    </key>
   </schema>
 </schemalist>

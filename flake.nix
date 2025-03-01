@@ -153,7 +153,7 @@
         # VM related:
         vm = import test/vm.nix { inherit self; };
         autologin = import test/autologin.nix;
-        qemu-sway = import test/qemu-sway.nix;
+        qemu-wayland = import test/qemu-wayland.nix;
 
         # Per-host configuration:
         falken = import devices/sid.nix;

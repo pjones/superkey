@@ -43,69 +43,45 @@ toggle_dnd() {
 ################################################################################
 toggle_inhibit() {
   local action=$1
-  local con_id=$2
-  local state="none"
 
   if [ "$action" = "$enable" ]; then
-    state="open"
-  fi
-
-  if [ -n "$con_id" ] && [ "$con_id" != 0 ]; then
-    swaymsg --type command "[con_id=$con_id] inhibit_idle $state"
+    systemctl --user start wayland-inhibit.service
+  else
+    systemctl --user stop wayland-inhibit.service
   fi
 }
 
 ################################################################################
 toggle_tablet_tool() {
   local action=$1
-  local tool_id
-  local other_monitor="*"
-
-  tool_id=$(
-    swaymsg --type get_inputs |
-      jq --raw-output '.[] | select(.type=="tablet_tool") | .identifier' |
-      head -1
-  )
+  local options=()
 
   if [ "$action" = "$enable" ]; then
-    other_monitor=$(
-      swaymsg --type get_outputs |
-        jq --raw-output '.[] | select(.active and .name != "eDP-1") | .name' |
-        head -1
-    )
+    options+=("-s") # Secondary monitor.
+  else
+    options+=("-p") # Primary monitor.
   fi
 
-  if [ -n "$tool_id" ] && [ -n "$other_monitor" ]; then
-    swaymsg --type command "input $tool_id map_to_output $other_monitor"
-  fi
+  superkey-tablet.sh "${options[@]}"
 }
 
 ################################################################################
 main() {
   local action=$enable
-  local con_id=0
 
   if [ "$(get_val enabled)" != "false" ]; then
     action=disable
   fi
 
   if [ "$action" = "enable" ]; then
-    con_id=$(
-      swaymsg --type get_tree |
-        jq '.. | select(.type?) | select(.focused==true) | .id' || :
-    )
-
     set_val enabled true
-    set_val con-id "$con_id"
     toggle_dnd "$action"
-    toggle_inhibit "$action" "$con_id"
+    toggle_inhibit "$action"
     toggle_tablet_tool "$action"
   else
-    con_id=$(get_val con-id)
     set_val enabled false
-    set_val con-id 0
     toggle_dnd "$action"
-    toggle_inhibit "$action" "$con_id"
+    toggle_inhibit "$action"
     toggle_tablet_tool "$action"
   fi
 }

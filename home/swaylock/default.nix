@@ -12,7 +12,6 @@ let
   color = str: alpha: builtins.substring 1 (builtins.stringLength str - 1) str + alpha;
 
   # Path to tools we need:
-  swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
   loginctl = "${pkgs.systemd}/bin/loginctl";
   pre-suspend-script = "${pkgs.pjones.superkey-scripts}/bin/superkey-pre-suspend.sh";
 
@@ -46,7 +45,7 @@ let
 
   # Script that is run by swayidle when it's time to blank the screen.
   onIdleCommand = pkgs.writeShellApplication {
-    name = "on-sway-idle";
+    name = "on-superkey-idle";
     runtimeInputs = [
       config.wayland.windowManager.sway.package
       pkgs.pjones.superkey-scripts
@@ -59,7 +58,7 @@ let
 
   # Script that is run by swayidle when it's time to wake the screen.
   onNotIdleCommand = pkgs.writeShellApplication {
-    name = "on-sway-not-idle";
+    name = "on-superkey-not-idle";
     runtimeInputs = [
       config.wayland.windowManager.sway.package
       pkgs.pjones.superkey-scripts
@@ -189,8 +188,8 @@ in
         { timeout = secureTimeout; command = pre-suspend-script; }
         {
           timeout = blankTimeout;
-          command = "${onIdleCommand}/bin/on-sway-idle";
-          resumeCommand = "${onNotIdleCommand}/bin/on-sway-not-idle";
+          command = "${onIdleCommand}/bin/on-superkey-idle";
+          resumeCommand = "${onNotIdleCommand}/bin/on-superkey-not-idle";
         }
       ];
     };

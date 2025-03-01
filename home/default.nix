@@ -3,6 +3,7 @@
 {
   imports = [
     ./clipboard
+    ./inhibit
     ./screenshot
     ./sway
     ./swayfx
@@ -15,6 +16,12 @@
 
   options.superkey = {
     enable = lib.mkEnableOption "Enable Wayland configuration.";
+
+    compositor = lib.mkOption {
+      type = lib.types.enum [ "sway" ];
+      default = "sway";
+      description = "The name of the compositor to use";
+    };
 
     theme = lib.mkOption {
       type = lib.types.package;
@@ -85,38 +92,5 @@
 
     # For apps that want a user picture like GDM:
     home.file.".face".source = "${pkgs.pjones.avatar}/share/faces/pjones.jpg";
-
-    xdg.portal =
-      let
-        default = [
-          "gtk"
-          "wlr"
-          "gnome"
-        ];
-      in
-      {
-        enable = true;
-
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-gnome
-          xdg-desktop-portal-gtk
-          xdg-desktop-portal-wlr
-        ];
-
-        config.common = {
-          inherit default;
-        };
-
-        config.sway = {
-          inherit default;
-
-          # Overrides for Sway:
-          "org.freedesktop.impl.portal.Inhibit" = "none";
-
-          # Overrides for WLR:
-          "org.freedesktop.impl.portal.ScreenCast" = "wlr";
-          "org.freedesktop.impl.portal.Screenshot" = "wlr";
-        };
-      };
   };
 }

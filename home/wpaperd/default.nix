@@ -11,12 +11,16 @@ let
 
   setDefaultImage = pkgs.writeShellApplication {
     name = "set-default-wallpaper";
-    runtimeInputs = [ pkgs.swaybg ];
-    text = ''
-      if [ ! -d "${cfg.wpaperd.primaryWallpaperDirectory}" ]; then
-        exec swaybg --output "${cfg.primaryOutput}" --image ${defaultImage} --mode fill
-      fi
-    '';
+
+    runtimeInputs =
+      lib.optional (config.superkey.compositor == "sway") pkgs.swaybg;
+
+    text =
+      lib.optionalString (config.superkey.compositor == "sway") ''
+        if [ ! -d "${cfg.wpaperd.primaryWallpaperDirectory}" ]; then
+          exec swaybg --output "${cfg.primaryOutput}" --image ${defaultImage} --mode fill
+        fi
+      '';
   };
 in
 {
@@ -73,8 +77,10 @@ in
       };
 
       Service = {
-        ExecStartPre = toString (pkgs.writeShellScript "kill-swaybg" ''
-          ${pkgs.procps}/bin/pkill -u "$USER" swaybg || true
+        ExecStartPre = toString (pkgs.writeShellScript "kill-default-bg" ''
+          ${lib.optionalString (config.superkey.compositor == "sway") ''
+            ${pkgs.procps}/bin/pkill -u "$USER" swaybg || true
+          ''}
         '');
         ExecStart = "${config.programs.wpaperd.package}/bin/wpaperd";
         Restart = "on-failure";
