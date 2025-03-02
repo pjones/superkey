@@ -8,7 +8,7 @@ in
     enable = lib.mkEnableOption "Enable Wayland configuration.";
 
     compositor = lib.mkOption {
-      type = lib.types.enum [ "sway" ];
+      type = lib.types.enum [ "niri" "sway" ];
       default = "sway";
       description = "The name of the compositor to use";
     };
@@ -24,6 +24,8 @@ in
           cmd =
             if cfg.compositor == "sway"
             then "sway"
+            else if cfg.compositor == "niri"
+            then "niri-session"
             else "bash";
         in
         {
@@ -31,14 +33,27 @@ in
         };
     };
 
+    # NixOS requires special configuration for Wayland that is done in
+    # one of the compositor modules.  We set the `package` option to
+    # `null` so that the compositor isn't installed in the system
+    # path.
     programs.sway = lib.mkIf (cfg.compositor == "sway") {
       enable = true;
       package = null;
       extraPackages = [ ];
     };
 
+    xdg.portal = lib.mkIf (cfg.compositor != "sway") {
+      enable = lib.mkDefault true;
+      configPackages = [ pkgs.niri ];
+      extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+    };
+
     # Needed so swayidle can start when systemd locks/sleeps.
     services.systemd-lock-handler.enable = true;
+
+    # https://github.com/NixOS/nixpkgs/issues/158025
+    security.pam.services.swaylock = { };
 
     # Sound:
     services.pipewire.enable = true;
@@ -88,7 +103,7 @@ in
     # Enable the Home Manager module too:
     home-manager.users.pjones = { ... }: {
       superkey.enable = true;
-      superkey.compositor = cfg.compositor;
+      superkey.compositor = lib.mkDefault cfg.compositor;
     };
   };
 }

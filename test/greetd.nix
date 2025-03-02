@@ -21,9 +21,8 @@ pkgs.nixosTest {
         machine.send_chars("password")
         machine.send_key("ret")
 
-    with subtest("Wait for sway to start"):
+    with subtest("Wait for compositor to start"):
         machine.wait_for_file("/run/user/1000/wayland-1")
-        machine.wait_for_file("/tmp/compositor-ipc.sock")
         machine.wait_until_succeeds("pgrep waybar")
 
     with subtest("Exit compositor"):

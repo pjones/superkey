@@ -9,12 +9,12 @@ in
   options.superkey.swayfx = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.superkey.enable;
+      default = config.superkey.sway.enable;
       description = "Enable SwayFX and related configuration";
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (config.superkey.enable && cfg.enable) {
     wayland.windowManager.sway = {
       package = pkgs.swayfx.override {
         isNixOS = true;

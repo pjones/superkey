@@ -24,72 +24,113 @@ EOF
 }
 
 ################################################################################
-sway_current_workspace() {
-  swaymsg --raw --type get_workspaces |
-    jq --raw-output '.[] | select(.focused) | .name' |
-    head -n1
+with_sway() {
+  local command=$1
+
+  case "$command" in
+  current)
+    swaymsg --raw --type get_workspaces |
+      jq --raw-output '.[] | select(.focused) | .name' |
+      head -n1
+    ;;
+
+  all)
+    swaymsg --raw --type get_workspaces |
+      jq --raw-output '.[] | .name'
+    ;;
+
+  switch)
+    swaymsg --type command workspace number "$option_switch_to"
+    ;;
+  esac
 }
 
 ################################################################################
-sway_all_workspaces() {
-  swaymsg --raw --type get_workspaces |
-    jq --raw-output '.[] | .name'
+with_niri() {
+  local command=$1
+
+  case "$command" in
+  current)
+    niri msg --json workspaces |
+      jq --raw-output '
+        .[] |
+        select(.is_focused) |
+        if .name
+        then .name
+        else .id
+        end'
+    ;;
+
+  all)
+    niri msg --json workspaces |
+      jq --raw-output '.[] | if .name then .name else .id end'
+    ;;
+
+  switch)
+    niri msg action focus-workspace "$option_switch_to"
+    ;;
+  esac
 }
 
 ################################################################################
-sway_switch_workspace() {
-  swaymsg --type command workspace number "$option_switch_to"
-}
+with_wmctrl() {
+  local command=$1
+  local desktop_id
 
-################################################################################
-wmctrl_current_workspace() {
-  wmctrl -d |
-    awk '$2 == "*" {
+  case "$command" in
+  current)
+    wmctrl -d |
+      awk '$2 == "*" {
       for (i=($8 == "N/A" ? 9 : 10); i<=NF; i++) {
         printf("%s%s", $i, i<NF ? OFS : "\n")
       }
     }'
-}
+    ;;
 
-################################################################################
-wmctrl_all_workspaces() {
-  wmctrl -d |
-    awk '{
+  all)
+    wmctrl -d |
+      awk '{
       for (i=($8 == "N/A" ? 9 : 10); i<=NF; i++) {
         printf("%s:%d%s", $i, $1 + 1, i<NF ? OFS : "\n")
       }
     }'
-}
+    ;;
 
-################################################################################
-wmctrl_switch_workspace() {
-  desktop_id=$(echo "$option_switch_to" | cut -d: -f2)
-  [ -z "$desktop_id" ] && exit
-  wmctrl -s "$((desktop_id - 1))"
+  switch)
+    desktop_id=$(echo "$option_switch_to" | cut -d: -f2)
+    [ -z "$desktop_id" ] && exit
+    wmctrl -s "$((desktop_id - 1))"
+    ;;
+  esac
 }
 
 ################################################################################
 dispatch() {
-  local suffix=$1
+  local command=$1
 
-  if [ -n "${SWAYSOCK:-}" ]; then
-    eval "sway_$suffix"
-  elif [ -n "${DISPLAY:-}" ] && type wmctrl &>/dev/null; then
-    eval "wmctrl_$suffix"
-  else
-    echo >&2 "ERROR: I don't know this compositor or window manager."
-    exit 1
-  fi
+  case "${XDG_CURRENT_DESKTOP:-}" in
+  niri)
+    with_niri "$command"
+    ;;
+
+  sway)
+    with_sway "$command"
+    ;;
+
+  *)
+    with_wmctrl "$command"
+    ;;
+  esac
 }
 
 ################################################################################
 main() {
   if [ "$option_current_name" -eq 1 ]; then
-    dispatch "current_workspace"
+    dispatch "current"
   elif [ -n "$option_switch_to" ]; then
-    dispatch "switch_workspace"
+    dispatch "switch"
   else
-    dispatch "all_workspaces"
+    dispatch "all"
   fi
 }
 

@@ -1,9 +1,13 @@
 { config, lib, pkgs, ... }:
 
+let
+  cfg = config.superkey;
+in
 {
   imports = [
     ./clipboard
     ./inhibit
+    ./niri
     ./screenshot
     ./sway
     ./swayfx
@@ -18,7 +22,7 @@
     enable = lib.mkEnableOption "Enable Wayland configuration.";
 
     compositor = lib.mkOption {
-      type = lib.types.enum [ "sway" ];
+      type = lib.types.enum [ "niri" "sway" ];
       default = "sway";
       description = "The name of the compositor to use";
     };
@@ -35,9 +39,30 @@
         The name of the primary output (display), For example: eDP-1.
       '';
     };
+
+    commands = {
+      sendClipboard = lib.mkOption {
+        type = lib.types.str;
+        default = "kdeconnect-cli -n Chet --send-clipboard";
+        description = "Shell command to send the clipboard to another device";
+      };
+
+      extraSessionCommands = lib.mkOption {
+        type = lib.types.lines;
+        default = ''
+          export _JAVA_AWT_WM_NONREPARENTING=1
+          export QT_QPA_PLATFORM=wayland
+          export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+          export SDL_VIDEODRIVER=wayland
+        '';
+        description = ''
+          Shell commands executed just before the compositor is started.
+        '';
+      };
+    };
   };
 
-  config = lib.mkIf config.superkey.enable {
+  config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       helvum # A GTK patchbay for pipewire
       jq # A lightweight and flexible command-line JSON processor

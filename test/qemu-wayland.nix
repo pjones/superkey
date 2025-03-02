@@ -1,27 +1,20 @@
 { config, lib, ... }:
 
 {
-  config = {
-    environment.sessionVariables = {
-      # WLR_NO_HARDWARE_CURSORS = "1";
-      # WLR_RENDERER_ALLOW_SOFTWARE = "1";
-      WLR_RENDERER = "pixman";
-    } // lib.optionalAttrs (config.superkey.compositor == "sway") {
-      # Fixed location for tests:
-      SWAYSOCK = "/tmp/compositor-ipc.sock";
+  config = lib.mkMerge [
+    {
+      hardware.graphics.enable = true;
+    }
 
-      # May not be set in tests:
-      XDG_CURRENT_DESKTOP = "sway";
-    };
+    (lib.mkIf (config.superkey.compositor == "sway") {
+      environment.sessionVariables = {
+        WLR_RENDERER = "pixman";
+      };
 
-    hardware.graphics.enable = true;
-    virtualisation.qemu.options = [
-      "-vga none"
-      "-device virtio-gpu-pci"
-    ];
-
-    home-manager.users.pjones = { ... }: {
-      superkey.primaryOutput = "Virtual-1";
-    };
-  };
+      virtualisation.qemu.options = [
+        "-vga none"
+        "-device virtio-gpu-pci"
+      ];
+    })
+  ];
 }

@@ -12,12 +12,12 @@ in
   options.superkey.sway = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.superkey.enable;
+      default = config.superkey.compositor == "sway";
       description = "Enable Sway and related configuration.";
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (config.superkey.enable && cfg.enable) {
     xdg.portal = {
       enable = true;
 
@@ -126,10 +126,7 @@ in
 
       extraSessionCommands = ''
         . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        export SDL_VIDEODRIVER=wayland
+        ${config.superkey.commands.extraSessionCommands}
       '';
     };
   };

@@ -34,6 +34,9 @@ in
           "sway/mode"
           "sway/workspaces"
           "sway/window"
+        ] ++ lib.optionals (config.superkey.compositor == "niri") [
+          "niri/workspaces"
+          "niri/window"
         ];
 
         modules-center = [
@@ -68,6 +71,21 @@ in
           rewrite = {
             "(.*) - Mozilla Firefox" = "$1";
             "Emacs:\s+(.*)" = "$1";
+          };
+        };
+
+        "niri/workspaces" = lib.optionalAttrs (config.superkey.compositor == "niri") {
+          all-outputs = true;
+          current-only = true;
+          format = "󰍹 {value}";
+        };
+
+        "niri/window" = lib.optionalAttrs (config.superkey.compositor == "niri") {
+          format = "{title}";
+          icon = true;
+          icon-size = config.programs.waybar.settings.main.height - 4;
+          "rewrite" = {
+            "(.*) - Mozilla Firefox" = "$1";
           };
         };
 

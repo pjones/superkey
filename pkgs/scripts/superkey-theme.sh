@@ -27,5 +27,10 @@ light)
 esac
 
 ################################################################################
+if [ "${XDG_CURRENT_DESKTOP:-}" = "niri" ]; then
+  # Ask Niri to animate the theme transition:
+  niri msg action do-screen-transition
+fi
+
 gsettings set org.gnome.desktop.interface color-scheme "$color_scheme"
 gsettings set org.gnome.desktop.interface gtk-theme "$gtk_theme"

@@ -2,7 +2,6 @@
 
 let
   cfg = config.superkey.sway;
-  sendClipboardCommand = "exec kdeconnect-cli -n Chet --send-clipboard";
 
   # Some default keys:
   modifier = "Mod4";
@@ -136,13 +135,7 @@ in
         "${modifier}+comma" = "focus output left";
 
         # Swap two monitors:
-        "${modifier}+d" = builtins.concatStringsSep "; " [
-          "focus output right"
-          "move workspace to output left"
-          "workspace back_and_forth"
-          "move workspace to output right"
-          "focus output right"
-        ];
+        "${modifier}+d" = "exec superkey-swap-monitor.sh";
 
         # Activate modes:
         "${modifier}+f" = "mode focus";
@@ -158,8 +151,8 @@ in
         "${modifier}+Return" = "exec eterm";
         "${modifier}+space" = "exec rofi-launcher.sh";
         Print = "exec screenshot";
-        XF86Launch5 = sendClipboardCommand;
-        XF86AudioMedia = sendClipboardCommand;
+        XF86Launch5 = "exec ${config.superkey.commands.sendClipboard}";
+        XF86AudioMedia = "exec ${config.superkey.commands.sendClipboard}";
 
         # Gromit-MPX:
         F4 = "exec ${gromit-toggle}";

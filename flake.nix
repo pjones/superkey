@@ -28,7 +28,7 @@
   outputs = { self, nixpkgs, home-manager, ... }:
     let
       # What state version to use for the VM:
-      stateVersion = "24.05";
+      stateVersion = "24.11";
 
       # List of supported systems:
       supportedSystems = [
@@ -92,7 +92,8 @@
             colors = pkgs/theme/outrun.json;
           };
 
-          vm = self.nixosConfigurations.vm.config.system.build.vm;
+          niri-vm = self.nixosConfigurations.niri-vm.config.system.build.vm;
+          sway-vm = self.nixosConfigurations.sway-vm.config.system.build.vm;
 
           xwininfo-tests = pkgs.writeShellApplication {
             name = "xwininfo";
@@ -106,9 +107,18 @@
         let pkgs = nixpkgsFor.${system};
         in {
           # Launch a VM running Peter's configuration:
-          default = {
+          default = self.apps.${system}.sway;
+
+          # Run Niri in a VM:
+          niri = {
             type = "app";
-            program = "${self.packages.${system}.vm}/bin/run-superkey-vm";
+            program = "${self.packages.${system}.niri-vm}/bin/run-superkey-vm";
+          };
+
+          # Run Sway in a VM:
+          sway = {
+            type = "app";
+            program = "${self.packages.${system}.sway-vm}/bin/run-superkey-vm";
           };
 
           # Run a VM then take a screenshot and store it locally:
@@ -131,16 +141,21 @@
         });
 
       ##########################################################################
-      nixosConfigurations = {
-        vm = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            { nixpkgs.pkgs = nixpkgsFor.x86_64-linux; }
-            { system.stateVersion = stateVersion; }
-            self.nixosModules.vm
-          ];
+      nixosConfigurations =
+        let
+          vmBase = module: nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+              { nixpkgs.pkgs = nixpkgsFor.x86_64-linux; }
+              { system.stateVersion = stateVersion; }
+              self.nixosModules.${module}
+            ];
+          };
+        in
+        {
+          niri-vm = vmBase "niri-vm";
+          sway-vm = vmBase "sway-vm";
         };
-      };
 
       ##########################################################################
       nixosModules = {
@@ -150,8 +165,31 @@
           ];
         };
 
-        # VM related:
-        vm = import test/vm.nix { inherit self; };
+        # A virtual machine running Niri:
+        niri-vm = {
+          imports = [
+            (import test/vm.nix { inherit self; })
+          ];
+
+          superkey.compositor = "niri";
+
+          virtualisation.qemu.options = [
+            "-spice port=0,disable-ticketing=on,image-compression=off,gl=on,rendernode=/dev/dri/by-path/pci-0000:c1:00.0-render,seamless-migration=on"
+            "-device virtio-vga-gl,id=video0,max_outputs=1"
+            "-display spice-app,gl=on"
+          ];
+        };
+
+        # A virtual machine running Sway:
+        sway-vm = {
+          imports = [
+            (import test/vm.nix { inherit self; })
+          ];
+
+          superkey.compositor = "sway";
+        };
+
+        # Helpful for other flakes:
         autologin = import test/autologin.nix;
         qemu-wayland = import test/qemu-wayland.nix;
 
@@ -197,6 +235,7 @@
       checks = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
+          niri = import test/niri.nix { inherit pkgs self; };
           sway = import test/sway.nix { inherit pkgs self; };
           greetd = import test/greetd.nix { inherit pkgs self; };
         });

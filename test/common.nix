@@ -12,8 +12,9 @@
   config = {
     users.users.pjones = {
       isNormalUser = true;
+      uid = 1000;
       password = "password";
-      extraGroups = [ "wheel" ];
+      extraGroups = [ "wheel" "video" "render" ];
     };
 
     # Enable NixOS settings:
@@ -39,6 +40,7 @@
         home.username = "pjones";
         home.homeDirectory = "/home/pjones";
         programs.pjones.emacsrc.enable = true;
+        superkey.primaryOutput = "Virtual-1";
       };
     };
   };
