@@ -26,29 +26,15 @@ in
         prefer-no-csd = { };
         screenshot-path = "${config.home.homeDirectory}/documents/pictures/screenshots/%Y/Screenshot_%Y%m%d_%H%M%S.png";
 
-        # FIXME: make this a global option.
         workspace =
-          let
-            names = [
-              "GTD"
-              "Social"
-              "Hacking"
-              "Media"
-              "Meetings"
-              "School"
-              "Work"
-              "Other"
-              "Spare"
-              "Web"
-            ];
-          in
-          map (name: { _args = [ name ]; }) names;
+          map (name: { _args = [ name ]; })
+            config.superkey.workspaceNames;
 
         cursor = {
           xcursor-theme = config.gtk.cursorTheme.name;
           xcursor-size = config.gtk.cursorTheme.size;
           hide-when-typing = { };
-          hide-after-inactive-ms = 1000;
+          hide-after-inactive-ms = 30000;
         };
 
         hotkey-overlay = {
@@ -142,7 +128,20 @@ in
             shell = cmd: {
               spawn = [ "sh" "-c" cmd ];
             };
+
+            workspaces =
+              lib.mergeAttrsList (lib.imap1
+                (index: name:
+                  let
+                    key = builtins.toString (lib.mod index 10);
+                  in
+                  {
+                    "Mod+${key}".focus-workspace = [ name ];
+                    "Mod+Shift+${key}".move-window-to-workspace = [ name ];
+                  })
+                config.superkey.workspaceNames);
           in
+          workspaces //
           {
             # Focus and move windows:
             "Mod+Ctrl+A".focus-column-first = { };
@@ -179,28 +178,6 @@ in
             "Mod+T".toggle-column-tabbed-display = { };
 
             # Workspaces:
-            "Mod+1".focus-workspace = [ 1 ];
-            "Mod+2".focus-workspace = [ 2 ];
-            "Mod+3".focus-workspace = [ 3 ];
-            "Mod+4".focus-workspace = [ 4 ];
-            "Mod+5".focus-workspace = [ 5 ];
-            "Mod+6".focus-workspace = [ 6 ];
-            "Mod+7".focus-workspace = [ 7 ];
-            "Mod+8".focus-workspace = [ 8 ];
-            "Mod+9".focus-workspace = [ 9 ];
-            "Mod+0".focus-workspace = [ 10 ];
-
-            "Mod+Shift+1".move-window-to-workspace = [ 1 ];
-            "Mod+Shift+2".move-window-to-workspace = [ 2 ];
-            "Mod+Shift+3".move-window-to-workspace = [ 3 ];
-            "Mod+Shift+4".move-window-to-workspace = [ 4 ];
-            "Mod+Shift+5".move-window-to-workspace = [ 5 ];
-            "Mod+Shift+6".move-window-to-workspace = [ 6 ];
-            "Mod+Shift+7".move-window-to-workspace = [ 7 ];
-            "Mod+Shift+8".move-window-to-workspace = [ 8 ];
-            "Mod+Shift+9".move-window-to-workspace = [ 9 ];
-            "Mod+Shift+0".move-window-to-workspace = [ 10 ];
-
             "Mod+Apostrophe".focus-workspace-previous = { };
             "Mod+Shift+comma".focus-workspace-up = { };
             "Mod+Shift+period".focus-workspace-down = { };

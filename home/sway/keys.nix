@@ -43,18 +43,7 @@ let
       '')
     (lib.zipListsWith (number: name: { inherit number name; })
       (lib.range 1 10)
-      [
-        "GTD"
-        "Social"
-        "Hacking"
-        "Media"
-        "Meetings"
-        "School"
-        "Work"
-        "Other"
-        "Spare"
-        "Web"
-      ]);
+      config.superkey.workspaceNames);
 
   # Ensure modes have an escape hatch:
   mkMode = bindings: bindings // {
