@@ -63,7 +63,7 @@ in
 
         layout = {
           gaps = 16;
-          center-focused-column = "on-overflow";
+          center-focused-column = "never";
 
           #preset-column-widths.proportion = [ 0.33333 0.5 0.66667 ];
           #preset-window-heights.proportion = [ 0.33333 0.5 0.66667 ];
@@ -90,10 +90,10 @@ in
           shadow.on = { };
 
           struts = {
-            left = 64;
-            right = 64;
-            top = 20;
-            bottom = 20;
+            left = 5;
+            right = 5;
+            top = 0;
+            bottom = 0;
           };
 
           # FIXME: a lot more to configure here:
@@ -161,17 +161,17 @@ in
 
             # Other window and column controls:
             "Mod+C".center-window = { };
-            "Mod+Comma".consume-window-into-column = { };
-            "Mod+Ctrl+H".set-column-width = "-10%";
-            "Mod+Ctrl+J".set-window-height = "-10%";
-            "Mod+Ctrl+K".set-window-height = "+10%";
-            "Mod+Ctrl+L".set-column-width = "+10%";
+            "Mod+Ctrl+H".set-column-width = "-5%";
+            "Mod+Ctrl+J".set-window-height = "-5%";
+            "Mod+Ctrl+K".set-window-height = "+5%";
+            "Mod+Ctrl+L".set-column-width = "+5%";
             "Mod+Equal".reset-window-height = { };
             "Mod+F".toggle-window-floating = { };
             "Mod+M".maximize-column = { };
-            "Mod+Period".expel-window-from-column = { };
             "Mod+R".switch-preset-column-width = { };
+            "Mod+Shift+Comma".consume-window-into-column = { };
             "Mod+Shift+M".fullscreen-window = { };
+            "Mod+Shift+Period".expel-window-from-column = { };
             "Mod+Shift+Q".close-window = { };
             "Mod+Shift+R".switch-preset-window-height = { };
             "Mod+Shift+T".switch-focus-between-floating-and-tiling = { };
@@ -179,15 +179,15 @@ in
 
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
-            "Mod+Shift+comma".focus-workspace-up = { };
-            "Mod+Shift+period".focus-workspace-down = { };
+            "Mod+Down".focus-workspace-down = { };
+            "Mod+Up".focus-workspace-up = { };
             "Mod+WheelScrollDown" = cooldown "focus-workspace-down";
             "Mod+WheelScrollUp" = cooldown "focus-workspace-up";
 
             # Monitors:
-            "Mod+U".focus-monitor-next = { };
-            "Mod+Y".focus-monitor-previous = { };
+            "Mod+Comma".focus-monitor-previous = { };
             "Mod+D".spawn = [ "superkey-swap-monitor.sh" ];
+            "Mod+Period".focus-monitor-next = { };
 
             # Applications and utilities:
             "Mod+E".spawn = [ "e" "-c" ];
@@ -197,7 +197,7 @@ in
             "Mod+Return".spawn = [ "eterm" ];
             "Mod+Shift+Slash".show-hotkey-overlay = { };
             "Mod+Space".spawn = [ "rofi-launcher.sh" ];
-            "Mod+Tab".spawn = [ "swaync-client -t" ];
+            "Mod+Tab".spawn = [ "swaync-client" "-t" ];
             Cancel = shell config.superkey.swaylock.forceLockCmd;
             Print.screenshot = { };
             XF86AudioMedia = shell config.superkey.commands.sendClipboard;
