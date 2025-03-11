@@ -91,9 +91,6 @@ in
 {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      brightnessctl # This program allows you read and control device brightness
-      pamixer # Pulseaudio command line mixer
-      playerctl # Command-line utility for controlling media players
       sway-easyfocus # A tool to help efficiently focus windows in Sway
       sway-overfocus # "Better" focus navigation for sway
     ];
