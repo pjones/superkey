@@ -59,13 +59,14 @@ in
       programs.waybar.settings.main = {
         # Additional outputs to put bars on to work around
         # https://github.com/Alexays/Waybar/issues/2061
-        output = [ monitors.work monitors.home ];
+        output = [ monitors.work monitors.home "DP-3" ];
       };
 
       programs.wpaperd.settings = {
         # Treat my main external monitor as a primary monitor:
         ${monitors.work}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
         ${monitors.home}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
+        "DP-3".path = config.superkey.wpaperd.primaryWallpaperDirectory;
       };
     };
   };
