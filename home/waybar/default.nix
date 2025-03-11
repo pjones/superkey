@@ -165,25 +165,29 @@ in
           };
         };
 
-        "custom/notification" = {
-          tooltip = false;
-          format = "{icon}";
-          format-icons = {
-            notification = "";
-            none = "";
-            dnd-notification = "";
-            dnd-none = "";
-            inhibited-notification = "";
-            inhibited-none = "";
-            dnd-inhibited-notification = "";
-            dnd-inhibited-none = "";
+        "custom/notification" =
+          let
+            client = "${pkgs.swaynotificationcenter}/bin/swaync-client";
+          in
+          {
+            tooltip = false;
+            format = "{icon}";
+            format-icons = {
+              notification = "";
+              none = "";
+              dnd-notification = "";
+              dnd-none = "";
+              inhibited-notification = "";
+              inhibited-none = "";
+              dnd-inhibited-notification = "";
+              dnd-inhibited-none = "";
+            };
+            return-type = "json";
+            exec = "${client} -swb";
+            on-click = "${client} -t -sw";
+            on-click-right = "toggle-presenter-mode";
+            escape = true;
           };
-          return-type = "json";
-          exec = "swaync-client -swb";
-          on-click = "swaync-client -t -sw";
-          on-click-right = "toggle-presenter-mode";
-          escape = true;
-        };
 
         wireplumber = {
           format = "{icon} {volume}%";
