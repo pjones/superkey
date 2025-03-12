@@ -89,7 +89,13 @@ in
 
           # FIXME: insert-hint
 
-          shadow.on = { };
+          shadow = {
+            on = { };
+            softness = 30;
+            spread = 5;
+            offset._props = { x = 0; y = 5; };
+            color = "#0007";
+          };
 
           struts = {
             left = 5;
@@ -113,6 +119,37 @@ in
 
           # match is-window-cast-target=true
           # https://github.com/YaLTeR/niri/discussions/1162
+
+          # Inactive windows:
+          # Not sure I like this:
+          {
+            match._props.is-focused = false;
+            opacity = 0.9;
+          }
+
+          # Apps that should float (using their title):
+          {
+            match._props.title = "OpenSSH Authentication Passphrase request";
+            open-floating = true;
+          }
+
+          # Apps that should float (using their app-id):
+          {
+            match._props.app-id = "udiskie";
+            open-floating = true;
+          }
+
+          # Apps that always start at 1/3 of the display size:
+          {
+            match._props.app-id = "emacs";
+            default-column-width.proportion = 0.33;
+          }
+
+          # Apps that can take up half of the screen:
+          {
+            match._props.app-id = "chromium|firefox|librewolf";
+            default-column-width.proportion = 0.5;
+          }
         ];
 
         binds =
