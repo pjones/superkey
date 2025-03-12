@@ -77,6 +77,18 @@ in
         '';
       };
     };
+
+    compositorPackage = lib.mkOption {
+      internal = true;
+      visible = false;
+
+      type = lib.types.package;
+      description = ''
+        Each compositor module should set this option so that systemd
+        services can ensure that their environments contain the IPC
+        communications tool.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {

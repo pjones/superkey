@@ -241,10 +241,18 @@ in
     systemd.user.targets.niri-session = {
       Unit = {
         Description = "A scrollable-tiling Wayland compositor";
-        BindsTo = [ "graphical-session.target" ];
+        BindsTo = [ "graphical-session.target" "tray.target" ];
         Wants = [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
         After = [ "graphical-session-pre.target" ];
         Before = [ "xdg-desktop-autostart.target" ];
+      };
+    };
+
+    # FIXME: Remove in release 25.05.
+    systemd.user.targets.tray = {
+      Unit = {
+        Description = "Home Manager System Tray";
+        Requires = [ "graphical-session-pre.target" ];
       };
     };
   };
