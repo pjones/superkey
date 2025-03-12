@@ -47,7 +47,7 @@ let
   onIdleCommand = pkgs.writeShellApplication {
     name = "on-superkey-idle";
     runtimeInputs = [
-      config.wayland.windowManager.sway.package
+      config.superkey.compositorPackage
       pkgs.pjones.superkey-scripts
     ];
     text = ''
@@ -60,7 +60,7 @@ let
   onNotIdleCommand = pkgs.writeShellApplication {
     name = "on-superkey-not-idle";
     runtimeInputs = [
-      config.wayland.windowManager.sway.package
+      config.superkey.compositorPackage
       pkgs.pjones.superkey-scripts
     ];
     text = ''

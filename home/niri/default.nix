@@ -18,6 +18,8 @@ in
   };
 
   config = lib.mkIf (config.superkey.enable && cfg.enable) {
+    superkey.compositorPackage = config.wayland.windowManager.niri.package;
+
     wayland.windowManager.niri = {
       enable = true;
       extraPackages = [ ];

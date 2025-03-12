@@ -97,6 +97,10 @@ in
       wl-clipboard # Command-line copy/paste utilities for Wayland
     ];
 
+    # Ensure the xsession is disabled so Home Manager will enable
+    # Wayland settings:
+    xsession.enable = lib.mkForce false;
+
     # This uses `xsession` but it's needed for Wayland too:
     xsession.preferStatusNotifierItems = true;
 

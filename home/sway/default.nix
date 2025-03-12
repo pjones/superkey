@@ -18,6 +18,8 @@ in
   };
 
   config = lib.mkIf (config.superkey.enable && cfg.enable) {
+    superkey.compositorPackage = config.wayland.windowManager.sway.package;
+
     xdg.portal = {
       enable = true;
 
