@@ -5,7 +5,6 @@ let
 in
 {
   imports = [
-    ./clipboard
     ./inhibit
     ./niri
     ./screenshot
