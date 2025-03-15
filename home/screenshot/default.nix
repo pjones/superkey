@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.superkey;
+  cfg = config.superkey.screenshot;
 
   screenshot = pkgs.writeShellApplication {
     name = "screenshot";
@@ -12,6 +12,8 @@ let
   };
 in
 {
+  options.superkey.screenshot.enable = lib.mkEnableOption "Screenshot tool";
+
   config = lib.mkIf cfg.enable {
     home.packages = [
       screenshot
