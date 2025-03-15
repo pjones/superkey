@@ -6,6 +6,7 @@
 , gawk
 , gnugrep
 , jq
+, netcat
 , openssh
 , procps
 }:
@@ -17,6 +18,7 @@ let
     gawk
     gnugrep
     jq
+    netcat
     openssh
     procps
   ];
