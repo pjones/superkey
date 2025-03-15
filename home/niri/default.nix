@@ -185,10 +185,11 @@ in
             # Focus and move windows:
             "Mod+Ctrl+A".focus-column-first = { };
             "Mod+Ctrl+E".focus-column-last = { };
-            "Mod+H".focus-column-left = { };
-            "Mod+J".focus-window-down = { };
-            "Mod+K".focus-window-up = { };
-            "Mod+L".focus-column-right = { };
+            "Mod+H".focus-column-left-or-last = { };
+            "Mod+J".focus-window-down-or-top = { };
+            "Mod+K".focus-window-up-or-bottom = { };
+            "Mod+L".focus-column-right-or-first = { };
+            "Mod+Semicolon".focus-window-previous = { };
             "Mod+Shift+A".move-column-to-first = { };
             "Mod+Shift+E".move-column-to-last = { };
             "Mod+Shift+H".move-column-left = { };
@@ -199,6 +200,8 @@ in
             "Mod+WheelScrollRight".focus-column-right = { };
 
             # Other window and column controls:
+            "Mod+Shift+Bracketleft".swap-window-left = { };
+            "Mod+Shift+Bracketright".swap-window-right = { };
             "Mod+C".center-window = { };
             "Mod+Ctrl+H".set-column-width = "-5%";
             "Mod+Ctrl+J".set-window-height = "-5%";
@@ -208,9 +211,9 @@ in
             "Mod+F".toggle-window-floating = { };
             "Mod+M".maximize-column = { };
             "Mod+R".switch-preset-column-width = { };
-            "Mod+Shift+Comma".consume-window-into-column = { };
+            "Mod+Shift+Comma".consume-or-expel-window-left = { };
             "Mod+Shift+M".fullscreen-window = { };
-            "Mod+Shift+Period".expel-window-from-column = { };
+            "Mod+Shift+Period".consume-or-expel-window-right = { };
             "Mod+Shift+Q".close-window = { };
             "Mod+Shift+R".switch-preset-window-height = { };
             "Mod+Shift+T".switch-focus-between-floating-and-tiling = { };
@@ -219,6 +222,8 @@ in
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
             "Mod+Down".focus-workspace-down = { };
+            "Mod+Left".move-workspace-to-monitor-previous = { };
+            "Mod+Right".move-workspace-to-monitor-next = { };
             "Mod+Up".focus-workspace-up = { };
             "Mod+WheelScrollDown" = cooldown "focus-workspace-down";
             "Mod+WheelScrollUp" = cooldown "focus-workspace-up";
