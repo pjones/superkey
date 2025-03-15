@@ -6,7 +6,7 @@
 stdenvNoCC.mkDerivation {
   pname = "nerd-hyperlegible";
   version = atkinson-hyperlegible.version;
-  src = ./.;
+  dontUnpack = true;
   dontBuild = true;
 
   buildInputs = [
