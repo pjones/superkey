@@ -71,7 +71,7 @@ in
         Description = "Wallpaper Daemon";
         Documentation = "https://github.com/danyspin97/wpaperd";
         PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session.target" ];
         ConditionEnvironment = "WAYLAND_DISPLAY";
         ConditionDirectoryNotEmpty = cfg.wpaperd.primaryWallpaperDirectory;
       };
