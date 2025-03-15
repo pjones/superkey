@@ -85,7 +85,10 @@ in
             };
           };
 
-          border.off = { };
+          border = {
+            off = { };
+            width = 4;
+          };
 
           # FIXME: insert-hint
 
@@ -117,8 +120,34 @@ in
             clip-to-geometry = true;
           }
 
-          # match is-window-cast-target=true
+          # Windows that are being cast:
+          #
           # https://github.com/YaLTeR/niri/discussions/1162
+          {
+            match._props.is-window-cast-target = true;
+
+            focus-ring = {
+              width = 2;
+              active-color = "#f38ba8";
+              inactive-color = "#7d0d2d";
+            };
+
+            border = {
+              on = { };
+              width = 2;
+              active-color = "#f38ba8";
+              inactive-color = "#7d0d2d";
+            };
+
+            shadow = {
+              color = "#7d0d2d70";
+            };
+
+            tab-indicator = {
+              active-color = "#f38ba8";
+              inactive-color = "#7d0d2d";
+            };
+          }
 
           # Inactive windows:
           # Not sure I like this:
@@ -135,7 +164,7 @@ in
 
           # Apps that should float (using their app-id):
           {
-            match._props.app-id = "udiskie";
+            match._props.app-id = "udiskie|wdisplays";
             open-floating = true;
           }
 
@@ -149,6 +178,19 @@ in
           {
             match._props.app-id = "chromium|firefox|librewolf";
             default-column-width.proportion = 0.5;
+          }
+
+          # KeePassXC
+          {
+            match._props = {
+              app-id = "org.keepassxc.KeePassXC";
+              title = "Access Request";
+            };
+            open-floating = true;
+          }
+          {
+            match._props.app-id = "org.keepassxc.KeePassXC";
+            block-out-from = "screen-capture";
           }
         ];
 
