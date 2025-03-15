@@ -98,13 +98,13 @@ in
       jq # A lightweight and flexible command-line JSON processor
       libnotify # A library that sends desktop notifications to a notification daemon
       networkmanagerapplet # NetworkManager control applet for GNOME
-      nwg-displays # Output management utility for Sway
       pamixer # Pulseaudio command line mixer
       pjones.presenter-mode # Toggle presenter mode.
       pjones.rofirc-wayland # Rofi launcher
       pjones.superkey-scripts # Wayland scripts.
       playerctl # Command-line utility for controlling media players
       wayland-utils # Wayland utilities (wayland-info)
+      wdisplays # Graphical application for configuring displays in Wayland compositors
       wev # Wayland event viewer
       wl-clipboard # Command-line copy/paste utilities for Wayland
     ];
