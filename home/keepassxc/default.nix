@@ -29,7 +29,8 @@ in
         Description = "Offline password manager with many features";
         Documentation = "https://keepassxc.org/docs/";
         PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
+        Requires = [ "tray.target" ];
+        After = [ "graphical-session.target" "tray.target" ];
       };
 
       Service = {
