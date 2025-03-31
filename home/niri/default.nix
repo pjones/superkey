@@ -106,10 +106,24 @@ in
             bottom = 0;
           };
 
-          # FIXME: a lot more to configure here:
           tab-indicator = {
+            corner-radius = 8;
+            gap = 4;
+            gaps-between-tabs = 0;
             hide-when-single-tab = { };
-            position = "bottom";
+            length._props = { total-proportion = 0.9; };
+            position = "left";
+            width = 4;
+
+            inactive-color = colors.base01;
+            active-gradient._props = {
+              "from" = "red";
+              "to" = "orange";
+              "angle" = 180;
+              "in" = "oklch longer hue";
+              "relative-to" = "workspace-view";
+            };
+
           };
         };
 
