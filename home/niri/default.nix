@@ -184,7 +184,7 @@ in
           # Apps that always start at 1/3 of the display size:
           {
             match._props.app-id = "emacs";
-            default-column-width.proportion = 0.33;
+            default-column-width.proportion = 0.33333;
           }
 
           # Apps that can take up half of the screen:
@@ -197,7 +197,7 @@ in
           {
             match._props = {
               app-id = "org.keepassxc.KeePassXC";
-              title = "Access Request";
+              title = "Access Request|Unlock Database";
             };
             open-floating = true;
           }
