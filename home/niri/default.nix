@@ -51,9 +51,8 @@ in
           };
 
           touchpad = {
-            click-method = "button-areas";
+            drag-lock = { };
             dwt = { };
-            scroll-method = "two-finger";
           };
 
           mouse = { };
