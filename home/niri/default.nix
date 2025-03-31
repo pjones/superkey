@@ -288,7 +288,7 @@ in
             Print.screenshot = { };
             XF86AudioMedia = shell config.superkey.commands.sendClipboard;
             XF86Launch5 = shell config.superkey.commands.sendClipboard;
-            XF86MonBrightnessDown.spawn = [ "brightnessctl" "set" "-5%" ];
+            XF86MonBrightnessDown.spawn = [ "brightnessctl" "set" "5%-" ];
             XF86MonBrightnessUp.spawn = [ "brightnessctl" "set" "+5%" ];
 
             # Audio commands:
