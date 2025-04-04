@@ -16,27 +16,6 @@
         "type": "github"
       }
     },
-    "desktop-scripts": {
-      "inputs": {
-        "nixpkgs": [
-          "rofirc",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1718056506,
-        "narHash": "sha256-K9jgvIJjakXYSVaO7NG8ZDsK6aGe+pM+EACnoceiG4w=",
-        "owner": "pjones",
-        "repo": "desktop-scripts",
-        "rev": "ad8e084b5745f0106c3a019777d6b083d2941778",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pjones",
-        "repo": "desktop-scripts",
-        "type": "github"
-      }
-    },
     "emacsrc": {
       "inputs": {
         "corg": "corg",
@@ -258,35 +237,12 @@
         "type": "github"
       }
     },
-    "rofirc": {
-      "inputs": {
-        "desktop-scripts": "desktop-scripts",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1718056804,
-        "narHash": "sha256-0s3Orawjpa527dCR6ZT3zgqr8YlbaMk6b3IqQxkF+dU=",
-        "owner": "pjones",
-        "repo": "rofirc",
-        "rev": "8ae5186b5295af6e71390ed79ca92f5dac46a0f3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pjones",
-        "ref": "wayland",
-        "repo": "rofirc",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "emacsrc": "emacsrc",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "org-clock-dbus": "org-clock-dbus_2",
-        "rofirc": "rofirc",
         "sway-easyfocus": "sway-easyfocus",
         "waybar": "waybar",
         "wpaperd": "wpaperd"

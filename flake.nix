@@ -13,9 +13,6 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    rofirc.url = "github:pjones/rofirc/wayland";
-    rofirc.inputs.nixpkgs.follows = "nixpkgs";
-
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
 
@@ -56,7 +53,7 @@
             avatar = self.packages.${prev.system}.pjones-avatar;
             nerd-hyperlegible = self.packages.${prev.system}.nerd-hyperlegible;
             presenter-mode = self.packages.${prev.system}.presenter-mode;
-            rofirc-wayland = self.inputs.rofirc.packages.${prev.system}.rofirc-wayland;
+            rofirc = self.packages.${prev.system}.rofirc;
             superkey-scripts = self.packages.${prev.system}.superkey-scripts;
           };
 
@@ -82,6 +79,12 @@
           nerd-hyperlegible = pkgs.callPackage pkgs/nerd-hyperlegible.nix { };
           pjones-avatar = pkgs.callPackage pkgs/pjones-avatar.nix { };
           presenter-mode = pkgs.callPackage pkgs/presenter-mode { };
+
+          rofirc = pkgs.callPackage pkgs/rofirc {
+            rofi = pkgs.rofi-wayland;
+            superkey-scripts = self.packages.${system}.superkey-scripts;
+          };
+
           superkey-scripts = pkgs.callPackage pkgs/scripts { };
 
           theme-dracula = pkgs.callPackage pkgs/theme {
