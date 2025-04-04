@@ -65,33 +65,34 @@ let
         }
     else null;
 
-  systemdActivation =
-    let
-      variables = lib.concatStringsSep " " cfg.systemd.variables;
-    in
-    pkgs.writeShellScript "niri-systemd-activation" ''
-      systemctl --user reset-failed
-      systemctl --user start niri-session.target
-    '';
+  systemdActivation = pkgs.writeShellScript "niri-systemd-activation" ''
+    systemctl --user reset-failed
+    systemctl --user start niri-session.target
+  '';
 
   # This is a wrapper around the Niri package that removes all
   # systemd related files and swaps out the niri-session script for
   # one that works with Home Manager.
   finalPackage =
     let
+      variables =
+        lib.concatMapStringsSep " "
+          lib.escapeShellArg
+          cfg.systemd.variables;
+
       sessionCommand = pkgs.writeShellScript "niri-session" ''
         set -o errexit
         exec > >(systemd-cat -t niri-session) 2>&1
 
-        if [ ! "$_NIRI_WRAPPER_ALREADY_EXECUTED" ]; then
-          export XDG_CURRENT_DESKTOP=${cfg.package.meta.mainProgram}
-          ${lib.optionalString cfg.xwayland "export DISPLAY=:0"}
-          ${cfg.extraSessionCommands}
-          . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
-          export _NIRI_WRAPPER_ALREADY_EXECUTED=1
-        fi
+        export XDG_CURRENT_DESKTOP=${cfg.package.meta.mainProgram}
+        ${lib.optionalString cfg.xwayland "export DISPLAY=:0"}
+        ${cfg.extraSessionCommands}
+        . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
+        systemctl --user import-environment ${variables}
+
         if [ "$DBUS_SESSION_BUS_ADDRESS" ]; then
           export DBUS_SESSION_BUS_ADDRESS
+          dbus-update-activation-environment --all
           ${lib.getExe cfg.package} --session "$@"
         else
           "${pkgs.dbus}/bin/dbus-run-session" -- \
