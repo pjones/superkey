@@ -87,6 +87,7 @@ in
 
         "niri/window" = lib.optionalAttrs (config.superkey.compositor == "niri") {
           format = "{title}";
+          separate-outputs = true; # Remove this after getting bar off eDP-1
           icon = true;
           icon-size = config.programs.waybar.settings.main.height - 4;
           "rewrite" = {
