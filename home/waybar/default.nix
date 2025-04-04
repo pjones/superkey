@@ -77,7 +77,12 @@ in
         "niri/workspaces" = lib.optionalAttrs (config.superkey.compositor == "niri") {
           all-outputs = true;
           current-only = true;
-          format = "󰍹 {value}";
+          format = "{icon} {name} [{index}]";
+          format-icons = {
+            default = "󰍹";
+            focused = "󰍹";
+            active = "󰶐";
+          };
         };
 
         "niri/window" = lib.optionalAttrs (config.superkey.compositor == "niri") {
