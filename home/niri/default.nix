@@ -28,9 +28,10 @@ in
         prefer-no-csd = { };
         screenshot-path = "${config.home.homeDirectory}/documents/pictures/screenshots/%Y/Screenshot_%Y%m%d_%H%M%S.png";
 
-        workspace =
-          map (name: { _args = [ name ]; })
-            config.superkey.workspaceNames;
+        # Only support one named workspace and let the rest be dynamic:
+        workspace = [
+          { _args = [ (builtins.head config.superkey.workspaceNames) ]; }
+        ];
 
         cursor = {
           xcursor-theme = config.gtk.cursorTheme.name;
@@ -58,8 +59,9 @@ in
           mouse = { };
           trackpoint = { };
 
+          focus-follows-mouse = { };
           warp-mouse-to-focus = { };
-          focus-follows-mouse._props = { max-scroll-amount = "0%"; };
+          workspace-auto-back-and-forth = { };
         };
 
         layout = {
@@ -224,16 +226,17 @@ in
             };
 
             workspaces =
-              lib.mergeAttrsList (lib.imap1
-                (index: name:
+              lib.mergeAttrsList (lib.map
+                (index:
                   let
                     key = builtins.toString (lib.mod index 10);
                   in
                   {
-                    "Mod+${key}".focus-workspace = [ name ];
-                    "Mod+Shift+${key}".move-window-to-workspace = [ name ];
+                    "Mod+${key}".focus-workspace = index;
+                    "Mod+Shift+${key}".move-window-to-workspace = index;
+                    "Mod+Ctrl+${key}".move-workspace-to-index = index;
                   })
-                config.superkey.workspaceNames);
+                (lib.range 1 10));
           in
           workspaces //
           {
