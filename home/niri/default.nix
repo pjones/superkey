@@ -234,7 +234,7 @@ in
                   {
                     "Mod+${key}".focus-workspace = index;
                     "Mod+Shift+${key}".move-window-to-workspace = index;
-                    "Mod+Ctrl+${key}".move-workspace-to-index = index;
+                    "Mod+Ctrl+${key}".move-workspace-to-index = (index - 1);
                   })
                 (lib.range 1 10));
           in
