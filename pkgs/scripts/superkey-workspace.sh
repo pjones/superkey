@@ -6,16 +6,17 @@ set -o pipefail
 
 ################################################################################
 # Options set from the command line.
-option_current_name=0
-option_switch_to=
+option_name= # The name of a workspace to act on.
 
 ################################################################################
-usage() {
+function usage() {
   cat <<EOF
 Usage: $(basename "$0") [options]
 
   -h      This message
   -n      Print the name of the current workspace
+  -N NAME Create a new workspace named NAME
+  -r NAME Rename current workspace to NAME
   -s NAME Switch to workspace NAME
 
 If no options are given, prints a list of all workspace names.
@@ -24,7 +25,7 @@ EOF
 }
 
 ################################################################################
-with_sway() {
+function with_sway() {
   local command=$1
 
   case "$command" in
@@ -40,13 +41,18 @@ with_sway() {
     ;;
 
   switch)
-    swaymsg --type command workspace number "$option_switch_to"
+    swaymsg --type command workspace number "$option_name"
+    ;;
+
+  *)
+    echo >&2 "ERROR: sway does not support workspace $command"
+    exit 1
     ;;
   esac
 }
 
 ################################################################################
-with_niri() {
+function with_niri() {
   local command=$1
 
   case "$command" in
@@ -67,13 +73,26 @@ with_niri() {
     ;;
 
   switch)
-    niri msg action focus-workspace "$option_switch_to"
+    niri msg action focus-workspace "$option_name"
+    ;;
+
+  new)
+    niri msg action focus-workspace 255
+    niri msg action set-workspace-name "$option_name"
+    ;;
+
+  rename)
+    if [ -z "$option_name" ]; then
+      niri msg action unset-workspace-name
+    else
+      niri msg action set-workspace-name "$option_name"
+    fi
     ;;
   esac
 }
 
 ################################################################################
-with_wmctrl() {
+function with_wmctrl() {
   local command=$1
   local desktop_id
 
@@ -97,15 +116,20 @@ with_wmctrl() {
     ;;
 
   switch)
-    desktop_id=$(echo "$option_switch_to" | cut -d: -f2)
+    desktop_id=$(echo "$option_name" | cut -d: -f2)
     [ -z "$desktop_id" ] && exit
     wmctrl -s "$((desktop_id - 1))"
+    ;;
+
+  *)
+    echo >&2 "ERROR: wmctrl does not support workspace $command"
+    exit 1
     ;;
   esac
 }
 
 ################################################################################
-dispatch() {
+function dispatch() {
   local command=$1
 
   case "${XDG_CURRENT_DESKTOP:-}" in
@@ -124,37 +148,51 @@ dispatch() {
 }
 
 ################################################################################
-main() {
-  if [ "$option_current_name" -eq 1 ]; then
-    dispatch "current"
-  elif [ -n "$option_switch_to" ]; then
-    dispatch "switch"
-  else
+function main() {
+  local list_workspaces=1
+
+  while getopts "hN:r:ns:" o; do
+    case "${o}" in
+    h)
+      usage
+      exit
+      ;;
+
+    n)
+      list_workspaces=0
+      dispatch "current"
+      ;;
+
+    N)
+      list_workspaces=0
+      option_name=$OPTARG
+      dispatch "new"
+      ;;
+
+    r)
+      list_workspaces=0
+      option_name=$OPTARG
+      dispatch "rename"
+      ;;
+
+    s)
+      list_workspaces=0
+      option_name=$OPTARG
+      dispatch "switch"
+      ;;
+
+    *)
+      exit 1
+      ;;
+    esac
+  done
+
+  shift $((OPTIND - 1))
+
+  if [ "$list_workspaces" -eq 1 ]; then
     dispatch "all"
   fi
 }
 
 ################################################################################
-while getopts "hns:" o; do
-  case "${o}" in
-  h)
-    usage
-    exit
-    ;;
-
-  n)
-    option_current_name=1
-    ;;
-
-  s)
-    option_switch_to=$OPTARG
-    ;;
-
-  *)
-    exit 1
-    ;;
-  esac
-done
-
-shift $((OPTIND - 1))
 main "$@"
