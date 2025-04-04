@@ -105,7 +105,7 @@ in
         };
 
         "custom/org-clock-dbus" = {
-          exec = "org-clock-dbus monitor --mode waybar --down-from 25m";
+          exec = "${pkgs.pkgs.org-clock-dbus}/bin/org-clock-dbus monitor --mode waybar --down-from 25m";
           return-type = "json";
           format = "{icon} {}";
           format-icons.running = "";
