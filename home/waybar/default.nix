@@ -91,7 +91,7 @@ in
           icon = true;
           icon-size = config.programs.waybar.settings.main.height - 4;
           "rewrite" = {
-            "(.*) - Mozilla Firefox" = "$1";
+            "(.*) — Mozilla Firefox" = "$1";
           };
         };
 
