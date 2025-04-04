@@ -4,6 +4,7 @@
 , coreutils
 , findutils
 , gawk
+, glib
 , gnugrep
 , jq
 , netcat
@@ -16,6 +17,7 @@ let
     coreutils
     findutils
     gawk
+    glib
     gnugrep
     jq
     netcat
