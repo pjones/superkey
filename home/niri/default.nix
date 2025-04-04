@@ -292,6 +292,7 @@ in
             "Mod+Period".focus-monitor-next = { };
 
             # Applications and utilities:
+            "Mod+B".spawn = [ "browser" ];
             "Mod+E".spawn = [ "e" "-c" ];
             "Mod+Escape".toggle-keyboard-shortcuts-inhibit = { };
             "Mod+I".spawn = [ "toggle-presenter-mode" ];
