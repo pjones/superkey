@@ -207,11 +207,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1724258487,
-        "narHash": "sha256-zgL0siyTsiyFA+qfcjhjoBPQ97aLPV6181gOyIg22Z0=",
+        "lastModified": 1743953551,
+        "narHash": "sha256-WVVfVsoFU8rV9X5ZI7bq4HFEnEqFjq+WvFNYdrRyKDM=",
         "owner": "pjones",
         "repo": "org-clock-dbus",
-        "rev": "c9dfddc3f9c730d34150fdd79618b74196a40f00",
+        "rev": "8c31b866bb3c01c03ee5f55c4bf260a325377fff",
         "type": "github"
       },
       "original": {

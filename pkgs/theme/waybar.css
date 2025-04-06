@@ -81,8 +81,11 @@ window#waybar.empty #window {
   /* text-transform: uppercase; */
 }
 
-#keyboard-state .locked {
+#keyboard-state .locked,
+#custom-org-clock-dbus.negative
+{
   opacity: 1.0;
+  padding: 0 0.5em;
   color: @base01;
   background-color: @base08;
   border-bottom: 0.15em solid @base09;
