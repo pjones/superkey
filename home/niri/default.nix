@@ -258,8 +258,6 @@ in
             "Mod+WheelScrollRight".focus-column-right = { };
 
             # Other window and column controls:
-            "Mod+Shift+Bracketleft".swap-window-left = { };
-            "Mod+Shift+Bracketright".swap-window-right = { };
             "Mod+C".center-window = { };
             "Mod+Ctrl+H".set-column-width = "-5%";
             "Mod+Ctrl+J".set-window-height = "-5%";
@@ -267,11 +265,13 @@ in
             "Mod+Ctrl+L".set-column-width = "+5%";
             "Mod+Equal".reset-window-height = { };
             "Mod+F".toggle-window-floating = { };
+            "Mod+Left".consume-or-expel-window-left = { };
             "Mod+M".maximize-column = { };
             "Mod+R".switch-preset-column-width = { };
-            "Mod+Shift+Comma".consume-or-expel-window-left = { };
+            "Mod+Right".consume-or-expel-window-right = { };
+            "Mod+Shift+Bracketleft".swap-window-left = { };
+            "Mod+Shift+Bracketright".swap-window-right = { };
             "Mod+Shift+M".fullscreen-window = { };
-            "Mod+Shift+Period".consume-or-expel-window-right = { };
             "Mod+Shift+Q".close-window = { };
             "Mod+Shift+R".switch-preset-window-height = { };
             "Mod+Shift+T".switch-focus-between-floating-and-tiling = { };
@@ -279,10 +279,8 @@ in
 
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
-            "Mod+Down".focus-workspace-down = { };
-            "Mod+Left".move-workspace-to-monitor-previous = { };
-            "Mod+Right".move-workspace-to-monitor-next = { };
-            "Mod+Up".focus-workspace-up = { };
+            "Mod+N".focus-workspace-down = { };
+            "Mod+P".focus-workspace-up = { };
             "Mod+WheelScrollDown" = cooldown "focus-workspace-down";
             "Mod+WheelScrollUp" = cooldown "focus-workspace-up";
 
@@ -290,6 +288,8 @@ in
             "Mod+Comma".focus-monitor-previous = { };
             "Mod+D".spawn = [ "superkey-swap-monitor.sh" ];
             "Mod+Period".focus-monitor-next = { };
+            "Mod+Shift+Comma".move-workspace-to-monitor-previous = { };
+            "Mod+Shift+Period".move-workspace-to-monitor-next = { };
 
             # Applications and utilities:
             "Mod+B".spawn = [ "browser" ];
