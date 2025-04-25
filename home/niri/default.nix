@@ -77,7 +77,7 @@ in
           default-column-width = { };
 
           focus-ring = {
-            width = 4;
+            width = 5;
             active-color = colors.base0D;
             inactive-color = colors.base01;
 
@@ -86,13 +86,12 @@ in
               "to" = "orange";
               "angle" = 45;
               "in" = "oklch longer hue";
-              "relative-to" = "workspace-view";
             };
           };
 
           border = {
             off = { };
-            width = 4;
+            width = 0;
           };
 
           # FIXME: insert-hint
@@ -102,7 +101,7 @@ in
             softness = 30;
             spread = 5;
             offset._props = { x = 0; y = 5; };
-            color = "#0007";
+            color = "#00000070";
           };
 
           struts = {
@@ -153,7 +152,7 @@ in
 
             border = {
               on = { };
-              width = 2;
+              width = 3;
               active-color = "#f38ba8";
               inactive-color = "#7d0d2d";
             };
@@ -166,13 +165,6 @@ in
               active-color = "#f38ba8";
               inactive-color = "#7d0d2d";
             };
-          }
-
-          # Inactive windows:
-          # Not sure I like this:
-          {
-            match._props.is-focused = false;
-            opacity = 0.9;
           }
 
           # Apps that should float (using their title):
