@@ -59,7 +59,11 @@ in
           mouse = { };
           trackpoint = { };
 
-          focus-follows-mouse = { };
+          # When using focus-follows-mouse, don't automatically focus
+          # a window that would require view scrolling more than the
+          # configured screen size below.  NOTE: clicking the window
+          # will focus and scroll it into view.
+          focus-follows-mouse._props.max-scroll-amount = "10%";
           warp-mouse-to-focus = { };
           workspace-auto-back-and-forth = { };
         };
