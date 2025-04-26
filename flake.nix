@@ -7,16 +7,12 @@
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    waybar.url = "github:Alexays/Waybar";
-
     emacsrc.url = "github:pjones/emacsrc/nixos-24.11";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
-
-    wpaperd.url = "github:pjones/wpaperd/pjones/main";
 
     org-clock-dbus.url = "github:pjones/org-clock-dbus";
     org-clock-dbus.inputs.nixpkgs.follows = "nixpkgs";
@@ -66,8 +62,6 @@
               outputHash = "sha256-Aiells9F2ZuCzQ7T9l2Y8k6iNvQAfIzWL98NZ1AHkLo=";
             };
           });
-
-          wpaperd = self.inputs.wpaperd.packages.${prev.system}.default;
         };
       };
 
@@ -221,9 +215,6 @@
                 startAllInhibitorsCmd = "${lockBin}/start-idle-inhibitors.sh";
               };
           };
-
-          programs.waybar.package =
-            self.inputs.waybar.packages.${pkgs.system}.default;
         };
 
         vm = { pkgs, ... }: {
