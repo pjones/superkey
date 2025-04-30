@@ -92,6 +92,7 @@ in
           icon-size = config.programs.waybar.settings.main.height - 4;
           "rewrite" = {
             "(.*) — Mozilla Firefox" = "$1";
+            "(Emacs:.*) \\[\\d+\\]" = "$1";
           };
         };
 
