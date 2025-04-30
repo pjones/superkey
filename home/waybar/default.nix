@@ -192,8 +192,7 @@ in
             };
             return-type = "json";
             exec = "${client} -swb";
-            on-click = "${client} -t -sw";
-            on-click-right = "toggle-presenter-mode";
+            on-click = "toggle-presenter-mode";
             escape = true;
           };
 
