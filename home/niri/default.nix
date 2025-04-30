@@ -203,6 +203,12 @@ in
             match._props.app-id = "org.keepassxc.KeePassXC";
             block-out-from = "screen-capture";
           }
+
+          # wl-mirror
+          {
+            match._props.app-id = "at.yrlf.wl_mirror";
+            default-column-width.proportion = 0.5;
+          }
         ];
 
         binds =
@@ -267,10 +273,10 @@ in
             "Mod+Right".consume-or-expel-window-right = { };
             "Mod+Shift+Bracketleft".swap-window-left = { };
             "Mod+Shift+Bracketright".swap-window-right = { };
+            "Mod+Shift+F".switch-focus-between-floating-and-tiling = { };
             "Mod+Shift+M".fullscreen-window = { };
             "Mod+Shift+Q".close-window = { };
             "Mod+Shift+R".switch-preset-window-height = { };
-            "Mod+Shift+T".switch-focus-between-floating-and-tiling = { };
             "Mod+T".toggle-column-tabbed-display = { };
 
             # Workspaces:
@@ -282,9 +288,10 @@ in
 
             # Monitors:
             "Mod+Comma".focus-monitor-previous = { };
-            "Mod+D".spawn = [ "superkey-swap-monitor.sh" ];
+            "Mod+D".move-column-to-monitor-next = { };
             "Mod+Period".focus-monitor-next = { };
             "Mod+Shift+Comma".move-workspace-to-monitor-previous = { };
+            "Mod+Shift+D".move-window-to-monitor-next = { };
             "Mod+Shift+Period".move-workspace-to-monitor-next = { };
 
             # Applications and utilities:

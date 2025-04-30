@@ -109,6 +109,7 @@ in
       wdisplays # Graphical application for configuring displays in Wayland compositors
       wev # Wayland event viewer
       wl-clipboard # Command-line copy/paste utilities for Wayland
+      wl-mirror # Simple Wayland output mirror client
     ];
 
     # Ensure the xsession is disabled so Home Manager will enable
@@ -147,6 +148,14 @@ in
       sleep-system = {
         name = "Sleep";
         exec = "systemctl suspend-then-hibernate";
+        icon = "emblem-system";
+        terminal = false;
+        categories = [ "System" ];
+      };
+
+      mirror-output = {
+        name = "Mirror Next Output";
+        exec = "superkey-mirror.sh";
         icon = "emblem-system";
         terminal = false;
         categories = [ "System" ];
