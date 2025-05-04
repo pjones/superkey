@@ -11,6 +11,9 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
+    niri.url = "github:YaLTeR/niri";
+    niri.flake = false;
+
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
 
@@ -18,7 +21,7 @@
     org-clock-dbus.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, ... }:
     let
       # What state version to use for the VM:
       stateVersion = "24.11";
@@ -53,13 +56,29 @@
             superkey-scripts = self.packages.${prev.system}.superkey-scripts;
           };
 
-          sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: rec {
-            version = "unstable-2024-07-08";
-            src = self.inputs.sway-easyfocus;
-            cargoDeps = orig.cargoDeps.overrideAttrs {
+          niri = prev.niri.overrideAttrs (orig:
+            let
+              commit = builtins.substring 0 7 self.inputs.niri.rev;
+              src = self.inputs.niri;
+            in
+            {
               inherit src;
-              name = "${orig.pname}-${version}-vendor.tar.gz";
-              outputHash = "sha256-Aiells9F2ZuCzQ7T9l2Y8k6iNvQAfIzWL98NZ1AHkLo=";
+
+              NIRI_BUILD_COMMIT = commit;
+              version = commit;
+
+              cargoDeps = prev.rustPlatform.fetchCargoVendor {
+                inherit src;
+                hash = "sha256-mIhfuTPOtJtEwZoFE1vd5SLxr8+B2XGq2kxAMy9EaVo=";
+              };
+            });
+
+          sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: {
+            version = builtins.substring 0 7 self.inputs.sway-easyfocus;
+            src = self.inputs.sway-easyfocus;
+            cargoDeps = prev.rustPlatform.fetchCargoVendor {
+              src = self.inputs.sway-easyfocus;
+              hash = "sha256-VxcMHh1eIiHugpTFpclwuO0joY95bPz6hVIBHQwB6ZA=";
             };
           });
         };
@@ -71,6 +90,7 @@
         in {
           force-lock = pkgs.callPackage pkgs/force-lock { };
           nerd-hyperlegible = pkgs.callPackage pkgs/nerd-hyperlegible.nix { };
+
           pjones-avatar = pkgs.callPackage pkgs/pjones-avatar.nix { };
           presenter-mode = pkgs.callPackage pkgs/presenter-mode { };
 

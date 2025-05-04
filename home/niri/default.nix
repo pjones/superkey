@@ -236,7 +236,7 @@ in
                   {
                     "Mod+${key}".focus-workspace = index;
                     "Mod+Shift+${key}".move-window-to-workspace = index;
-                    "Mod+Ctrl+${key}".move-workspace-to-index = (index - 1);
+                    "Mod+Ctrl+${key}".move-workspace-to-index = index;
                   })
                 (lib.range 1 10));
           in
@@ -265,23 +265,28 @@ in
             "Mod+Ctrl+J".set-window-height = "-5%";
             "Mod+Ctrl+K".set-window-height = "+5%";
             "Mod+Ctrl+L".set-column-width = "+5%";
+            "Mod+Ctrl+M".toggle-windowed-fullscreen = { };
+            "Mod+Ctrl+S".clear-dynamic-cast-target = { };
             "Mod+Equal".reset-window-height = { };
             "Mod+F".toggle-window-floating = { };
             "Mod+Left".consume-or-expel-window-left = { };
             "Mod+M".maximize-column = { };
             "Mod+R".switch-preset-column-width = { };
             "Mod+Right".consume-or-expel-window-right = { };
+            "Mod+S".set-dynamic-cast-window = { };
             "Mod+Shift+Bracketleft".swap-window-left = { };
             "Mod+Shift+Bracketright".swap-window-right = { };
             "Mod+Shift+F".switch-focus-between-floating-and-tiling = { };
             "Mod+Shift+M".fullscreen-window = { };
             "Mod+Shift+Q".close-window = { };
             "Mod+Shift+R".switch-preset-window-height = { };
+            "Mod+Shift+S".set-dynamic-cast-monitor = { };
             "Mod+T".toggle-column-tabbed-display = { };
 
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
             "Mod+N".focus-workspace-down = { };
+            "Mod+O".toggle-overview = { };
             "Mod+P".focus-workspace-up = { };
             "Mod+WheelScrollDown" = cooldown "focus-workspace-down";
             "Mod+WheelScrollUp" = cooldown "focus-workspace-up";
