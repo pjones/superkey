@@ -309,6 +309,7 @@ in
             "Mod+Shift+Slash".show-hotkey-overlay = { };
             "Mod+Space".spawn = [ "rofi-launcher.sh" ];
             "Mod+Tab".spawn = [ "swaync-client" "-t" ];
+            "Mod+X".spawn = [ "rofi-niri.sh" ];
             Cancel = shell config.superkey.swaylock.forceLockCmd;
             Print.screenshot = { };
             XF86AudioMedia = shell config.superkey.commands.sendClipboard;
