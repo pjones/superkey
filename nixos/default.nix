@@ -80,7 +80,7 @@ in
 
     # For setting GTK themes:
     programs.dconf.enable = true;
-    services.dbus.packages = [ pkgs.dconf ];
+    services.dbus.packages = [ pkgs.dconf pkgs.sushi ];
 
     # Fonts:
     fonts = {

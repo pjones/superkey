@@ -98,6 +98,7 @@ in
       helvum # A GTK patchbay for pipewire
       jq # A lightweight and flexible command-line JSON processor
       libnotify # A library that sends desktop notifications to a notification daemon
+      nautilus # File manager for GNOME
       networkmanagerapplet # NetworkManager control applet for GNOME
       pamixer # Pulseaudio command line mixer
       pjones.presenter-mode # Toggle presenter mode.
@@ -105,6 +106,7 @@ in
       pjones.superkey-scripts # Wayland scripts.
       playerctl # Command-line utility for controlling media players
       rofi-wayland # Window switcher, run dialog and dmenu replacement for Wayland
+      sushi # Quick previewer for Nautilus
       wayland-utils # Wayland utilities (wayland-info)
       wdisplays # Graphical application for configuring displays in Wayland compositors
       wev # Wayland event viewer
