@@ -191,7 +191,7 @@ in
             default-column-width.proportion = 0.5;
           }
 
-          # KeePassXC
+          # KeePassXC:
           {
             match._props = {
               app-id = "org.keepassxc.KeePassXC";
@@ -204,10 +204,27 @@ in
             block-out-from = "screen-capture";
           }
 
-          # wl-mirror
+          # Nautilus:
+          {
+            match._props.app-id = "org.gnome.NautilusPreviewer";
+            open-floating = true;
+          }
+
+          # wl-mirror:
           {
             match._props.app-id = "at.yrlf.wl_mirror";
             default-column-width.proportion = 0.5;
+          }
+
+          # Zoom:
+          {
+            match._props = {
+              app-id = "zoom";
+              title = "zoom";
+            };
+
+            open-floating = true;
+            open-focused = false;
           }
         ];
 
