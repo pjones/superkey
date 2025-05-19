@@ -56,7 +56,7 @@ e -- --eval '(setq inhibit-message t)'
 # my `eterm' script can't open a window if the terminal window would
 # be the first one loaded by the daemon.
 e -c '/etc/issue' && sleep 1
-eterm -e fastfetch && sleep 1
+eterm -ke fastfetch && sleep 1
 
 case "$XDG_CURRENT_DESKTOP" in
 sway)

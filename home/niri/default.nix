@@ -298,12 +298,14 @@ in
             "Mod+S".set-dynamic-cast-window = { };
             "Mod+Shift+Bracketleft".swap-window-left = { };
             "Mod+Shift+Bracketright".swap-window-right = { };
+            "Mod+Shift+C".center-visible-columns = { };
             "Mod+Shift+F".switch-focus-between-floating-and-tiling = { };
             "Mod+Shift+M".fullscreen-window = { };
             "Mod+Shift+Q".close-window = { };
             "Mod+Shift+R".switch-preset-window-height = { };
             "Mod+Shift+S".set-dynamic-cast-monitor = { };
             "Mod+T".toggle-column-tabbed-display = { };
+            "Mod+W".expand-column-to-available-width = { };
 
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
