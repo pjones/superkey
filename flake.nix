@@ -11,7 +11,7 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    niri.url = "github:YaLTeR/niri/v25.05";
+    niri.url = "github:YaLTeR/niri/v25.05.1";
     niri.flake = false;
 
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
@@ -69,7 +69,7 @@
 
               cargoDeps = prev.rustPlatform.fetchCargoVendor {
                 inherit src;
-                hash = "sha256-tZp7AhhddEhKWzEUTgosxXMEzALbv6FxqnJEb9MBhzc=";
+                hash = "sha256-8ltuI94yIhff7JxIfe1mog4bDJ/7VFgLooMWOnSTREs=";
               };
             });
 
