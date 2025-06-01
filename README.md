@@ -16,7 +16,7 @@ running in an ephemeral virtual machine (`nix flake check`).
 
 ## Details
 
-  * Compositor: [SwayFX][]
+  * Compositor: [Niri][]
 
   * Status Bar: [waybar][]
 
@@ -40,13 +40,14 @@ nix run github:pjones/superkey
 ```
 
 Use the key binding `Super+Space` to start `rofi`.  Other key bindings
-can be found in `home/sway/keys.nix`.
+can be found in `home/niri/default.nix`.
 
 This virtual machine is pretty bare-bones.  If you want to start a
 virtual machine with this configuration plus my entire workstation
 configuration then take a look at my [tilde][] project.
 
 [nix]: https://nixos.org/
+[niri]: https://github.com/YaLTeR/niri
 [nixpkgs]: https://github.com/NixOS/nixpkgs
 [home-manager]: https://github.com/rycee/home-manager
 [swayfx]: https://github.com/WillPower3309/swayfx

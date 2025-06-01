@@ -237,7 +237,7 @@
           };
         };
 
-        vm = { pkgs, ... }: {
+        vm = { ... }: {
           imports = [
             { home.stateVersion = stateVersion; }
             self.homeManagerModules.default
