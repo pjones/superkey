@@ -62,7 +62,7 @@ in
         output = [ monitors.work monitors.home "DP-3" ];
       };
 
-      programs.wpaperd.settings = {
+      services.wpaperd.settings = {
         # Treat my main external monitor as a primary monitor:
         ${monitors.work}.path = config.superkey.wpaperd.primaryWallpaperDirectory;
         ${monitors.home}.path = config.superkey.wpaperd.primaryWallpaperDirectory;

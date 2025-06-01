@@ -248,13 +248,5 @@ in
         Before = [ "xdg-desktop-autostart.target" ];
       };
     };
-
-    # FIXME: Remove in release 25.05.
-    systemd.user.targets.tray = {
-      Unit = {
-        Description = "Home Manager System Tray";
-        Requires = [ "graphical-session-pre.target" ];
-      };
-    };
   };
 }

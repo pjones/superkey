@@ -92,9 +92,8 @@ in
         dejavu_fonts
         hermit
         ibm-plex
-        nerdfonts
         overpass
-        pjones.nerd-hyperlegible # From ../flake.nix
+        pjones.nerd-hyperlegible # From ../pkgs/nerd-hyperlegible.nix
         tt2020
         ubuntu_font_family
       ];

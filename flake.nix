@@ -2,12 +2,12 @@
   description = "Peter's Wayland Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    emacsrc.url = "github:pjones/emacsrc/nixos-24.11";
+    emacsrc.url = "github:pjones/emacsrc/nixos-25.05";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
@@ -18,7 +18,6 @@
     sway-easyfocus.flake = false;
 
     org-clock-dbus.url = "github:pjones/org-clock-dbus";
-    org-clock-dbus.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, ... }:

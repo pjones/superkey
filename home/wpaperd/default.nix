@@ -49,7 +49,7 @@ in
       exec ${setDefaultImage}/bin/set-default-wallpaper
     '';
 
-    programs.wpaperd = {
+    services.wpaperd = {
       enable = true;
 
       settings = {
@@ -64,29 +64,6 @@ in
         any.path = cfg.wpaperd.secondaryWallpaperDirectory;
         ${cfg.primaryOutput}.path = cfg.wpaperd.primaryWallpaperDirectory;
       };
-    };
-
-    systemd.user.services.wpaperd = {
-      Unit = {
-        Description = "Wallpaper Daemon";
-        Documentation = "https://github.com/danyspin97/wpaperd";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" ];
-        ConditionEnvironment = "WAYLAND_DISPLAY";
-        ConditionDirectoryNotEmpty = cfg.wpaperd.primaryWallpaperDirectory;
-      };
-
-      Service = {
-        ExecStartPre = toString (pkgs.writeShellScript "kill-default-bg" ''
-          ${lib.optionalString (config.superkey.compositor == "sway") ''
-            ${pkgs.procps}/bin/pkill -u "$USER" swaybg || true
-          ''}
-        '');
-        ExecStart = "${config.programs.wpaperd.package}/bin/wpaperd";
-        Restart = "on-failure";
-      };
-
-      Install.WantedBy = [ "graphical-session.target" ];
     };
   };
 }

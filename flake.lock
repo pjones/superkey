@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "anki-editor": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1744537210,
+        "narHash": "sha256-1aQ/dtux9tVy1iwo6B6itRNhiUiL8aCrsKt/OkZPeEs=",
+        "owner": "anki-editor",
+        "repo": "anki-editor",
+        "rev": "5e4dfaa34cd2a54b2003b7664f5438bb40a6b09a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anki-editor",
+        "repo": "anki-editor",
+        "type": "github"
+      }
+    },
     "corg": {
       "flake": false,
       "locked": {
@@ -18,30 +34,33 @@
     },
     "emacsrc": {
       "inputs": {
+        "anki-editor": "anki-editor",
         "corg": "corg",
         "home-manager": [
           "home-manager"
         ],
+        "meow-edit": "meow-edit",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": [
           "nixpkgs"
         ],
         "org-capture-ref": "org-capture-ref",
         "org-clock-dbus": "org-clock-dbus",
+        "org-grader": "org-grader",
         "ox-ipynb": "ox-ipynb",
         "persid": "persid"
       },
       "locked": {
-        "lastModified": 1747644851,
-        "narHash": "sha256-cgW2X2SnIlmqpHkor84ol41mfPjsmYX/9Dk7ZNhWb6A=",
+        "lastModified": 1748785450,
+        "narHash": "sha256-ih6jVqLTUGknJpkrUrL+imSar2mtk5W8qjVs1U6mjQk=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "2aa66fef9cc5c910f0e991d87505c3893195e1d1",
+        "rev": "ba429866331eb1b0ca1f5375880d82079a04bd42",
         "type": "github"
       },
       "original": {
         "owner": "pjones",
-        "ref": "nixos-24.11",
+        "ref": "nixos-25.05",
         "repo": "emacsrc",
         "type": "github"
       }
@@ -53,17 +72,33 @@
         ]
       },
       "locked": {
-        "lastModified": 1747331121,
-        "narHash": "sha256-3MmiUN/jOHBHQUnjqzg6qKArc17j2OS6jisEppDY4g8=",
+        "lastModified": 1748665073,
+        "narHash": "sha256-RMhjnPKWtCoIIHiuR9QKD7xfsKb3agxzMfJY8V9MOew=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "1eec32f0efe3b830927989767a9e6ece0d82d608",
+        "rev": "282e1e029cb6ab4811114fc85110613d72771dea",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-24.11",
+        "ref": "release-25.05",
         "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "meow-edit": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1743777156,
+        "narHash": "sha256-3YzEpgXhftN3g1p84aTfSd31XHbwkmySMUWQArZg0ZY=",
+        "owner": "meow-edit",
+        "repo": "meow",
+        "rev": "e5817f3b5ef82cbcf8a729af205191dc6b142282",
+        "type": "github"
+      },
+      "original": {
+        "owner": "meow-edit",
+        "repo": "meow",
         "type": "github"
       }
     },
@@ -102,16 +137,32 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1747485343,
-        "narHash": "sha256-YbsZyuRE1tobO9sv0PUwg81QryYo3L1F3R3rF9bcG38=",
+        "lastModified": 1748437600,
+        "narHash": "sha256-hYKMs3ilp09anGO7xzfGs3JqEgUqFMnZ8GMAqI6/k04=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9b5ac7ad45298d58640540d0323ca217f32a6762",
+        "rev": "7282cb574e0607e65224d33be8241eae7cfe0979",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-24.11",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1720657034,
+        "narHash": "sha256-nPhbeFdyN8yn+EXmnPcBWisoypndtQbNIhSKmAinv3E=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "212defe037698e18fc9521dfe451779a8979844c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -155,9 +206,7 @@
     },
     "org-clock-dbus_2": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "lastModified": 1744028889,
@@ -170,6 +219,22 @@
       "original": {
         "owner": "pjones",
         "repo": "org-clock-dbus",
+        "type": "github"
+      }
+    },
+    "org-grader": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748092534,
+        "narHash": "sha256-aCQ2pYjOXTGZWTtrkKjtsond0hE31Khf8KO0DvYdGb8=",
+        "owner": "pjones",
+        "repo": "org-grader",
+        "rev": "bf91f975b7773f97a6db5159c69e257bdb7bbcff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pjones",
+        "repo": "org-grader",
         "type": "github"
       }
     },
