@@ -92,6 +92,7 @@ in
         dejavu_fonts
         hermit
         ibm-plex
+        iosevka
         overpass
         pjones.nerd-hyperlegible # From ../pkgs/nerd-hyperlegible.nix
         tt2020
