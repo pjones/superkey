@@ -6,7 +6,6 @@ in
 {
   imports = [
     ./inhibit
-    ./keepassxc
     ./niri
     ./screenshot
     ./sway

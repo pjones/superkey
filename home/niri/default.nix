@@ -196,19 +196,6 @@ in
             default-column-width.proportion = 0.5;
           }
 
-          # KeePassXC:
-          {
-            match._props = {
-              app-id = "org.keepassxc.KeePassXC";
-              title = "Access Request|Unlock Database";
-            };
-            open-floating = true;
-          }
-          {
-            match._props.app-id = "org.keepassxc.KeePassXC";
-            block-out-from = "screen-capture";
-          }
-
           # Nautilus:
           {
             match._props.app-id = "org.gnome.NautilusPreviewer";
