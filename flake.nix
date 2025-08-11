@@ -11,9 +11,6 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    niri.url = "github:YaLTeR/niri/v25.05.1";
-    niri.flake = false;
-
     sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
     sway-easyfocus.flake = false;
 
@@ -54,23 +51,6 @@
             rofirc = self.packages.${prev.system}.rofirc;
             superkey-scripts = self.packages.${prev.system}.superkey-scripts;
           };
-
-          niri = prev.niri.overrideAttrs (orig:
-            let
-              commit = builtins.substring 0 7 self.inputs.niri.rev;
-              src = self.inputs.niri;
-            in
-            {
-              inherit src;
-
-              NIRI_BUILD_COMMIT = commit;
-              version = commit;
-
-              cargoDeps = prev.rustPlatform.fetchCargoVendor {
-                inherit src;
-                hash = "sha256-8ltuI94yIhff7JxIfe1mog4bDJ/7VFgLooMWOnSTREs=";
-              };
-            });
 
           sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: {
             version = builtins.substring 0 7 self.inputs.sway-easyfocus;
