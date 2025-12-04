@@ -215,6 +215,28 @@ in
           }
         ];
 
+        recent-windows = {
+          debounce-ms = 750;
+          open-delay-ms = 150;
+
+          highlight = {
+            active-color = "#999999ff";
+            urgent-color = "#ff9999ff";
+            padding = 30;
+            corner-radius = 14;
+          };
+
+          previews = {
+            max-height = 480;
+            max-scale = 0.5;
+          };
+
+          binds = {
+            "Mod+Semicolon".next-window = { };
+            "Mod+colon".next-window._props.filter = "app-id";
+          };
+        };
+
         binds =
           let
             audio = cmd: {
@@ -253,7 +275,6 @@ in
             "Mod+J".focus-window-down-or-top = { };
             "Mod+K".focus-window-up-or-bottom = { };
             "Mod+L".focus-column-right-or-first = { };
-            "Mod+Semicolon".focus-window-previous = { };
             "Mod+Shift+A".move-column-to-first = { };
             "Mod+Shift+E".move-column-to-last = { };
             "Mod+Shift+H".move-column-left = { };
