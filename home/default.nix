@@ -104,7 +104,7 @@ in
       pjones.rofirc # Rofi launcher configuration
       pjones.superkey-scripts # Wayland scripts.
       playerctl # Command-line utility for controlling media players
-      rofi-wayland # Window switcher, run dialog and dmenu replacement for Wayland
+      rofi # Window switcher, run dialog and dmenu replacement for Wayland
       sushi # Quick previewer for Nautilus
       wayland-utils # Wayland utilities (wayland-info)
       wdisplays # Graphical application for configuring displays in Wayland compositors

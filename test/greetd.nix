@@ -1,9 +1,9 @@
 { self, pkgs }:
-pkgs.nixosTest {
+pkgs.testers.nixosTest {
   name = "superkey-greetd-test";
 
   nodes = {
-    machine = { pkgs, lib, ... }: {
+    machine = { ... }: {
       imports = [
         (import ./common.nix { inherit self; })
       ];

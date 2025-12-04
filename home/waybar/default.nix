@@ -109,7 +109,7 @@ in
           exec = "${pkgs.pkgs.org-clock-dbus}/bin/org-clock-dbus monitor --mode waybar --down-from 25m";
           on-click = "${pkgs.pkgs.org-clock-dbus}/bin/org-clock-dbus stop";
           return-type = "json";
-          format = "{icon} {}";
+          format = "{icon} {text}";
           format-icons.running = "";
           max-length = 100;
         };

@@ -4,7 +4,7 @@ let
   withXwininfo = pkgs.appendOverlays [
     (final: prev: {
       xorg = prev.xorg // {
-        xwininfo = self.packages.${prev.system}.xwininfo-tests;
+        xwininfo = self.packages.${prev.stdenv.hostPlatform.system}.xwininfo-tests;
       };
     })
   ];
@@ -61,12 +61,12 @@ let
             machine.succeed("su - pjones -c check-kill-compositor.sh")
   '';
 in
-withXwininfo.nixosTest {
+withXwininfo.testers.nixosTest {
   name = "superkey-niri-test";
   passthru.testHelpers = testHelpers;
 
   nodes = {
-    machine = { pkgs, lib, ... }: {
+    machine = { pkgs, ... }: {
       imports = [
         (import ./common.nix { inherit self; })
         ./autologin.nix

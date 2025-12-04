@@ -29,7 +29,7 @@ in
             else "bash";
         in
         {
-          command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${cmd}";
+          command = "${pkgs.greetd}/bin/agreety --cmd ${cmd}";
         };
     };
 
@@ -96,7 +96,6 @@ in
         overpass
         pjones.nerd-hyperlegible # From ../pkgs/nerd-hyperlegible.nix
         tt2020
-        ubuntu_font_family
       ];
     };
 

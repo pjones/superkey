@@ -2,12 +2,12 @@
   description = "Peter's Wayland Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    emacsrc.url = "github:pjones/emacsrc/nixos-25.05";
+    emacsrc.url = "github:pjones/emacsrc/nixos-25.11";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
@@ -41,26 +41,28 @@
     {
       ##########################################################################
       overlays = {
-        superkey = final: prev: {
-          org-clock-dbus = self.inputs.org-clock-dbus.packages.${prev.system}.monitor;
+        superkey = final: prev:
+          let system = prev.stdenv.hostPlatform.system;
+          in {
+            org-clock-dbus = self.inputs.org-clock-dbus.packages.${system}.monitor;
 
-          pjones = (prev.pjones or { }) // {
-            avatar = self.packages.${prev.system}.pjones-avatar;
-            nerd-hyperlegible = self.packages.${prev.system}.nerd-hyperlegible;
-            presenter-mode = self.packages.${prev.system}.presenter-mode;
-            rofirc = self.packages.${prev.system}.rofirc;
-            superkey-scripts = self.packages.${prev.system}.superkey-scripts;
-          };
-
-          sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: {
-            version = builtins.substring 0 7 self.inputs.sway-easyfocus;
-            src = self.inputs.sway-easyfocus;
-            cargoDeps = prev.rustPlatform.fetchCargoVendor {
-              src = self.inputs.sway-easyfocus;
-              hash = "sha256-VxcMHh1eIiHugpTFpclwuO0joY95bPz6hVIBHQwB6ZA=";
+            pjones = (prev.pjones or { }) // {
+              avatar = self.packages.${system}.pjones-avatar;
+              nerd-hyperlegible = self.packages.${system}.nerd-hyperlegible;
+              presenter-mode = self.packages.${system}.presenter-mode;
+              rofirc = self.packages.${system}.rofirc;
+              superkey-scripts = self.packages.${system}.superkey-scripts;
             };
-          });
-        };
+
+            sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: {
+              version = builtins.substring 0 7 self.inputs.sway-easyfocus;
+              src = self.inputs.sway-easyfocus;
+              cargoDeps = prev.rustPlatform.fetchCargoVendor {
+                src = self.inputs.sway-easyfocus;
+                hash = "sha256-VxcMHh1eIiHugpTFpclwuO0joY95bPz6hVIBHQwB6ZA=";
+              };
+            });
+          };
       };
 
       ##########################################################################
@@ -74,7 +76,6 @@
           presenter-mode = pkgs.callPackage pkgs/presenter-mode { };
 
           rofirc = pkgs.callPackage pkgs/rofirc {
-            rofi = pkgs.rofi-wayland;
             superkey-scripts = self.packages.${system}.superkey-scripts;
           };
 
@@ -108,12 +109,14 @@
           # Run Niri in a VM:
           niri = {
             type = "app";
+            meta.description = "Run Niri in a VM";
             program = "${self.packages.${system}.niri-vm}/bin/run-superkey-vm";
           };
 
           # Run Sway in a VM:
           sway = {
             type = "app";
+            meta.description = "Run Sway in a VM";
             program = "${self.packages.${system}.sway-vm}/bin/run-superkey-vm";
           };
 
@@ -126,12 +129,14 @@
             in
             {
               type = "app";
+              meta.description = "Take a screenshot of a Sway VM";
               program = "${script}";
             };
 
           # Interactive version of the sway test:
           swayTest = {
             type = "app";
+            meta.description = "Interactively debug a Sway session";
             program = "${self.checks.${system}.sway.driverInteractive}/bin/nixos-test-driver";
           };
         });
@@ -202,11 +207,11 @@
           ];
 
           superkey = {
-            theme = self.packages.${pkgs.system}.theme-outrun;
+            theme = self.packages.${pkgs.stdenv.hostPlatform.system}.theme-outrun;
 
             swaylock =
               let
-                lockBin = "${self.packages.${pkgs.system}.force-lock}/bin";
+                lockBin = "${self.packages.${pkgs.stdenv.hostPlatform.system}.force-lock}/bin";
               in
               {
                 forceLockCmd = "${lockBin}/force-lock.sh";
