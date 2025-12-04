@@ -57,9 +57,6 @@ let
 
             ''spawn-at-startup "${systemdActivation}"''
 
-            (lib.optionalString cfg.xwayland
-              ''spawn-at-startup "xwayland-satellite"'')
-
             cfg.extraConfig
           ];
         }
@@ -85,7 +82,6 @@ let
         exec > >(systemd-cat -t niri-session) 2>&1
 
         export XDG_CURRENT_DESKTOP=${cfg.package.meta.mainProgram}
-        ${lib.optionalString cfg.xwayland "export DISPLAY=:0"}
         ${cfg.extraSessionCommands}
         . "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh"
         systemctl --user import-environment ${variables}
@@ -203,21 +199,12 @@ in
         '';
       };
     };
-
-    xwayland = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = ''
-        Enable Xwayland support via xwayland-satellite.
-      '';
-    };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages =
-      [ finalPackage ]
-      ++ cfg.extraPackages
-      ++ lib.optional cfg.xwayland pkgs.xwayland-satellite;
+      [ finalPackage pkgs.xwayland-satellite ]
+      ++ cfg.extraPackages;
 
     xdg.configFile."niri/config.kdl" =
       let file = configFile;

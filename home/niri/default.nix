@@ -28,11 +28,6 @@ in
         prefer-no-csd = { };
         screenshot-path = "${config.home.homeDirectory}/documents/pictures/screenshots/%Y/Screenshot_%Y%m%d_%H%M%S.png";
 
-        environment = {
-          # FIXME: where else should I put this?
-          DISPLAY = ":0";
-        };
-
         # Only support one named workspace and let the rest be dynamic:
         workspace = [
           { _args = [ (builtins.head config.superkey.workspaceNames) ]; }
