@@ -111,6 +111,7 @@ in
       wev # Wayland event viewer
       wl-clipboard # Command-line copy/paste utilities for Wayland
       wl-mirror # Simple Wayland output mirror client
+      wtype # xdotool type for wayland
     ];
 
     # Ensure the xsession is disabled so Home Manager will enable
