@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.superkey;
@@ -12,15 +17,13 @@ let
   setDefaultImage = pkgs.writeShellApplication {
     name = "set-default-wallpaper";
 
-    runtimeInputs =
-      lib.optional (config.superkey.compositor == "sway") pkgs.swaybg;
+    runtimeInputs = lib.optional (config.superkey.compositor == "sway") pkgs.swaybg;
 
-    text =
-      lib.optionalString (config.superkey.compositor == "sway") ''
-        if [ ! -d "${cfg.wpaperd.primaryWallpaperDirectory}" ]; then
-          exec swaybg --output "${cfg.primaryOutput}" --image ${defaultImage} --mode fill
-        fi
-      '';
+    text = lib.optionalString (config.superkey.compositor == "sway") ''
+      if [ ! -d "${cfg.wpaperd.primaryWallpaperDirectory}" ]; then
+        exec swaybg --output "${cfg.primaryOutput}" --image ${defaultImage} --mode fill
+      fi
+    '';
   };
 in
 {

@@ -1,5 +1,4 @@
-{ stdenvNoCC
-}:
+{ stdenvNoCC }:
 
 stdenvNoCC.mkDerivation {
   name = "test-scripts";

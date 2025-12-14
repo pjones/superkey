@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.superkey;
@@ -21,7 +26,10 @@ in
     enable = lib.mkEnableOption "Enable Wayland configuration.";
 
     compositor = lib.mkOption {
-      type = lib.types.enum [ "niri" "sway" ];
+      type = lib.types.enum [
+        "niri"
+        "sway"
+      ];
       default = "sway";
       description = "The name of the compositor to use";
     };

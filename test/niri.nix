@@ -66,25 +66,25 @@ withXwininfo.testers.nixosTest {
   passthru.testHelpers = testHelpers;
 
   nodes = {
-    machine = { pkgs, ... }: {
-      imports = [
-        (import ./common.nix { inherit self; })
-        ./autologin.nix
-      ];
+    machine =
+      { pkgs, ... }:
+      {
+        imports = [
+          (import ./common.nix { inherit self; })
+          ./autologin.nix
+        ];
 
-      superkey.compositor = "niri";
+        superkey.compositor = "niri";
 
-      environment.systemPackages = [
-        pkgs.fastfetch
-      ];
+        environment.systemPackages = [ pkgs.fastfetch ];
 
-      virtualisation.qemu.options = [
-        #"-spice port=0,disable-ticketing=on,image-compression=off,gl=on,rendernode=/dev/dri/by-path/pci-0000:c1:00.0-render,seamless-migration=on"
-        #"-device virtio-vga-gl,id=video0,max_outputs=1"
-        #"-display spice-app,gl=on"
-        #"-device virtio-gpu-pci"
-      ];
-    };
+        virtualisation.qemu.options = [
+          #"-spice port=0,disable-ticketing=on,image-compression=off,gl=on,rendernode=/dev/dri/by-path/pci-0000:c1:00.0-render,seamless-migration=on"
+          #"-device virtio-vga-gl,id=video0,max_outputs=1"
+          #"-display spice-app,gl=on"
+          #"-device virtio-gpu-pci"
+        ];
+      };
   };
 
   testScript = ''

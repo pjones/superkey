@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.wayland.windowManager.niri;
@@ -6,61 +11,53 @@ let
 
   # Convert an attribute set to KDL and return the corresponding
   # string.
-  toConfig = attrs:
+  toConfig =
+    attrs:
     let
       # Nodes that repeat (list of attribute sets):
-      repeatBlocks =
-        lib.filterAttrs
-          (_name: value: builtins.typeOf value == "list")
-          attrs;
+      repeatBlocks = lib.filterAttrs (_name: value: builtins.typeOf value == "list") attrs;
 
       # All other nodes:
-      settings =
-        builtins.removeAttrs attrs
-          (builtins.attrNames repeatBlocks);
+      settings = builtins.removeAttrs attrs (builtins.attrNames repeatBlocks);
 
-      repeatBlocksToKDL =
-        lib.concatStringsSep "\n"
-          (lib.mapAttrsToList
-            (name: blocks:
-              lib.concatMapStringsSep "\n"
-                (block: toKDL { ${name} = block; })
-                blocks)
-            repeatBlocks);
+      repeatBlocksToKDL = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (
+          name: blocks: lib.concatMapStringsSep "\n" (block: toKDL { ${name} = block; }) blocks
+        ) repeatBlocks
+      );
     in
-    toKDL settings
-    + repeatBlocksToKDL;
+    toKDL settings + repeatBlocksToKDL;
 
   # Return a string containing the Niri configuration or `null` if the
   # user is managing the configuration manually.
   configFile =
     let
       text =
-        if cfg.config != null
-        then cfg.config
-        else if cfg.settings != null
-        then toConfig cfg.settings
-        else null;
+        if cfg.config != null then
+          cfg.config
+        else if cfg.settings != null then
+          toConfig cfg.settings
+        else
+          null;
     in
-    if text != null
-    then
-      pkgs.writeTextFile
-        {
-          name = "config.kdl";
+    if text != null then
+      pkgs.writeTextFile {
+        name = "config.kdl";
 
-          checkPhase = ''
-            ${cfg.package}/bin/niri validate --config "$target"
-          '';
+        checkPhase = ''
+          ${cfg.package}/bin/niri validate --config "$target"
+        '';
 
-          text = lib.concatStringsSep "\n" [
-            text
+        text = lib.concatStringsSep "\n" [
+          text
 
-            ''spawn-at-startup "${systemdActivation}"''
+          ''spawn-at-startup "${systemdActivation}"''
 
-            cfg.extraConfig
-          ];
-        }
-    else null;
+          cfg.extraConfig
+        ];
+      }
+    else
+      null;
 
   systemdActivation = pkgs.writeShellScript "niri-systemd-activation" ''
     systemctl --user reset-failed
@@ -72,10 +69,7 @@ let
   # one that works with Home Manager.
   finalPackage =
     let
-      variables =
-        lib.concatMapStringsSep " "
-          lib.escapeShellArg
-          cfg.systemd.variables;
+      variables = lib.concatMapStringsSep " " lib.escapeShellArg cfg.systemd.variables;
 
       sessionCommand = pkgs.writeShellScript "niri-session" ''
         set -o errexit
@@ -202,13 +196,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages =
-      [ finalPackage pkgs.xwayland-satellite ]
-      ++ cfg.extraPackages;
+    home.packages = [
+      finalPackage
+      pkgs.xwayland-satellite
+    ]
+    ++ cfg.extraPackages;
 
     xdg.configFile."niri/config.kdl" =
-      let file = configFile;
-      in lib.mkIf (file != null) { source = file; };
+      let
+        file = configFile;
+      in
+      lib.mkIf (file != null) { source = file; };
 
     xdg.portal = {
       enable = true;
@@ -219,7 +217,10 @@ in
       ];
 
       config.niri = {
-        default = [ "gnome" "gtk" ];
+        default = [
+          "gnome"
+          "gtk"
+        ];
         "org.freedesktop.impl.portal.Access" = "gtk";
         "org.freedesktop.impl.portal.Notification" = "gtk";
         "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
@@ -229,8 +230,14 @@ in
     systemd.user.targets.niri-session = {
       Unit = {
         Description = "A scrollable-tiling Wayland compositor";
-        BindsTo = [ "graphical-session.target" "tray.target" ];
-        Wants = [ "graphical-session-pre.target" "xdg-desktop-autostart.target" ];
+        BindsTo = [
+          "graphical-session.target"
+          "tray.target"
+        ];
+        Wants = [
+          "graphical-session-pre.target"
+          "xdg-desktop-autostart.target"
+        ];
         After = [ "graphical-session-pre.target" ];
         Before = [ "xdg-desktop-autostart.target" ];
       };

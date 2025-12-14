@@ -5,9 +5,7 @@ let
   colors = config.superkey.theme.colors;
 in
 {
-  imports = [
-    ./module.nix
-  ];
+  imports = [ ./module.nix ];
 
   options.superkey.niri = {
     enable = lib.mkOption {
@@ -29,9 +27,7 @@ in
         screenshot-path = "${config.home.homeDirectory}/documents/pictures/screenshots/%Y/Screenshot_%Y%m%d_%H%M%S.png";
 
         # Only support one named workspace and let the rest be dynamic:
-        workspace = [
-          { _args = [ (builtins.head config.superkey.workspaceNames) ]; }
-        ];
+        workspace = [ { _args = [ (builtins.head config.superkey.workspaceNames) ]; } ];
 
         cursor = {
           xcursor-theme = config.gtk.cursorTheme.name;
@@ -100,7 +96,10 @@ in
             on = { };
             softness = 30;
             spread = 5;
-            offset._props = { x = 0; y = 5; };
+            offset._props = {
+              x = 0;
+              y = 5;
+            };
             color = "#00000070";
           };
 
@@ -116,7 +115,9 @@ in
             gap = 4;
             gaps-between-tabs = 0;
             hide-when-single-tab = { };
-            length._props = { total-proportion = 0.9; };
+            length._props = {
+              total-proportion = 0.9;
+            };
             position = "left";
             width = 4;
 
@@ -250,24 +251,29 @@ in
             };
 
             shell = cmd: {
-              spawn = [ "sh" "-c" cmd ];
+              spawn = [
+                "sh"
+                "-c"
+                cmd
+              ];
             };
 
-            workspaces =
-              lib.mergeAttrsList (lib.map
-                (index:
-                  let
-                    key = builtins.toString (lib.mod index 10);
-                  in
-                  {
-                    "Mod+${key}".focus-workspace = index;
-                    "Mod+Shift+${key}".move-window-to-workspace = index;
-                    "Mod+Ctrl+${key}".move-workspace-to-index = index;
-                  })
-                (lib.range 1 10));
+            workspaces = lib.mergeAttrsList (
+              lib.map (
+                index:
+                let
+                  key = builtins.toString (lib.mod index 10);
+                in
+                {
+                  "Mod+${key}".focus-workspace = index;
+                  "Mod+Shift+${key}".move-window-to-workspace = index;
+                  "Mod+Ctrl+${key}".move-workspace-to-index = index;
+                }
+              ) (lib.range 1 10)
+            );
           in
-          workspaces //
-          {
+          workspaces
+          // {
             # Focus and move windows:
             "Mod+Ctrl+A".focus-column-first = { };
             "Mod+Ctrl+E".focus-column-last = { };
@@ -328,29 +334,63 @@ in
 
             # Applications and utilities:
             "Mod+B".spawn = [ "browser" ];
-            "Mod+E".spawn = [ "e" "-c" ];
+            "Mod+E".spawn = [
+              "e"
+              "-c"
+            ];
             "Mod+Escape".toggle-keyboard-shortcuts-inhibit = { };
             "Mod+I".spawn = [ "toggle-presenter-mode" ];
             "Mod+Print".screenshot-window = { };
             "Mod+Return".spawn = [ "eterm" ];
             "Mod+Shift+Slash".show-hotkey-overlay = { };
             "Mod+Space".spawn = [ "rofi-launcher.sh" ];
-            "Mod+Tab".spawn = [ "swaync-client" "-t" ];
+            "Mod+Tab".spawn = [
+              "swaync-client"
+              "-t"
+            ];
             "Mod+X".spawn = [ "rofi-niri.sh" ];
             Cancel = shell config.superkey.swaylock.forceLockCmd;
             Print.screenshot = { };
             XF86AudioMedia = shell config.superkey.commands.sendClipboard;
             XF86Launch5 = shell config.superkey.commands.sendClipboard;
-            XF86MonBrightnessDown.spawn = [ "brightnessctl" "set" "5%-" ];
-            XF86MonBrightnessUp.spawn = [ "brightnessctl" "set" "+5%" ];
+            XF86MonBrightnessDown.spawn = [
+              "brightnessctl"
+              "set"
+              "5%-"
+            ];
+            XF86MonBrightnessUp.spawn = [
+              "brightnessctl"
+              "set"
+              "+5%"
+            ];
 
             # Audio commands:
-            XF86AudioLowerVolume = audio [ "pamixer" "--decrease" "5" ];
-            XF86AudioMute = audio [ "pamixer" "--toggle-mute" ];
-            XF86AudioNext = audio [ "playerctl" "next" ];
-            XF86AudioPlay = audio [ "playerctl" "play-pause" ];
-            XF86AudioPrev = audio [ "playerctl" "previous" ];
-            XF86AudioRaiseVolume = audio [ "pamixer" "--increase" "5" ];
+            XF86AudioLowerVolume = audio [
+              "pamixer"
+              "--decrease"
+              "5"
+            ];
+            XF86AudioMute = audio [
+              "pamixer"
+              "--toggle-mute"
+            ];
+            XF86AudioNext = audio [
+              "playerctl"
+              "next"
+            ];
+            XF86AudioPlay = audio [
+              "playerctl"
+              "play-pause"
+            ];
+            XF86AudioPrev = audio [
+              "playerctl"
+              "previous"
+            ];
+            XF86AudioRaiseVolume = audio [
+              "pamixer"
+              "--increase"
+              "5"
+            ];
             XF86Launch6 = audio [ "superkey-paswitch.sh" ];
           };
       };

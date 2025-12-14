@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.superkey;
@@ -8,7 +13,10 @@ in
     enable = lib.mkEnableOption "Enable Wayland configuration.";
 
     compositor = lib.mkOption {
-      type = lib.types.enum [ "niri" "sway" ];
+      type = lib.types.enum [
+        "niri"
+        "sway"
+      ];
       default = "sway";
       description = "The name of the compositor to use";
     };
@@ -22,11 +30,12 @@ in
       settings.default_session =
         let
           cmd =
-            if cfg.compositor == "sway"
-            then "sway"
-            else if cfg.compositor == "niri"
-            then "niri-session"
-            else "bash";
+            if cfg.compositor == "sway" then
+              "sway"
+            else if cfg.compositor == "niri" then
+              "niri-session"
+            else
+              "bash";
         in
         {
           command = "${pkgs.greetd}/bin/agreety --cmd ${cmd}";
@@ -80,7 +89,10 @@ in
 
     # For setting GTK themes:
     programs.dconf.enable = true;
-    services.dbus.packages = [ pkgs.dconf pkgs.sushi ];
+    services.dbus.packages = [
+      pkgs.dconf
+      pkgs.sushi
+    ];
 
     # Fonts:
     fonts = {
@@ -100,9 +112,11 @@ in
     };
 
     # Enable the Home Manager module too:
-    home-manager.users.pjones = { ... }: {
-      superkey.enable = true;
-      superkey.compositor = lib.mkDefault cfg.compositor;
-    };
+    home-manager.users.pjones =
+      { ... }:
+      {
+        superkey.enable = true;
+        superkey.compositor = lib.mkDefault cfg.compositor;
+      };
   };
 }

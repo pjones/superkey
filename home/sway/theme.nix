@@ -1,11 +1,15 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   cfg = config.superkey.sway;
   colors = config.superkey.theme.colors;
 
-  rrggbb = color:
-    builtins.substring 1 (builtins.stringLength color - 1) color;
+  rrggbb = color: builtins.substring 1 (builtins.stringLength color - 1) color;
 in
 {
   config = lib.mkIf cfg.enable {

@@ -1,8 +1,9 @@
-{ stdenvNoCC
-, makeWrapper
-, lib
-, procps
-, systemd
+{
+  stdenvNoCC,
+  makeWrapper,
+  lib,
+  procps,
+  systemd,
 }:
 
 let

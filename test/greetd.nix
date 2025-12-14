@@ -3,11 +3,11 @@ pkgs.testers.nixosTest {
   name = "superkey-greetd-test";
 
   nodes = {
-    machine = { ... }: {
-      imports = [
-        (import ./common.nix { inherit self; })
-      ];
-    };
+    machine =
+      { ... }:
+      {
+        imports = [ (import ./common.nix { inherit self; }) ];
+      };
   };
 
   testScript = ''

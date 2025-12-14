@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   cfg = config.superkey.sway;
@@ -14,79 +19,94 @@ let
   };
 
   # Focus the next container visually:
-  visualFocus = direction:
-    let dirChar = builtins.substring 0 1 direction;
-    in "sway-overfocus split-${dirChar}t float-${dirChar}t";
+  visualFocus =
+    direction:
+    let
+      dirChar = builtins.substring 0 1 direction;
+    in
+    "sway-overfocus split-${dirChar}t float-${dirChar}t";
 
   # Window focus and movement:
-  windows = lib.foldl' lib.mergeAttrs { } (lib.mapAttrsToList
-    (direction: key: {
+  windows = lib.foldl' lib.mergeAttrs { } (
+    lib.mapAttrsToList (direction: key: {
       # Focus a (split) window in the given direction:
       "${modifier}+${key}" = "exec ${visualFocus direction}";
 
       # Move a window in the given direction:
       "${modifier}+Shift+${key}" = "move ${direction}";
-    })
-    motion);
+    }) motion
+  );
 
   # Switch workspace, move window to workspace.  Returns a string so
   # that workspaces are in the correct order.
-  workspaces = lib.concatMapStringsSep "\n"
-    (workspace:
-      let
-        key = toString (if workspace.number == 10 then 0 else workspace.number);
-        name = "${toString workspace.number}:${workspace.name}";
-      in
-      ''
-        bindsym ${modifier}+${key} workspace number ${name}
-        bindsym ${modifier}+Shift+${key} move container to workspace number ${name}
-      '')
-    (lib.zipListsWith (number: name: { inherit number name; })
-      (lib.range 1 10)
-      config.superkey.workspaceNames);
+  workspaces =
+    lib.concatMapStringsSep "\n"
+      (
+        workspace:
+        let
+          key = toString (if workspace.number == 10 then 0 else workspace.number);
+          name = "${toString workspace.number}:${workspace.name}";
+        in
+        ''
+          bindsym ${modifier}+${key} workspace number ${name}
+          bindsym ${modifier}+Shift+${key} move container to workspace number ${name}
+        ''
+      )
+      (
+        lib.zipListsWith (number: name: {
+          inherit number name;
+        }) (lib.range 1 10) config.superkey.workspaceNames
+      );
 
   # Ensure modes have an escape hatch:
-  mkMode = bindings: bindings // {
-    "Escape" = "mode default";
-    "Control+g" = "mode default";
-  };
+  mkMode =
+    bindings:
+    bindings
+    // {
+      "Escape" = "mode default";
+      "Control+g" = "mode default";
+    };
 
   # Keys available for marking windows:
   marks = import ./alphabet.nix;
 
   # Make a mode out of all marks that run the given command:
-  mkMarkModeMod = mod: command: mkMode (builtins.listToAttrs (map
-    (char: {
-      name = if mod != null then "${mod}+${char}" else char;
-      value = "${command char}; mode default";
-    })
-    marks));
+  mkMarkModeMod =
+    mod: command:
+    mkMode (
+      builtins.listToAttrs (
+        map (char: {
+          name = if mod != null then "${mod}+${char}" else char;
+          value = "${command char}; mode default";
+        }) marks
+      )
+    );
 
   mkMarkMode = mkMarkModeMod null;
 
-  gromit-toggle =
-    pkgs.writeShellScript "gromit-toggle"
-      (builtins.readFile ../../support/scripts/gromit-mpx-toggle.sh);
+  gromit-toggle = pkgs.writeShellScript "gromit-toggle" (
+    builtins.readFile ../../support/scripts/gromit-mpx-toggle.sh
+  );
 
-  scratchpad-toggle =
-    pkgs.writeShellScript "sway-scratchpad-toggle"
-      (builtins.readFile ../../support/scripts/sway-scratchpad-toggle.sh);
+  scratchpad-toggle = pkgs.writeShellScript "sway-scratchpad-toggle" (
+    builtins.readFile ../../support/scripts/sway-scratchpad-toggle.sh
+  );
 
-  scratchpad-push =
-    pkgs.writeShellScript "sway-scratchpad-push"
-      (builtins.readFile ../../support/scripts/sway-scratchpad-push.sh);
+  scratchpad-push = pkgs.writeShellScript "sway-scratchpad-push" (
+    builtins.readFile ../../support/scripts/sway-scratchpad-push.sh
+  );
 
-  scratchpad-pop =
-    pkgs.writeShellScript "sway-scratchpad-pop"
-      (builtins.readFile ../../support/scripts/sway-scratchpad-pop.sh);
+  scratchpad-pop = pkgs.writeShellScript "sway-scratchpad-pop" (
+    builtins.readFile ../../support/scripts/sway-scratchpad-pop.sh
+  );
 
-  scratchpad-fetch =
-    pkgs.writeShellScript "sway-scratchpad-fetch"
-      (builtins.readFile ../../support/scripts/sway-scratchpad-fetch.sh);
+  scratchpad-fetch = pkgs.writeShellScript "sway-scratchpad-fetch" (
+    builtins.readFile ../../support/scripts/sway-scratchpad-fetch.sh
+  );
 
-  sway-move-all-workspaces =
-    pkgs.writeShellScript "sway-move-all-workspaces"
-      (builtins.readFile ../../support/scripts/sway-move-all-workspaces.sh);
+  sway-move-all-workspaces = pkgs.writeShellScript "sway-move-all-workspaces" (
+    builtins.readFile ../../support/scripts/sway-move-all-workspaces.sh
+  );
 in
 {
   config = lib.mkIf cfg.enable {
@@ -97,7 +117,12 @@ in
 
     wayland.windowManager.sway.config = {
       inherit modifier;
-      inherit (motion) left down up right;
+      inherit (motion)
+        left
+        down
+        up
+        right
+        ;
 
       keybindings = windows // {
         # Windows:
@@ -150,9 +175,7 @@ in
         XF86MonBrightnessDown = "exec brightnessctl set 5%-";
       };
 
-      floating = {
-        inherit modifier;
-      };
+      floating = { inherit modifier; };
 
       modes.window = mkMode {
         "0" = "kill; mode default";
@@ -205,12 +228,12 @@ in
             value = "opacity set 0.${toString tenth}";
           };
         in
-        mkMode
-          {
-            "${motion.down}" = "opacity minus 0.05";
-            "${motion.up}" = "opacity plus 0.05";
-            "o" = "opacity set 1.0; mode default";
-          } // lib.listToAttrs (map set (lib.range 0 9));
+        mkMode {
+          "${motion.down}" = "opacity minus 0.05";
+          "${motion.up}" = "opacity plus 0.05";
+          "o" = "opacity set 1.0; mode default";
+        }
+        // lib.listToAttrs (map set (lib.range 0 9));
 
       modes.mark = mkMarkMode (char: "mark --add --toggle ${char}");
       modes.jump = mkMarkMode (char: "[con_mark=\"${char}\"] focus");
@@ -242,31 +265,31 @@ in
 
       modes.swap =
         let
-          swapInDirection = dir: pkgs.writeShellScript "sway-swap-${dir}" ''
-            swaymsg -- mark --add _swap
-            ${visualFocus dir}
-            swaymsg -- swap container with mark _swap
-            swaymsg -- '[con_mark="_swap"]' focus
-            swaymsg -- unmark _swap
-          '';
+          swapInDirection =
+            dir:
+            pkgs.writeShellScript "sway-swap-${dir}" ''
+              swaymsg -- mark --add _swap
+              ${visualFocus dir}
+              swaymsg -- swap container with mark _swap
+              swaymsg -- '[con_mark="_swap"]' focus
+              swaymsg -- unmark _swap
+            '';
 
           motionBindings = lib.listToAttrs (
-            lib.mapAttrsToList
-              (direction: key: {
-                name = "${key}";
-                value = "exec ${swapInDirection direction}";
-              })
-              motion);
+            lib.mapAttrsToList (direction: key: {
+              name = "${key}";
+              value = "exec ${swapInDirection direction}";
+            }) motion
+          );
         in
-        motionBindings // mkMode {
-          "g" = "mode swap_with_mark";
-        };
+        motionBindings // mkMode { "g" = "mode swap_with_mark"; };
 
       modes.swap_with_mark = mkMarkMode (char: "swap container with mark ${char}");
 
       modes.scratchpad =
-        (mkMarkMode (char: "exec ${scratchpad-fetch} ${char}")) //
-        (mkMarkModeMod modifier (char: "exec ${scratchpad-push} ${char}")) // {
+        (mkMarkMode (char: "exec ${scratchpad-fetch} ${char}"))
+        // (mkMarkModeMod modifier (char: "exec ${scratchpad-push} ${char}"))
+        // {
           "BackSpace" = "exec ${scratchpad-pop}; mode default";
           "Space" = "scratchpad show"; # Cycle through scratchpads.
         };
@@ -283,6 +306,7 @@ in
       bindsym --locked XF86Launch6 exec superkey-paswitch.sh
 
       bindsym --release --no-repeat Cancel exec ${config.superkey.swaylock.forceLockCmd}
-    '' + lib.concatStringsSep "\n" [ workspaces ];
+    ''
+    + lib.concatStringsSep "\n" [ workspaces ];
   };
 }

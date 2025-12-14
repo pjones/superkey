@@ -1,4 +1,9 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 let
   cfg = config.superkey.waybar;
@@ -30,14 +35,16 @@ in
         position = "bottom";
         height = lib.mkDefault 24;
 
-        modules-left = lib.optionals (config.superkey.compositor == "sway") [
-          "sway/mode"
-          "sway/workspaces"
-          "sway/window"
-        ] ++ lib.optionals (config.superkey.compositor == "niri") [
-          "niri/workspaces"
-          "niri/window"
-        ];
+        modules-left =
+          lib.optionals (config.superkey.compositor == "sway") [
+            "sway/mode"
+            "sway/workspaces"
+            "sway/window"
+          ]
+          ++ lib.optionals (config.superkey.compositor == "niri") [
+            "niri/workspaces"
+            "niri/window"
+          ];
 
         modules-center = [
           "keyboard-state"
@@ -118,7 +125,11 @@ in
           format = "{status_icon} {dynamic}";
           format-paused = "{status_icon} {dynamic}";
           format-stopped = "";
-          dynamic-order = [ "artist" "title" "album" ];
+          dynamic-order = [
+            "artist"
+            "title"
+            "album"
+          ];
           dynamic-len = 45;
           status-icons = {
             playing = "";
@@ -129,7 +140,11 @@ in
 
         backlight = {
           format = "{icon} {percent}%";
-          format-icons = [ "󰃞" "󰃟" "󰃠" ];
+          format-icons = [
+            "󰃞"
+            "󰃟"
+            "󰃠"
+          ];
         };
 
         battery =
@@ -142,7 +157,18 @@ in
             format-charging = charging;
             format-discharging = discharging;
             format-time = "{H}:{m}";
-            format-icons = [ "󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" ];
+            format-icons = [
+              "󰂃"
+              "󰁺"
+              "󰁻"
+              "󰁼"
+              "󰁽"
+              "󰁾"
+              "󰁿"
+              "󰂀"
+              "󰂁"
+              "󰂂"
+            ];
             states = {
               warning = 30;
               critical = 15;
@@ -200,7 +226,12 @@ in
           format = "{icon} {volume}%";
           format-muted = "";
           on-click = "";
-          format-icons = [ "" "" "" "󰕾" ];
+          format-icons = [
+            ""
+            ""
+            ""
+            "󰕾"
+          ];
         };
 
         tray = {

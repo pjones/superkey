@@ -1,15 +1,16 @@
-{ stdenvNoCC
-, lib
-, makeWrapper
-, coreutils
-, findutils
-, gawk
-, glib
-, gnugrep
-, jq
-, netcat
-, openssh
-, procps
+{
+  stdenvNoCC,
+  lib,
+  makeWrapper,
+  coreutils,
+  findutils,
+  gawk,
+  glib,
+  gnugrep,
+  jq,
+  netcat,
+  openssh,
+  procps,
 }:
 
 let
@@ -32,9 +33,7 @@ stdenvNoCC.mkDerivation rec {
   version = "0.1.0";
   src = ./.;
 
-  buildInputs = [
-    makeWrapper
-  ] ++ deps;
+  buildInputs = [ makeWrapper ] ++ deps;
 
   installPhase = ''
     mkdir -p "$out/scripts" "$out/bin"

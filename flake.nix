@@ -17,33 +17,36 @@
     org-clock-dbus.url = "github:pjones/org-clock-dbus";
   };
 
-  outputs = { self, nixpkgs, ... }:
+  outputs =
+    { self, nixpkgs, ... }:
     let
       # What state version to use for the VM:
       stateVersion = "24.11";
 
       # List of supported systems:
-      supportedSystems = [
-        "x86_64-linux"
-      ];
+      supportedSystems = [ "x86_64-linux" ];
 
       # Function to generate a set based on supported systems:
-      forAllSystems = f:
-        nixpkgs.lib.genAttrs supportedSystems (system: f system);
+      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
 
       # Attribute set of nixpkgs for each system:
-      nixpkgsFor = forAllSystems (system:
+      nixpkgsFor = forAllSystems (
+        system:
         import nixpkgs {
           inherit system;
           overlays = builtins.attrValues self.overlays;
-        });
+        }
+      );
     in
     {
       ##########################################################################
       overlays = {
-        superkey = final: prev:
-          let system = prev.stdenv.hostPlatform.system;
-          in {
+        superkey =
+          final: prev:
+          let
+            system = prev.stdenv.hostPlatform.system;
+          in
+          {
             org-clock-dbus = self.inputs.org-clock-dbus.packages.${system}.monitor;
 
             pjones = (prev.pjones or { }) // {
@@ -66,9 +69,12 @@
       };
 
       ##########################################################################
-      packages = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
-        in {
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
           force-lock = pkgs.callPackage pkgs/force-lock { };
           nerd-hyperlegible = pkgs.callPackage pkgs/nerd-hyperlegible.nix { };
 
@@ -81,28 +87,31 @@
 
           superkey-scripts = pkgs.callPackage pkgs/scripts { };
 
-          theme-dracula = pkgs.callPackage pkgs/theme {
-            colors = pkgs/theme/dracula.json;
-          };
+          theme-dracula = pkgs.callPackage pkgs/theme { colors = pkgs/theme/dracula.json; };
 
-          theme-outrun = pkgs.callPackage pkgs/theme {
-            colors = pkgs/theme/outrun.json;
-          };
+          theme-outrun = pkgs.callPackage pkgs/theme { colors = pkgs/theme/outrun.json; };
 
           niri-vm = self.nixosConfigurations.niri-vm.config.system.build.vm;
           sway-vm = self.nixosConfigurations.sway-vm.config.system.build.vm;
 
           xwininfo-tests = pkgs.writeShellApplication {
             name = "xwininfo";
-            runtimeInputs = with pkgs; [ jq swayfx ];
+            runtimeInputs = with pkgs; [
+              jq
+              swayfx
+            ];
             text = builtins.readFile ./support/scripts/xwininfo-tests;
           };
-        });
+        }
+      );
 
       ##########################################################################
-      apps = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
-        in {
+      apps = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
           # Launch a VM running Peter's configuration:
           default = self.apps.${system}.sway;
 
@@ -139,19 +148,22 @@
             meta.description = "Interactively debug a Sway session";
             program = "${self.checks.${system}.sway.driverInteractive}/bin/nixos-test-driver";
           };
-        });
+        }
+      );
 
       ##########################################################################
       nixosConfigurations =
         let
-          vmBase = module: nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              { nixpkgs.pkgs = nixpkgsFor.x86_64-linux; }
-              { system.stateVersion = stateVersion; }
-              self.nixosModules.${module}
-            ];
-          };
+          vmBase =
+            module:
+            nixpkgs.lib.nixosSystem {
+              system = "x86_64-linux";
+              modules = [
+                { nixpkgs.pkgs = nixpkgsFor.x86_64-linux; }
+                { system.stateVersion = stateVersion; }
+                self.nixosModules.${module}
+              ];
+            };
         in
         {
           niri-vm = vmBase "niri-vm";
@@ -161,16 +173,12 @@
       ##########################################################################
       nixosModules = {
         default = {
-          imports = [
-            ./nixos
-          ];
+          imports = [ ./nixos ];
         };
 
         # A virtual machine running Niri:
         niri-vm = {
-          imports = [
-            (import test/vm.nix { inherit self; })
-          ];
+          imports = [ (import test/vm.nix { inherit self; }) ];
 
           superkey.compositor = "niri";
 
@@ -183,9 +191,7 @@
 
         # A virtual machine running Sway:
         sway-vm = {
-          imports = [
-            (import test/vm.nix { inherit self; })
-          ];
+          imports = [ (import test/vm.nix { inherit self; }) ];
 
           superkey.compositor = "sway";
         };
@@ -201,46 +207,55 @@
 
       ##########################################################################
       homeManagerModules = {
-        default = { pkgs, ... }: {
-          imports = [
-            ./home
-          ];
+        default =
+          { pkgs, ... }:
+          {
+            imports = [ ./home ];
 
-          superkey = {
-            theme = self.packages.${pkgs.stdenv.hostPlatform.system}.theme-outrun;
+            superkey = {
+              theme = self.packages.${pkgs.stdenv.hostPlatform.system}.theme-outrun;
 
-            swaylock =
-              let
-                lockBin = "${self.packages.${pkgs.stdenv.hostPlatform.system}.force-lock}/bin";
-              in
-              {
-                forceLockCmd = "${lockBin}/force-lock.sh";
-                stopAllInhibitorsCmd = "${lockBin}/stop-idle-inhibitors.sh";
-                startAllInhibitorsCmd = "${lockBin}/start-idle-inhibitors.sh";
-              };
+              swaylock =
+                let
+                  lockBin = "${self.packages.${pkgs.stdenv.hostPlatform.system}.force-lock}/bin";
+                in
+                {
+                  forceLockCmd = "${lockBin}/force-lock.sh";
+                  stopAllInhibitorsCmd = "${lockBin}/stop-idle-inhibitors.sh";
+                  startAllInhibitorsCmd = "${lockBin}/start-idle-inhibitors.sh";
+                };
+            };
           };
-        };
 
-        vm = { ... }: {
-          imports = [
-            { home.stateVersion = stateVersion; }
-            self.homeManagerModules.default
-          ];
-        };
+        vm =
+          { ... }:
+          {
+            imports = [
+              { home.stateVersion = stateVersion; }
+              self.homeManagerModules.default
+            ];
+          };
       };
 
       ##########################################################################
-      checks = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
-        in {
+      checks = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
           niri = import test/niri.nix { inherit pkgs self; };
           sway = import test/sway.nix { inherit pkgs self; };
           greetd = import test/greetd.nix { inherit pkgs self; };
-        });
+        }
+      );
 
       ##########################################################################
-      devShells = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system}; in
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
         {
           default = pkgs.mkShell {
             NIX_PATH = "nixpkgs=${pkgs.path}";
@@ -250,6 +265,7 @@
               pkgs.nixpkgs-fmt
             ];
           };
-        });
+        }
+      );
     };
 }

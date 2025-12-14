@@ -2,9 +2,7 @@
 
 {
   config = lib.mkMerge [
-    {
-      hardware.graphics.enable = true;
-    }
+    { hardware.graphics.enable = true; }
 
     (lib.mkIf (config.superkey.compositor == "sway") {
       environment.sessionVariables = {

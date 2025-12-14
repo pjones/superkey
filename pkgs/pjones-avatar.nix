@@ -1,11 +1,15 @@
-{ stdenvNoCC
-, fetchurl
-, imagemagick
+{
+  stdenvNoCC,
+  fetchurl,
+  imagemagick,
 }:
 
 stdenvNoCC.mkDerivation rec {
   name = "pjones-avatar";
-  phases = [ "installPhase" "fixupPhase" ];
+  phases = [
+    "installPhase"
+    "fixupPhase"
+  ];
 
   src = fetchurl {
     url = "https://avatars2.githubusercontent.com/u/3737";

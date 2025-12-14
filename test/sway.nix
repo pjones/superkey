@@ -61,23 +61,23 @@ withXwininfo.testers.nixosTest {
   passthru.testHelpers = testHelpers;
 
   nodes = {
-    machine = { pkgs, ... }: {
-      imports = [
-        (import ./common.nix { inherit self; })
-        ./autologin.nix
-      ];
+    machine =
+      { pkgs, ... }:
+      {
+        imports = [
+          (import ./common.nix { inherit self; })
+          ./autologin.nix
+        ];
 
-      superkey.compositor = "sway";
+        superkey.compositor = "sway";
 
-      environment.systemPackages = [
-        pkgs.fastfetch
-      ];
+        environment.systemPackages = [ pkgs.fastfetch ];
 
-      environment.sessionVariables = {
-        # Fixed location for tests:
-        SWAYSOCK = "/tmp/compositor-ipc.sock";
+        environment.sessionVariables = {
+          # Fixed location for tests:
+          SWAYSOCK = "/tmp/compositor-ipc.sock";
+        };
       };
-    };
   };
 
   testScript = ''

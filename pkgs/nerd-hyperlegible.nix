@@ -1,6 +1,7 @@
-{ stdenvNoCC
-, atkinson-hyperlegible
-, nerd-font-patcher
+{
+  stdenvNoCC,
+  atkinson-hyperlegible,
+  nerd-font-patcher,
 }:
 
 stdenvNoCC.mkDerivation {
@@ -9,9 +10,7 @@ stdenvNoCC.mkDerivation {
   dontUnpack = true;
   dontBuild = true;
 
-  buildInputs = [
-    nerd-font-patcher
-  ];
+  buildInputs = [ nerd-font-patcher ];
 
   installPhase = ''
     dest="$out/share/fonts/opentype"

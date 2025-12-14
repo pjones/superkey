@@ -1,7 +1,8 @@
-{ lib
-, stdenvNoCC
-, ruby
-, colors
+{
+  lib,
+  stdenvNoCC,
+  ruby,
+  colors,
 }:
 
 stdenvNoCC.mkDerivation {
@@ -17,9 +18,7 @@ stdenvNoCC.mkDerivation {
     colors = lib.importJSON colors;
   };
 
-  buildInputs = [
-    ruby
-  ];
+  buildInputs = [ ruby ];
 
   installPhase = ''
     runHook preInstall

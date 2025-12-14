@@ -1,15 +1,11 @@
-{ stdenvNoCC
-, glib
-}:
+{ stdenvNoCC, glib }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "presenter-mode";
   version = "0.1.0";
   src = ./.;
 
-  buildInputs = [
-    glib
-  ];
+  buildInputs = [ glib ];
 
   installPhase = ''
     export schema_dir="$out/share/gsettings-schema/${pname}-${version}/glib-2.0/schemas"

@@ -1,10 +1,11 @@
-{ stdenvNoCC
-, lib
-, makeWrapper
-, bash
-, coreutils
-, rofi
-, superkey-scripts
+{
+  stdenvNoCC,
+  lib,
+  makeWrapper,
+  bash,
+  coreutils,
+  rofi,
+  superkey-scripts,
 }:
 let
   deps = [
@@ -19,7 +20,11 @@ in
 stdenvNoCC.mkDerivation {
   name = "rofirc";
   src = ./.;
-  phases = [ "unpackPhase" "installPhase" "fixupPhase" ];
+  phases = [
+    "unpackPhase"
+    "installPhase"
+    "fixupPhase"
+  ];
   buildInputs = [ makeWrapper ];
 
   installPhase = ''

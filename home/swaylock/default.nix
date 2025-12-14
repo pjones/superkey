@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.superkey.swaylock;
@@ -124,9 +129,7 @@ in
   };
 
   config = lib.mkIf config.superkey.enable {
-    home.packages = [
-      pkgs.wayland-pipewire-idle-inhibit
-    ];
+    home.packages = [ pkgs.wayland-pipewire-idle-inhibit ];
 
     xdg.desktopEntries = {
       lock-screen = {
@@ -184,8 +187,14 @@ in
       extraArgs = [ "-w" ];
 
       timeouts = [
-        { timeout = lockTimeout; command = "${loginctl} lock-session"; }
-        { timeout = secureTimeout; command = pre-suspend-script; }
+        {
+          timeout = lockTimeout;
+          command = "${loginctl} lock-session";
+        }
+        {
+          timeout = secureTimeout;
+          command = pre-suspend-script;
+        }
         {
           timeout = blankTimeout;
           command = "${onIdleCommand}/bin/on-superkey-idle";
@@ -234,8 +243,7 @@ in
           { name = "Built-in"; }
         ];
 
-        node_blacklist = [
-        ];
+        node_blacklist = [ ];
       };
 
     systemd.user.services.wayland-pipewire-idle-inhibit = {

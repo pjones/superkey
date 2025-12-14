@@ -1,12 +1,19 @@
 { self }:
 
-{ lib, pkgs, modulesPath, ... }:
+{
+  lib,
+  pkgs,
+  modulesPath,
+  ...
+}:
 let
-  waybarWrapper = home: pkgs.writeShellScript "waybar-wrapper" ''
-    # Enable waybar debugging:
-    # export GTK_DEBUG="interactive"
-    ${home.programs.waybar.package}/bin/waybar -l debug
-  '';
+  waybarWrapper =
+    home:
+    pkgs.writeShellScript "waybar-wrapper" ''
+      # Enable waybar debugging:
+      # export GTK_DEBUG="interactive"
+      ${home.programs.waybar.package}/bin/waybar -l debug
+    '';
 in
 {
   imports = [
@@ -30,11 +37,13 @@ in
         target = "/mnt";
       };
 
-      forwardPorts = [{
-        from = "host";
-        host.port = 2222;
-        guest.port = 22;
-      }];
+      forwardPorts = [
+        {
+          from = "host";
+          host.port = 2222;
+          guest.port = 22;
+        }
+      ];
     };
 
     nixpkgs.flake.setNixPath = false;
@@ -44,9 +53,10 @@ in
     services.openssh.enable = true;
     services.qemuGuest.enable = true;
 
-    home-manager.users.pjones = { config, ... }: {
-      systemd.user.services.waybar.Service.ExecStart =
-        lib.mkForce (waybarWrapper config);
-    };
+    home-manager.users.pjones =
+      { config, ... }:
+      {
+        systemd.user.services.waybar.Service.ExecStart = lib.mkForce (waybarWrapper config);
+      };
   };
 }
