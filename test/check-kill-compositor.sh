@@ -31,18 +31,8 @@ function wait_until_fails() {
   wait_until_succeeds "! ( $* )"
 }
 
-case "$XDG_CURRENT_DESKTOP" in
-sway)
-  test -L "$HOME/.config/sway/config"
-  swaymsg -t command exit || :
-  wait_until_fails pgrep -x sway
-  ;;
-
-niri)
-  niri msg action quit --skip-confirmation || :
-  wait_until_fails pgrep -x niri
-  ;;
-esac
+niri msg action quit --skip-confirmation || :
+wait_until_fails pgrep -x niri
 
 if [ "${COMPOSITOR_VERIFY_EXIT:-0}" -eq 1 ]; then
   wait_until_succeeds test -e /tmp/compositor-exit-ok

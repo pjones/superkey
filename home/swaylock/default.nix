@@ -52,7 +52,7 @@ let
   onIdleCommand = pkgs.writeShellApplication {
     name = "on-superkey-idle";
     runtimeInputs = [
-      config.superkey.compositorPackage
+      config.wayland.windowManager.niri.package
       pkgs.pjones.superkey-scripts
     ];
     text = ''
@@ -65,7 +65,7 @@ let
   onNotIdleCommand = pkgs.writeShellApplication {
     name = "on-superkey-not-idle";
     runtimeInputs = [
-      config.superkey.compositorPackage
+      config.wayland.windowManager.niri.package
       pkgs.pjones.superkey-scripts
     ];
     text = ''

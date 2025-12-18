@@ -16,12 +16,8 @@ function _su() {
 
 ################################################################################
 function get_windows() {
-  _su swaymsg -t get_tree |
-    jq --raw-output \
-      '[recurse(.nodes[], .floating_nodes[])]
-     | map(select((.type == "con" or .type == "floating_con") and .name))
-     | map(.name)
-     | join("\u0000")'
+  _su niri msg --json windows |
+    jq --raw-output 'map(.title) | join("\u0000")'
 }
 
 ################################################################################

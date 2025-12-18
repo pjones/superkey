@@ -10,8 +10,6 @@ let
 in
 {
   config = lib.mkIf config.superkey.enable {
-    superkey.compositor = "niri";
-
     home-manager.users.pjones =
       { config, ... }:
       {

@@ -14,16 +14,6 @@ source <(systemctl --user show-environment | grep -E 'SOCK|XDG')
 # Send all output to the systemd journal:
 exec > >(systemd-cat -t stage-screen -p emerg) 2>&1
 
-case "$XDG_CURRENT_DESKTOP" in
-sway)
-  swaymsg -t command "[all] kill" || :
-  swaymsg -t command rename workspace to 1:Hacking
-  swaymsg -t command layout splitv
-  swaymsg -t command gaps outer all set 100
-  swaymsg -t command 'seat * hide_cursor 100'
-  ;;
-esac
-
 # Verify that the `e' script can connect to the daemon:
 count=10
 
@@ -45,10 +35,6 @@ e -- --eval '
         (kill-buffer buffer))))
 '
 
-# Let sway settle down for a second (otherwise it might actually kill
-# the next window that opens for some reason):
-sleep 1
-
 # Disable the echo area to make things prettier:
 e -- --eval '(setq inhibit-message t)'
 
@@ -57,13 +43,6 @@ e -- --eval '(setq inhibit-message t)'
 # be the first one loaded by the daemon.
 e -c '/etc/issue' && sleep 1
 eterm -ke fastfetch && sleep 1
-
-case "$XDG_CURRENT_DESKTOP" in
-sway)
-  swaymsg -t command focus prev
-  swaymsg -t command kill
-  ;;
-esac
 
 # Move point back to the first character so the entire output from
 # fastfetch is visible:

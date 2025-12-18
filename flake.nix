@@ -11,9 +11,6 @@
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
 
-    sway-easyfocus.url = "github:pjones/sway-easyfocus/pjones/swap";
-    sway-easyfocus.flake = false;
-
     org-clock-dbus.url = "github:pjones/org-clock-dbus";
   };
 
@@ -56,15 +53,6 @@
               rofirc = self.packages.${system}.rofirc;
               superkey-scripts = self.packages.${system}.superkey-scripts;
             };
-
-            sway-easyfocus = prev.sway-easyfocus.overrideAttrs (orig: {
-              version = builtins.substring 0 7 self.inputs.sway-easyfocus;
-              src = self.inputs.sway-easyfocus;
-              cargoDeps = prev.rustPlatform.fetchCargoVendor {
-                src = self.inputs.sway-easyfocus;
-                hash = "sha256-VxcMHh1eIiHugpTFpclwuO0joY95bPz6hVIBHQwB6ZA=";
-              };
-            });
           };
       };
 
@@ -92,13 +80,11 @@
           theme-outrun = pkgs.callPackage pkgs/theme { colors = pkgs/theme/outrun.json; };
 
           niri-vm = self.nixosConfigurations.niri-vm.config.system.build.vm;
-          sway-vm = self.nixosConfigurations.sway-vm.config.system.build.vm;
 
           xwininfo-tests = pkgs.writeShellApplication {
             name = "xwininfo";
             runtimeInputs = with pkgs; [
               jq
-              swayfx
             ];
             text = builtins.readFile ./support/scripts/xwininfo-tests;
           };
@@ -113,7 +99,7 @@
         in
         {
           # Launch a VM running Peter's configuration:
-          default = self.apps.${system}.sway;
+          default = self.apps.${system}.niri;
 
           # Run Niri in a VM:
           niri = {
@@ -122,31 +108,24 @@
             program = "${self.packages.${system}.niri-vm}/bin/run-superkey-vm";
           };
 
-          # Run Sway in a VM:
-          sway = {
-            type = "app";
-            meta.description = "Run Sway in a VM";
-            program = "${self.packages.${system}.sway-vm}/bin/run-superkey-vm";
-          };
-
           # Run a VM then take a screenshot and store it locally:
           screenshot =
             let
               script = pkgs.writeShellScript "screenshot" ''
-                cp --force ${self.checks.${system}.sway}/*.png support/
+                cp --force ${self.checks.${system}.niri}/*.png support/
               '';
             in
             {
               type = "app";
-              meta.description = "Take a screenshot of a Sway VM";
+              meta.description = "Take a screenshot of a Niri VM";
               program = "${script}";
             };
 
-          # Interactive version of the sway test:
-          swayTest = {
+          # Interactive version of the Niri test:
+          niriTest = {
             type = "app";
-            meta.description = "Interactively debug a Sway session";
-            program = "${self.checks.${system}.sway.driverInteractive}/bin/nixos-test-driver";
+            meta.description = "Interactively debug a Niri session";
+            program = "${self.checks.${system}.niri.driverInteractive}/bin/nixos-test-driver";
           };
         }
       );
@@ -167,7 +146,6 @@
         in
         {
           niri-vm = vmBase "niri-vm";
-          sway-vm = vmBase "sway-vm";
         };
 
       ##########################################################################
@@ -180,20 +158,11 @@
         niri-vm = {
           imports = [ (import test/vm.nix { inherit self; }) ];
 
-          superkey.compositor = "niri";
-
           virtualisation.qemu.options = [
             "-spice port=0,disable-ticketing=on,image-compression=off,gl=on,rendernode=/dev/dri/by-path/pci-0000:c1:00.0-render,seamless-migration=on"
             "-device virtio-vga-gl,id=video0,max_outputs=1"
             "-display spice-app,gl=on"
           ];
-        };
-
-        # A virtual machine running Sway:
-        sway-vm = {
-          imports = [ (import test/vm.nix { inherit self; }) ];
-
-          superkey.compositor = "sway";
         };
 
         # Helpful for other flakes:
@@ -245,7 +214,6 @@
         in
         {
           niri = import test/niri.nix { inherit pkgs self; };
-          sway = import test/sway.nix { inherit pkgs self; };
           greetd = import test/greetd.nix { inherit pkgs self; };
         }
       );

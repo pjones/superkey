@@ -12,9 +12,6 @@ in
   imports = [
     ./inhibit
     ./niri
-    ./screenshot
-    ./sway
-    ./swayfx
     ./swaylock
     ./swaync
     ./theme.nix
@@ -24,15 +21,6 @@ in
 
   options.superkey = {
     enable = lib.mkEnableOption "Enable Wayland configuration.";
-
-    compositor = lib.mkOption {
-      type = lib.types.enum [
-        "niri"
-        "sway"
-      ];
-      default = "sway";
-      description = "The name of the compositor to use";
-    };
 
     theme = lib.mkOption {
       type = lib.types.package;
@@ -84,18 +72,6 @@ in
           Shell commands executed just before the compositor is started.
         '';
       };
-    };
-
-    compositorPackage = lib.mkOption {
-      internal = true;
-      visible = false;
-
-      type = lib.types.package;
-      description = ''
-        Each compositor module should set this option so that systemd
-        services can ensure that their environments contain the IPC
-        communications tool.
-      '';
     };
   };
 

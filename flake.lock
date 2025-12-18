@@ -242,25 +242,7 @@
         "emacsrc": "emacsrc",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
-        "org-clock-dbus": "org-clock-dbus_2",
-        "sway-easyfocus": "sway-easyfocus"
-      }
-    },
-    "sway-easyfocus": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1720731909,
-        "narHash": "sha256-7bdW7t9xQRJ1/Wb451TMzfsl5QPIDTM90bemnN+WNwQ=",
-        "owner": "pjones",
-        "repo": "sway-easyfocus",
-        "rev": "eca80954060279107f3700cab7f2e36749adbc0e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "pjones",
-        "ref": "pjones/swap",
-        "repo": "sway-easyfocus",
-        "type": "github"
+        "org-clock-dbus": "org-clock-dbus_2"
       }
     }
   },

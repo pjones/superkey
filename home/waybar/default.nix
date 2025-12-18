@@ -35,16 +35,10 @@ in
         position = "bottom";
         height = lib.mkDefault 24;
 
-        modules-left =
-          lib.optionals (config.superkey.compositor == "sway") [
-            "sway/mode"
-            "sway/workspaces"
-            "sway/window"
-          ]
-          ++ lib.optionals (config.superkey.compositor == "niri") [
-            "niri/workspaces"
-            "niri/window"
-          ];
+        modules-left = [
+          "niri/workspaces"
+          "niri/window"
+        ];
 
         modules-center = [
           "keyboard-state"
@@ -61,27 +55,7 @@ in
           "tray"
         ];
 
-        "sway/mode" = lib.optionalAttrs (config.superkey.compositor == "sway") {
-          format = "<span>󰀦</span> Mode: {} <span> 󰀦</span>";
-        };
-
-        "sway/workspaces" = lib.optionalAttrs (config.superkey.compositor == "sway") {
-          format = "󰍹 {name}";
-          all-outputs = true;
-          current-only = true;
-        };
-
-        "sway/window" = lib.optionalAttrs (config.superkey.compositor == "sway") {
-          format = " {title}";
-          max-length = 50;
-          icon = false;
-          rewrite = {
-            "(.*) - Mozilla Firefox" = "$1";
-            "Emacs:\s+(.*)" = "$1";
-          };
-        };
-
-        "niri/workspaces" = lib.optionalAttrs (config.superkey.compositor == "niri") {
+        "niri/workspaces" = {
           all-outputs = true;
           current-only = true;
           format = "{icon} {name} [{index}]";
@@ -92,7 +66,7 @@ in
           };
         };
 
-        "niri/window" = lib.optionalAttrs (config.superkey.compositor == "niri") {
+        "niri/window" = {
           format = "{title}";
           separate-outputs = true; # Remove this after getting bar off eDP-1
           icon = true;

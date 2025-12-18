@@ -25,33 +25,6 @@ EOF
 }
 
 ################################################################################
-function with_sway() {
-  local command=$1
-
-  case "$command" in
-  current)
-    swaymsg --raw --type get_workspaces |
-      jq --raw-output '.[] | select(.focused) | .name' |
-      head -n1
-    ;;
-
-  all)
-    swaymsg --raw --type get_workspaces |
-      jq --raw-output '.[] | .name'
-    ;;
-
-  switch)
-    swaymsg --type command workspace number "$option_name"
-    ;;
-
-  *)
-    echo >&2 "ERROR: sway does not support workspace $command"
-    exit 1
-    ;;
-  esac
-}
-
-################################################################################
 function with_niri() {
   local command=$1
 
@@ -92,62 +65,6 @@ function with_niri() {
 }
 
 ################################################################################
-function with_wmctrl() {
-  local command=$1
-  local desktop_id
-
-  case "$command" in
-  current)
-    wmctrl -d |
-      awk '$2 == "*" {
-      for (i=($8 == "N/A" ? 9 : 10); i<=NF; i++) {
-        printf("%s%s", $i, i<NF ? OFS : "\n")
-      }
-    }'
-    ;;
-
-  all)
-    wmctrl -d |
-      awk '{
-      for (i=($8 == "N/A" ? 9 : 10); i<=NF; i++) {
-        printf("%s:%d%s", $i, $1 + 1, i<NF ? OFS : "\n")
-      }
-    }'
-    ;;
-
-  switch)
-    desktop_id=$(echo "$option_name" | cut -d: -f2)
-    [ -z "$desktop_id" ] && exit
-    wmctrl -s "$((desktop_id - 1))"
-    ;;
-
-  *)
-    echo >&2 "ERROR: wmctrl does not support workspace $command"
-    exit 1
-    ;;
-  esac
-}
-
-################################################################################
-function dispatch() {
-  local command=$1
-
-  case "${XDG_CURRENT_DESKTOP:-}" in
-  niri)
-    with_niri "$command"
-    ;;
-
-  sway)
-    with_sway "$command"
-    ;;
-
-  *)
-    with_wmctrl "$command"
-    ;;
-  esac
-}
-
-################################################################################
 function main() {
   local list_workspaces=1
 
@@ -160,25 +77,25 @@ function main() {
 
     n)
       list_workspaces=0
-      dispatch "current"
+      with_niri "current"
       ;;
 
     N)
       list_workspaces=0
       option_name=$OPTARG
-      dispatch "new"
+      with_niri "new"
       ;;
 
     r)
       list_workspaces=0
       option_name=$OPTARG
-      dispatch "rename"
+      with_niri "rename"
       ;;
 
     s)
       list_workspaces=0
       option_name=$OPTARG
-      dispatch "switch"
+      with_niri "switch"
       ;;
 
     *)
@@ -190,7 +107,7 @@ function main() {
   shift $((OPTIND - 1))
 
   if [ "$list_workspaces" -eq 1 ]; then
-    dispatch "all"
+    with_niri "all"
   fi
 }
 

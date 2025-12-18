@@ -14,11 +14,5 @@ source <(systemctl --user show-environment | grep -E 'SOCK|XDG')
 # Send all output to the systemd journal:
 exec > >(systemd-cat -t test-lock-screen -p emerg) 2>&1
 
-case "$XDG_CURRENT_DESKTOP" in
-sway)
-  swaymsg -t command exec loginctl lock-session
-  ;;
-niri)
-  niri msg action spawn -- loginctl lock-session
-  ;;
-esac
+# Lock it!
+niri msg action spawn -- loginctl lock-session

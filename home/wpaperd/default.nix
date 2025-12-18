@@ -17,11 +17,10 @@ let
   setDefaultImage = pkgs.writeShellApplication {
     name = "set-default-wallpaper";
 
-    runtimeInputs = lib.optional (config.superkey.compositor == "sway") pkgs.swaybg;
-
-    text = lib.optionalString (config.superkey.compositor == "sway") ''
+    # FIXME:
+    text = ''
       if [ ! -d "${cfg.wpaperd.primaryWallpaperDirectory}" ]; then
-        exec swaybg --output "${cfg.primaryOutput}" --image ${defaultImage} --mode fill
+        echo ${defaultImage}
       fi
     '';
   };
@@ -48,8 +47,8 @@ in
   };
 
   config = lib.mkIf cfg.wpaperd.enable {
-    wayland.windowManager.sway.extraConfig = ''
-      exec ${setDefaultImage}/bin/set-default-wallpaper
+    wayland.windowManager.niri.extraConfig = ''
+      spawn-at-startup "${setDefaultImage}/bin/set-default-wallpaper"
     '';
 
     services.wpaperd = {

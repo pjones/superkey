@@ -10,14 +10,12 @@ in
   options.superkey.niri = {
     enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.superkey.compositor == "niri";
+      default = config.superkey.enable;
       description = "Enable Niri and related configuration.";
     };
   };
 
   config = lib.mkIf (config.superkey.enable && cfg.enable) {
-    superkey.compositorPackage = config.wayland.windowManager.niri.package;
-
     wayland.windowManager.niri = {
       enable = true;
       extraPackages = [ ];

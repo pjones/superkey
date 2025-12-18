@@ -74,8 +74,6 @@ withXwininfo.testers.nixosTest {
           ./autologin.nix
         ];
 
-        superkey.compositor = "niri";
-
         environment.systemPackages = [ pkgs.fastfetch ];
 
         virtualisation.qemu.options = [

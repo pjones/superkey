@@ -22,16 +22,7 @@ EOF
 ################################################################################
 power_on_off() {
   local state=$1
-
-  case "$XDG_CURRENT_DESKTOP" in
-  niri)
-    niri msg action "power-$state-monitors"
-    ;;
-
-  sway)
-    swaymsg "output * power $state"
-    ;;
-  esac
+  niri msg action "power-$state-monitors"
 }
 
 ################################################################################

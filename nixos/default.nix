@@ -11,15 +11,6 @@ in
 {
   options.superkey = {
     enable = lib.mkEnableOption "Enable Wayland configuration.";
-
-    compositor = lib.mkOption {
-      type = lib.types.enum [
-        "niri"
-        "sway"
-      ];
-      default = "sway";
-      description = "The name of the compositor to use";
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -27,32 +18,12 @@ in
       enable = true;
       restart = true;
 
-      settings.default_session =
-        let
-          cmd =
-            if cfg.compositor == "sway" then
-              "sway"
-            else if cfg.compositor == "niri" then
-              "niri-session"
-            else
-              "bash";
-        in
-        {
-          command = "${pkgs.greetd}/bin/agreety --cmd ${cmd}";
-        };
+      settings.default_session = {
+        command = "${pkgs.greetd}/bin/agreety --cmd niri-session";
+      };
     };
 
-    # NixOS requires special configuration for Wayland that is done in
-    # one of the compositor modules.  We set the `package` option to
-    # `null` so that the compositor isn't installed in the system
-    # path.
-    programs.sway = lib.mkIf (cfg.compositor == "sway") {
-      enable = true;
-      package = null;
-      extraPackages = [ ];
-    };
-
-    xdg.portal = lib.mkIf (cfg.compositor != "sway") {
+    xdg.portal = {
       enable = lib.mkDefault true;
       configPackages = [ pkgs.niri ];
       extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
@@ -116,7 +87,6 @@ in
       { ... }:
       {
         superkey.enable = true;
-        superkey.compositor = lib.mkDefault cfg.compositor;
       };
   };
 }

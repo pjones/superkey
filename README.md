@@ -50,7 +50,6 @@ configuration then take a look at my [tilde][] project.
 [niri]: https://github.com/YaLTeR/niri
 [nixpkgs]: https://github.com/NixOS/nixpkgs
 [home-manager]: https://github.com/rycee/home-manager
-[swayfx]: https://github.com/WillPower3309/swayfx
 [waybar]: https://github.com/Alexays/Waybar
 [swaync]: https://github.com/ErikReider/SwayNotificationCenter
 [swayidle]: https://github.com/swaywm/swayidle
