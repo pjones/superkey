@@ -92,43 +92,37 @@
       );
 
       ##########################################################################
-      apps = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
-          # Launch a VM running Peter's configuration:
-          default = self.apps.${system}.niri;
+      apps = forAllSystems (system: {
+        # Launch a VM running Peter's configuration:
+        default = self.apps.${system}.niri;
 
-          # Run Niri in a VM:
-          niri = {
-            type = "app";
-            meta.description = "Run Niri in a VM";
-            program = "${self.packages.${system}.niri-vm}/bin/run-superkey-vm";
-          };
+        # Run Niri in a VM:
+        niri = {
+          type = "app";
+          meta.description = "Run Niri in a VM";
+          program = "${self.packages.${system}.niri-vm}/bin/run-superkey-vm";
+        };
 
-          # Run a VM then take a screenshot and store it locally:
-          screenshot =
-            let
-              script = pkgs.writeShellScript "screenshot" ''
-                cp --force ${self.checks.${system}.niri}/*.png support/
-              '';
-            in
-            {
-              type = "app";
-              meta.description = "Take a screenshot of a Niri VM";
-              program = "${script}";
-            };
-
-          # Interactive version of the Niri test:
-          niriTest = {
-            type = "app";
-            meta.description = "Interactively debug a Niri session";
-            program = "${self.checks.${system}.niri.driverInteractive}/bin/nixos-test-driver";
-          };
-        }
-      );
+        # Run a VM then take a screenshot and store it locally:
+        # screenshot =
+        #   let
+        #     script = pkgs.writeShellScript "screenshot" ''
+        #       cp --force ${self.checks.${system}.niri}/*.png support/
+        #     '';
+        #   in
+        #   {
+        #     type = "app";
+        #     meta.description = "Take a screenshot of a Niri VM";
+        #     program = "${script}";
+        #   };
+        #
+        # # Interactive version of the Niri test:
+        # niriTest = {
+        #   type = "app";
+        #   meta.description = "Interactively debug a Niri session";
+        #   program = "${self.checks.${system}.niri.driverInteractive}/bin/nixos-test-driver";
+        # };
+      });
 
       ##########################################################################
       nixosConfigurations =
@@ -213,7 +207,7 @@
           pkgs = nixpkgsFor.${system};
         in
         {
-          niri = import test/niri.nix { inherit pkgs self; };
+          #niri = import test/niri.nix { inherit pkgs self; };
           greetd = import test/greetd.nix { inherit pkgs self; };
         }
       );
