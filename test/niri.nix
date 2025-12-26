@@ -10,6 +10,10 @@ let
   ];
 
   testHelpers = ''
+    def screenshot(file):
+        path = os.path.join(machine.out_dir, file) + ".png"
+        machine.send_monitor_command(f"screendump {path} -f png")
+
     def superkey_start():
         with subtest("Start machines and prepare"):
             start_all()
@@ -20,33 +24,29 @@ let
 
         with subtest("Wait for Niri to start"):
             machine.wait_for_file("/run/user/1000/wayland-1")
-            #machine.wait_for_file("/tmp/compositor-ipc.sock")
             machine.wait_until_succeeds("pgrep waybar")
             machine.wait_for_unit("emacs", "pjones")
             machine.wait_for_file("/run/user/1000/emacs/server")
+            machine.send_key("f1") # Must issue before wait_for_window
+            machine.wait_for_file("/home/pjones/niri-socket")
 
     def superkey_screenshot(theme="dark"):
         with subtest(f"Screenshot: {theme}"):
-            # machine.succeed(
-            #    "su - pjones -c 'stage-for-screenshot.sh'"
-            # )
-            #machine.wait_for_window("fastfetch")
+            machine.send_key("f2")
+            machine.wait_for_window("fastfetch")
             machine.sleep(5) # Need other windows to go away and settle
-            machine.screenshot(f"screenshot-{theme}")
+            screenshot(f"screenshot-{theme}")
             machine.sleep(1) # Need to be stable for the screenshot
 
     def superkey_lock():
         with subtest("Test screen locking"):
-            machine.succeed(
-                "su - pjones -c test-lock-screen.sh"
-            )
+            machine.send_key("f3")
             machine.wait_until_succeeds("pgrep swaylock")
             machine.sleep(1)
-            machine.screenshot("lock")
+            screenshot("lock")
             machine.send_chars("password")
             machine.send_key("ret")
-            # FIXME: swaylock never exits
-            # machine.wait_until_fails("pgrep swaylock")
+            machine.wait_until_fails("pgrep swaylock")
 
     def superkey_switch_to_light_theme():
         with subtest("Switching to light theme"):
@@ -58,40 +58,72 @@ let
 
     def superkey_exit():
         with subtest("Exit Niri"):
-            machine.succeed("su - pjones -c check-kill-compositor.sh")
+            machine.send_key("f4")
   '';
-in
-withXwininfo.testers.nixosTest {
-  name = "superkey-niri-test";
-  passthru.testHelpers = testHelpers;
 
-  nodes = {
-    machine =
-      { pkgs, ... }:
-      {
-        imports = [
-          (import ./common.nix { inherit self; })
-          ./autologin.nix
-        ];
+  linkNiriSock = pkgs.writeShellScriptBin "link-niri-socket" ''
+    exec > >(systemd-cat -t link-niri -p emerg) 2>&1
+    ln -nsf "$NIRI_SOCKET" /home/pjones/niri-socket
+  '';
 
-        environment.systemPackages = [ pkgs.fastfetch ];
+  test = withXwininfo.testers.runNixOSTest {
+    name = "superkey-niri-test";
 
-        virtualisation.qemu.options = [
-          #"-spice port=0,disable-ticketing=on,image-compression=off,gl=on,rendernode=/dev/dri/by-path/pci-0000:c1:00.0-render,seamless-migration=on"
-          #"-device virtio-vga-gl,id=video0,max_outputs=1"
-          #"-display spice-app,gl=on"
-          #"-device virtio-gpu-pci"
-        ];
-      };
+    qemu.package = pkgs.qemu;
+
+    passthru.testHelpers = testHelpers;
+
+    nodes = {
+      machine =
+        { pkgs, ... }:
+        {
+          imports = [
+            (import ./common.nix { inherit self; })
+            ./autologin.nix
+          ];
+
+          environment.systemPackages = [
+            linkNiriSock
+            pkgs.fastfetch
+          ];
+
+          # OpenGL is not supported by display backend 'none'
+          virtualisation.graphics = true;
+
+          virtualisation.qemu.options = [
+            "-spice port=0,disable-ticketing=on,image-compression=off,gl=on,rendernode=/dev/dri/by-path/pci-0000:c1:00.0-render,seamless-migration=on"
+            "-device virtio-vga-gl,id=video0,max_outputs=1"
+            #"-display spice-app,gl=on"
+          ];
+
+          home-manager.users.pjones =
+            { ... }:
+            {
+              wayland.windowManager.niri.settings.binds = {
+                "F1".spawn = [ "link-niri-socket" ];
+                "F2".spawn = [ "stage-for-screenshot.sh" ];
+                "F3".spawn = [ "test-lock-screen.sh" ];
+                "F4".spawn = [ "check-kill-compositor.sh" ];
+              };
+            };
+        };
+    };
+
+    testScript = ''
+      ${testHelpers}
+      superkey_start()
+      superkey_screenshot("dark")
+      superkey_lock()
+      superkey_switch_to_light_theme()
+      superkey_screenshot("light")
+      superkey_exit()
+    '';
   };
-
-  testScript = ''
-    ${testHelpers}
-    superkey_start()
-    superkey_screenshot("dark")
-    superkey_lock()
-    # superkey_switch_to_light_theme()
-    # superkey_screenshot("light")
-    superkey_exit()
+in
+test.overrideTestDerivation (orig: {
+  buildCommand = ''
+    set -x
+    export DISPLAY=:0
+    ${orig.buildCommand}
   '';
-}
+})

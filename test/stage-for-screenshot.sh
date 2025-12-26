@@ -2,14 +2,6 @@
 
 set -eux
 set -o pipefail
-set -o allexport
-
-# Need this to run systemctl:
-export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
-
-# Load environment variables from the systemd:
-# shellcheck disable=1090
-source <(systemctl --user show-environment | grep -E 'SOCK|XDG')
 
 # Send all output to the systemd journal:
 exec > >(systemd-cat -t stage-screen -p emerg) 2>&1
@@ -43,6 +35,12 @@ e -- --eval '(setq inhibit-message t)'
 # be the first one loaded by the daemon.
 e -c '/etc/issue' && sleep 1
 eterm -ke fastfetch && sleep 1
+
+# Move some windows around:
+niri msg action focus-column-left-or-last
+niri msg action close-window
+niri msg action set-column-width 66%
+niri msg action center-window
 
 # Move point back to the first character so the entire output from
 # fastfetch is visible:
