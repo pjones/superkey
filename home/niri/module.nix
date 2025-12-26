@@ -123,7 +123,7 @@ in
     };
 
     settings = lib.mkOption {
-      type = lib.types.nullOr lib.types.attrs;
+      type = lib.types.nullOr (lib.types.attrsOf lib.types.anything);
       default = { };
       description = ''
         An attribute set that is converted to KDL.
