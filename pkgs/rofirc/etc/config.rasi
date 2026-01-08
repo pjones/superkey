@@ -1,8 +1,6 @@
 configuration {
-  modes: "combi,workspace:@out@/bin/rofi-desktop.sh,window,pass:@out@/bin/rofi-pass.sh";
-  combi-modes: "drun,window,pass,workspace";
+  modes: "workspace:@out@/bin/rofi-desktop.sh,window,drun,pass:@out@/bin/rofi-pass.sh";
 
-  combi-display-format: "{text}";
   drun-show-actions: true;
   matching: "normal";
   show-icons: true;
@@ -30,10 +28,6 @@ configuration {
 
   pass {
     display-name: " ";
-  }
-
-  combi {
-    display-name: " ";
   }
 }
 
