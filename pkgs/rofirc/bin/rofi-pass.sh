@@ -51,10 +51,11 @@ clip_field() {
   local field=$2
 
   pass show "$password" |
+    tail --lines=+3 |
     awk --assign field="$field" \
       --field-separator ': ' \
       '$1 == field {print $2}' |
-    tr -d "\n" | desktop-copy
+    tr -d "\n" | wl-copy
 
   notify "Copied $field from $(basename "$password")"
 }
