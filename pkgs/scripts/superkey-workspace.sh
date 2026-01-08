@@ -15,6 +15,7 @@ function usage() {
 Usage: $(basename "$0") [options]
 
   -h      This message
+  -m NAME Move focused winodw to workspace NAME
   -n      Print the name of the current workspace
   -N NAME Create a new workspace named NAME
   -r NAME Rename current workspace to NAME
@@ -70,6 +71,10 @@ function with_niri() {
 
     ;;
 
+  move)
+    niri msg action move-window-to-workspace "$option_name"
+    ;;
+
   new)
     niri msg action focus-workspace 255
     niri msg action set-workspace-name "$option_name"
@@ -89,11 +94,17 @@ function with_niri() {
 function main() {
   local list_workspaces=1
 
-  while getopts "hN:r:ns:S:" o; do
+  while getopts "hm:N:nr:s:S:" o; do
     case "${o}" in
     h)
       usage
       exit
+      ;;
+
+    m)
+      list_workspaces=0
+      option_name=$OPTARG
+      with_niri "move"
       ;;
 
     n)

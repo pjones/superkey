@@ -38,6 +38,8 @@ function rename_workspace() {
 ################################################################################
 if [ $# -eq 0 ]; then
   # Rofi wants a list of desktops:
+  echo -en "\0use-hot-keys\x1ftrue\n"
+
   declare -a desktops
   mapfile -t desktops < <(superkey-workspace.sh)
 
@@ -58,7 +60,11 @@ else
     ;;
 
   *)
-    superkey-workspace.sh -S "$1"
+    if [ "$ROFI_RETV" -eq 10 ]; then
+      superkey-workspace.sh -m "$1"
+    else
+      superkey-workspace.sh -S "$1"
+    fi
     ;;
   esac
 fi
