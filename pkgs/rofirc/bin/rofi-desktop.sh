@@ -45,15 +45,10 @@ if [ $# -eq 0 ]; then
     echo -en "$d\0icon\x1fnetwork-workgroup\n"
   done
 
-  echo -en "New Workspace\0icon\x1fnetwork-workgroup\x1finfo\x1fnew\n"
   echo -en "Rename Workspace\0icon\x1fnetwork-workgroup\x1finfo\x1frename\n"
   echo -en "Unname Workspace\0icon\x1fnetwork-workgroup\x1finfo\x1funname\n"
 else
   case "${ROFI_INFO:-}" in
-  new)
-    coproc new_workspace >/dev/null 2>&1
-    ;;
-
   rename)
     coproc rename_workspace >/dev/null 2>&1
     ;;
@@ -63,7 +58,7 @@ else
     ;;
 
   *)
-    superkey-workspace.sh -s "$1"
+    superkey-workspace.sh -S "$1"
     ;;
   esac
 fi

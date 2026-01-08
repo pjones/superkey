@@ -6,7 +6,8 @@ set -o pipefail
 
 ################################################################################
 # Options set from the command line.
-option_name= # The name of a workspace to act on.
+option_name=    # The name of a workspace to act on.
+option_create=0 # Should we create the requested workspace?
 
 ################################################################################
 function usage() {
@@ -18,10 +19,22 @@ Usage: $(basename "$0") [options]
   -N NAME Create a new workspace named NAME
   -r NAME Rename current workspace to NAME
   -s NAME Switch to workspace NAME
+  -S NAME Switch to NAME, creating it if necessary
 
 If no options are given, prints a list of all workspace names.
 
 EOF
+}
+
+################################################################################
+function workspace_exists() {
+  local name=$1
+
+  niri msg --json workspaces |
+    jq --raw-output --arg name "$name" '
+      map(if .name then .name else .id end | tostring) |
+      any(. == $name) |
+      if . then halt else halt_error end' 2>/dev/null
 }
 
 ################################################################################
@@ -46,7 +59,15 @@ function with_niri() {
     ;;
 
   switch)
-    niri msg action focus-workspace "$option_name"
+    if workspace_exists "$option_name"; then
+      niri msg action focus-workspace "$option_name"
+    elif [ "$option_create" -eq 1 ]; then
+      with_niri "new"
+    else
+      echo >&2 "ERROR: no such workspace: $option_name"
+      exit 1
+    fi
+
     ;;
 
   new)
@@ -68,7 +89,7 @@ function with_niri() {
 function main() {
   local list_workspaces=1
 
-  while getopts "hN:r:ns:" o; do
+  while getopts "hN:r:ns:S:" o; do
     case "${o}" in
     h)
       usage
@@ -95,6 +116,13 @@ function main() {
     s)
       list_workspaces=0
       option_name=$OPTARG
+      with_niri "switch"
+      ;;
+
+    S)
+      list_workspaces=0
+      option_name=$OPTARG
+      option_create=1
       with_niri "switch"
       ;;
 
