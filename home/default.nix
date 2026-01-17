@@ -11,8 +11,9 @@ in
 {
   imports = [
     ./inhibit
+    ./hyprlock.nix
+    ./lock.nix
     ./niri
-    ./swaylock
     ./swaync
     ./theme.nix
     ./waybar

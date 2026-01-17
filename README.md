@@ -22,7 +22,7 @@ running in an ephemeral virtual machine (`nix flake check`).
 
   * Notifications: [Sway Notification Center][swaync]
 
-  * Screen Lock: [swayidle][] and [swaylock][]
+  * Screen Lock: [swayidle][] and [hyprlock][]
 
   * Wallpaper Daemon: [wpaperd][]
 
@@ -53,7 +53,7 @@ configuration then take a look at my [tilde][] project.
 [waybar]: https://github.com/Alexays/Waybar
 [swaync]: https://github.com/ErikReider/SwayNotificationCenter
 [swayidle]: https://github.com/swaywm/swayidle
-[swaylock]: https://github.com/swaywm/swaylock
+[hyprlock]: https://github.com/hyprwm/hyprlock
 [wpaperd]: https://github.com/danyspin97/wpaperd
 [tilde]: https://github.com/pjones/tilde
 [hyperlegible]: https://brailleinstitute.org/freefont

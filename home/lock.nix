@@ -1,3 +1,4 @@
+# Interface for locking the screen.
 {
   config,
   lib,
@@ -6,15 +7,11 @@
 }:
 
 let
-  cfg = config.superkey.swaylock;
-  colors = config.superkey.theme.colors;
+  cfg = config.superkey.lock;
 
   lockTimeout = cfg.lockAfterMin * 60;
   secureTimeout = cfg.secureAfterMin * 60;
   blankTimeout = lockTimeout + 60;
-
-  # Format a color for swaylock:
-  color = str: alpha: builtins.substring 1 (builtins.stringLength str - 1) str + alpha;
 
   # Path to tools we need:
   loginctl = "${pkgs.systemd}/bin/loginctl";
@@ -25,26 +22,29 @@ let
   lockCmd = pkgs.writeShellApplication {
     name = "lock";
     runtimeInputs = [
-      config.programs.swaylock.package
       pkgs.pjones.superkey-scripts
     ];
     text = ''
-      # Ensure swaylock *always* starts:
-      trap "exec swaylock -f" ERR
+      # Ensure the lock screen tool *always* starts:
+      trap "exec ${cfg.screenLockCmd}" ERR
 
-      default_lock_image=${../../support/images/lock.png}
-      args=("-f")
+      default_lock_image=${../support/images/lock.png}
+      selected_image=
 
       if [ -d "${cfg.imagePath}" ]; then
-        image=$(superkey-random-file.sh -i -d "${cfg.imagePath}" -D "$default_lock_image")
-        args+=("--image" "$image")
+        selected_image=$(superkey-random-file.sh -i -d "${cfg.imagePath}" -D "$default_lock_image")
       elif [ -e "${cfg.imagePath}" ]; then
-        args+=("--image" "${cfg.imagePath}")
+        selected_image="${cfg.imagePath}"
       else
-        args+=("--image" "$default_lock_image")
+        selected_image=$default_lock_image
       fi
 
-      exec swaylock "''${args[@]}"
+      if [ -n "$selected_image" ] && [ -e "$selected_image" ]; then
+        mkdir --parents "$(dirname "${cfg.imageCachePath}")"
+        ln --force --symbolic "$selected_image" "${cfg.imageCachePath}"
+      fi
+
+      exec ${cfg.screenLockCmd}
     '';
   };
 
@@ -73,9 +73,10 @@ let
       ${cfg.startAllInhibitorsCmd} || :
     '';
   };
+
 in
 {
-  options.superkey.swaylock = {
+  options.superkey.lock = {
     lockAfterMin = lib.mkOption {
       type = lib.types.int;
       default = 30;
@@ -94,12 +95,29 @@ in
       '';
     };
 
+    imageCachePath = lib.mkOption {
+      type = lib.types.path;
+      default = "${config.xdg.cacheHome}/superkey/lock-image";
+      internal = true;
+      description = ''
+        Internal path where the selected lock image will appear.
+      '';
+    };
+
     imagePath = lib.mkOption {
       type = lib.types.str;
       default = "${config.home.homeDirectory}/documents/pictures/backgrounds/lock-screen";
       description = ''
         Path to the image or directory of images to use for the lock
         screen.
+      '';
+    };
+
+    screenLockCmd = lib.mkOption {
+      type = lib.types.str;
+      default = null;
+      description = ''
+        A shell command that starts a graphical lock screen.
       '';
     };
 
@@ -141,47 +159,6 @@ in
       };
     };
 
-    programs.swaylock = {
-      enable = true;
-      settings = {
-        ignore-empty-password = false;
-        show-failed-attempts = true;
-        indicator-caps-lock = true;
-        scaling = "fit";
-        indicator-radius = 200;
-        font = "Hermit";
-        font-size = "24";
-        color = "000000FF";
-        bs-hl-color = color colors.base01 "AA";
-        caps-lock-key-hl-color = color colors.base08 "FF";
-        inside-color = color colors.base00 "AA";
-        inside-clear-color = color colors.base00 "AA";
-        inside-caps-lock-color = color colors.base08 "FF";
-        inside-ver-color = color colors.base02 "AA";
-        inside-wrong-color = color colors.base0E "AA";
-        key-hl-color = color colors.base0B "AA";
-        layout-text-color = color colors.base05 "FF";
-        layout-bg-color = "00000000";
-        layout-border-color = "00000000";
-        text-color = color colors.base05 "FF";
-        text-clear-color = color colors.base05 "FF";
-        text-caps-lock-color = color colors.base05 "FF";
-        text-ver-color = color colors.base05 "FF";
-        text-wrong-color = color colors.base05 "FF";
-        line-color = color colors.base00 "FF";
-        line-clear-color = color colors.base00 "FF";
-        line-caps-lock-color = color colors.base00 "FF";
-        line-ver-color = color colors.base00 "FF";
-        line-wrong-color = color colors.base00 "FF";
-        ring-color = color colors.base00 "AA";
-        ring-clear-color = color colors.base0B "AA";
-        ring-caps-lock-color = color colors.base08 "FF";
-        ring-ver-color = color colors.base02 "AA";
-        ring-wrong-color = color colors.base0E "AA";
-        separator-color = color colors.base00 "FF";
-      };
-    };
-
     services.swayidle = {
       enable = true;
       extraArgs = [ "-w" ];
@@ -208,14 +185,13 @@ in
       # services.systemd-lock-handler.
       Unit = {
         Description = "Screen locker for Wayland";
-        Documentation = [ "man:swaylock(1)" ];
         PartOf = [ "lock.target" ];
         OnSuccess = [ "unlock.target" ];
         Before = [ "lock.target" ];
       };
 
       Service = {
-        Type = "forking";
+        Type = "exec";
         ExecStart = "${lockCmd}/bin/lock";
         Restart = "on-failure";
         RestartSec = 0;

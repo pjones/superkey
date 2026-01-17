@@ -178,7 +178,7 @@
             superkey = {
               theme = self.packages.${pkgs.stdenv.hostPlatform.system}.theme-outrun;
 
-              swaylock =
+              lock =
                 let
                   lockBin = "${self.packages.${pkgs.stdenv.hostPlatform.system}.force-lock}/bin";
                 in

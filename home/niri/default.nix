@@ -347,7 +347,7 @@ in
               "-t"
             ];
             "Mod+X".spawn = [ "rofi-niri.sh" ];
-            Cancel = shell config.superkey.swaylock.forceLockCmd;
+            Cancel = shell config.superkey.lock.forceLockCmd;
             Print.screenshot = { };
             XF86AudioMedia = shell config.superkey.commands.sendClipboard;
             XF86Launch5 = shell config.superkey.commands.sendClipboard;

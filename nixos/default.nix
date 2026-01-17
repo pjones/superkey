@@ -33,7 +33,7 @@ in
     services.systemd-lock-handler.enable = true;
 
     # https://github.com/NixOS/nixpkgs/issues/158025
-    security.pam.services.swaylock = { };
+    security.pam.services.hyprlock = { };
 
     # Sound:
     services.pipewire.enable = true;
