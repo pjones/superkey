@@ -62,74 +62,81 @@ in
           workspace-auto-back-and-forth = { };
         };
 
-        layout = {
-          gaps = 16;
-          center-focused-column = "never";
+        layout =
+          let
+            gaps = 16;
+            focusRingWidth = 5;
+            struts = -gaps + focusRingWidth;
+          in
+          {
+            inherit gaps;
 
-          #preset-column-widths.proportion = [ 0.33333 0.5 0.66667 ];
-          #preset-window-heights.proportion = [ 0.33333 0.5 0.66667 ];
-          default-column-width = { };
-
-          focus-ring = {
-            width = 5;
-            active-color = colors.base0D;
-            inactive-color = colors.base01;
-
-            active-gradient._props = {
-              "from" = "red";
-              "to" = "orange";
-              "angle" = 45;
-              "in" = "oklch longer hue";
-            };
-          };
-
-          border = {
-            off = { };
-            width = 0;
-          };
-
-          # FIXME: insert-hint
-
-          shadow = {
-            on = { };
-            softness = 30;
-            spread = 5;
-            offset._props = {
-              x = 0;
-              y = 5;
-            };
-            color = "#00000070";
-          };
-
-          struts = {
-            left = 5;
-            right = 5;
-            top = 0;
-            bottom = 0;
-          };
-
-          tab-indicator = {
-            corner-radius = 8;
-            gap = 4;
-            gaps-between-tabs = 0;
-            hide-when-single-tab = { };
-            length._props = {
-              total-proportion = 0.9;
-            };
-            position = "left";
-            width = 4;
-
-            inactive-color = colors.base01;
-            active-gradient._props = {
-              "from" = "red";
-              "to" = "orange";
-              "angle" = 180;
-              "in" = "oklch longer hue";
-              "relative-to" = "workspace-view";
+            struts = {
+              left = struts;
+              right = struts;
+              top = struts;
+              bottom = struts;
             };
 
+            center-focused-column = "never";
+
+            #preset-column-widths.proportion = [ 0.33333 0.5 0.66667 ];
+            #preset-window-heights.proportion = [ 0.33333 0.5 0.66667 ];
+            default-column-width = { };
+
+            focus-ring = {
+              width = focusRingWidth;
+              active-color = colors.base0D;
+              inactive-color = colors.base01;
+
+              active-gradient._props = {
+                "from" = "red";
+                "to" = "orange";
+                "angle" = 45;
+                "in" = "oklch longer hue";
+              };
+            };
+
+            border = {
+              off = { };
+              width = 0;
+            };
+
+            # FIXME: insert-hint
+
+            shadow = {
+              on = { };
+              softness = 30;
+              spread = 5;
+              offset._props = {
+                x = 0;
+                y = 5;
+              };
+              color = "#00000070";
+            };
+
+            tab-indicator = {
+              corner-radius = 8;
+              gap = 4;
+              gaps-between-tabs = 0;
+              hide-when-single-tab = { };
+              length._props = {
+                total-proportion = 0.9;
+              };
+              position = "left";
+              width = 4;
+
+              inactive-color = colors.base01;
+              active-gradient._props = {
+                "from" = "red";
+                "to" = "orange";
+                "angle" = 180;
+                "in" = "oklch longer hue";
+                "relative-to" = "workspace-view";
+              };
+
+            };
           };
-        };
 
         window-rule = [
           {
