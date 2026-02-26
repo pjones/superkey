@@ -52,6 +52,7 @@ in
 
           mouse = { };
           trackpoint = { };
+          tablet.map-to-output = config.superkey.primaryOutput;
 
           # When using focus-follows-mouse, don't automatically focus
           # a window that would require view scrolling more than the
