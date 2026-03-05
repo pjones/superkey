@@ -14,3 +14,8 @@ fi
 
 # Kill gpg-agent so all passphrases are cleared:
 pkill gpg-agent || :
+
+# Lock the password vault:
+if type -P rbw >/dev/null; then
+  rbw lock || :
+fi
