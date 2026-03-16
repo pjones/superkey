@@ -79,7 +79,8 @@ in
               bottom = struts;
             };
 
-            center-focused-column = "never";
+            center-focused-column = "on-overflow";
+            always-center-single-column = { };
 
             #preset-column-widths.proportion = [ 0.33333 0.5 0.66667 ];
             #preset-window-heights.proportion = [ 0.33333 0.5 0.66667 ];
