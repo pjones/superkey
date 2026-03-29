@@ -118,25 +118,16 @@ in
             };
 
             tab-indicator = {
-              corner-radius = 8;
-              gap = 4;
-              gaps-between-tabs = 0;
+              active-color = colors.base0D;
+              corner-radius = 2;
+              gap = focusRingWidth * 2;
+              gaps-between-tabs = focusRingWidth * 2;
               hide-when-single-tab = { };
-              length._props = {
-                total-proportion = 0.9;
-              };
-              position = "left";
-              width = 4;
-
-              inactive-color = colors.base01;
-              active-gradient._props = {
-                "from" = "red";
-                "to" = "orange";
-                "angle" = 180;
-                "in" = "oklch longer hue";
-                "relative-to" = "workspace-view";
-              };
-
+              inactive-color = colors.base00;
+              length._props.total-proportion = 0.99;
+              place-within-column = { };
+              position = "top";
+              width = builtins.floor (focusRingWidth / 2);
             };
           };
 
