@@ -29,23 +29,6 @@ in
       description = "A theme package.";
     };
 
-    workspaceNames = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "Tasks" # 1
-        "Social" # 2
-        "Hacking" # 3
-        "Media" # 4
-        "Meetings" # 5
-        "Papers" # 6
-        "Study" # 7
-        "Work" # 8
-        "Spare" # 9
-        "Web" # 10
-      ];
-      description = "Workspace names";
-    };
-
     primaryOutput = lib.mkOption {
       type = lib.types.str;
       description = ''

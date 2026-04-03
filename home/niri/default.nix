@@ -24,9 +24,6 @@ in
         prefer-no-csd = { };
         screenshot-path = "${config.home.homeDirectory}/documents/pictures/screenshots/%Y/Screenshot_%Y%m%d_%H%M%S.png";
 
-        # Only support one named workspace and let the rest be dynamic:
-        workspace = [ { _args = [ (builtins.head config.superkey.workspaceNames) ]; } ];
-
         cursor = {
           xcursor-theme = config.gtk.cursorTheme.name;
           xcursor-size = config.gtk.cursorTheme.size;
