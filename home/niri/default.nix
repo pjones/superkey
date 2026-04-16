@@ -35,6 +35,11 @@ in
           skip-at-startup = { };
         };
 
+        gestures = {
+          # I really hate hot corners:
+          hot-corners.off = { };
+        };
+
         input = {
           keyboard.xkb = {
             layout = "us";
@@ -212,7 +217,7 @@ in
         ];
 
         recent-windows = {
-          debounce-ms = 750;
+          debounce-ms = 1000;
           open-delay-ms = 150;
 
           highlight = {
@@ -223,7 +228,7 @@ in
           };
 
           previews = {
-            max-height = 480;
+            max-height = 600;
             max-scale = 0.5;
           };
 
