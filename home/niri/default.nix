@@ -86,7 +86,7 @@ in
 
             #preset-column-widths.proportion = [ 0.33333 0.5 0.66667 ];
             #preset-window-heights.proportion = [ 0.33333 0.5 0.66667 ];
-            default-column-width = { };
+            default-column-width.proportion = 0.3333;
 
             focus-ring = {
               width = focusRingWidth;
@@ -180,12 +180,6 @@ in
             open-floating = true;
           }
 
-          # Apps that always start at 1/3 of the display size:
-          {
-            match._props.app-id = "emacs";
-            default-column-width.proportion = 0.33333;
-          }
-
           # Apps that can take up half of the screen:
           {
             match._props.app-id = "chromium|firefox|librewolf";
@@ -201,7 +195,7 @@ in
           # wl-mirror:
           {
             match._props.app-id = "at.yrlf.wl_mirror";
-            default-column-width.proportion = 0.5;
+            default-column-width.proportion = 0.75;
           }
 
           # Zoom:
@@ -281,6 +275,8 @@ in
             "Mod+J".focus-window-down-or-top = { };
             "Mod+K".focus-window-up-or-bottom = { };
             "Mod+L".focus-column-right-or-first = { };
+            "Mod+N".focus-window-up-or-bottom = { };
+            "Mod+P".focus-window-down-or-top = { };
             "Mod+Shift+A".move-column-to-first = { };
             "Mod+Shift+E".move-column-to-last = { };
             "Mod+Shift+H".move-column-left = { };
@@ -318,9 +314,7 @@ in
 
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
-            "Mod+N".focus-workspace-down = { };
             "Mod+O".toggle-overview = { };
-            "Mod+P".focus-workspace-up = { };
             "Mod+WheelScrollDown" = cooldown "focus-workspace-down";
             "Mod+WheelScrollUp" = cooldown "focus-workspace-up";
 
