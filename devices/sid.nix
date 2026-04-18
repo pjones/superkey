@@ -2,6 +2,8 @@
 { config, lib, ... }:
 
 let
+  # wayland-info | grep wl_output -A2
+  # niri msg outputs|grep Output
   monitors = {
     builtin = "eDP-1";
     home = "AOC Q27B3MA 17ZP7HA000040";
@@ -15,31 +17,17 @@ in
       {
         superkey.primaryOutput = monitors.builtin;
 
-        wayland.windowManager.sway.config = {
-          output.${monitors.builtin} = {
-            mode = "2256x1504";
-            scale = 1.4;
-          };
-
-          output.${monitors.work} = {
-            mode = "2560x1440@59.951Hz";
-            pos = "1611 0";
-            scale = "1.0";
-          };
-
-          output.${monitors.home} = {
-            mode = "2560x1440@59.951Hz";
-            pos = "1611 0";
-            scale = "1.0";
-          };
-        };
-
         wayland.windowManager.niri.settings = {
           output = [
             {
               _args = [ monitors.builtin ];
               mode = "2256x1504";
               scale = 1.4;
+
+              layout = {
+                # Smaller windows are hard to use:
+                default-column-width.proportion = 0.5;
+              };
             }
             {
               _args = [ monitors.work ];
