@@ -320,10 +320,10 @@ in
 
             # Monitors:
             "Mod+Comma".focus-monitor-previous = { };
-            "Mod+D".move-column-to-monitor-next = { };
+            "Mod+Shift+D".spawn = [ "superkey-bring-workspaces.sh" ];
+            "Mod+D".move-window-to-monitor-next = { };
             "Mod+Period".focus-monitor-next = { };
             "Mod+Shift+Comma".move-workspace-to-monitor-previous = { };
-            "Mod+Shift+D".move-window-to-monitor-next = { };
             "Mod+Shift+Period".move-workspace-to-monitor-next = { };
 
             # Applications and utilities:
