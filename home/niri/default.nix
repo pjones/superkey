@@ -287,6 +287,11 @@ in
             "Mod+WheelScrollRight".focus-column-right = { };
 
             # Other window and column controls:
+            "Mod+Equal".spawn = [
+              "superkey-reset-column.sh"
+              "-a"
+            ];
+
             "Mod+C".center-window = { };
             "Mod+Ctrl+H".set-column-width = "-5%";
             "Mod+Ctrl+J".set-window-height = "-5%";
@@ -294,7 +299,6 @@ in
             "Mod+Ctrl+L".set-column-width = "+5%";
             "Mod+Ctrl+M".toggle-windowed-fullscreen = { };
             "Mod+Ctrl+S".clear-dynamic-cast-target = { };
-            "Mod+Equal".reset-window-height = { };
             "Mod+F".toggle-window-floating = { };
             "Mod+Left".consume-or-expel-window-left = { };
             "Mod+M".maximize-column = { };
