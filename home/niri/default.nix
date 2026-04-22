@@ -275,8 +275,6 @@ in
             "Mod+J".focus-window-down-or-top = { };
             "Mod+K".focus-window-up-or-bottom = { };
             "Mod+L".focus-column-right-or-first = { };
-            "Mod+N".focus-window-up-or-bottom = { };
-            "Mod+P".focus-window-down-or-top = { };
             "Mod+Shift+A".move-column-to-first = { };
             "Mod+Shift+E".move-column-to-last = { };
             "Mod+Shift+H".move-column-left = { };
@@ -318,7 +316,9 @@ in
 
             # Workspaces:
             "Mod+Apostrophe".focus-workspace-previous = { };
+            "Mod+N".focus-workspace-down = { };
             "Mod+O".toggle-overview = { };
+            "Mod+P".focus-workspace-up = { };
             "Mod+WheelScrollDown" = cooldown "focus-workspace-down";
             "Mod+WheelScrollUp" = cooldown "focus-workspace-up";
 
