@@ -1,65 +1,32 @@
 {
   "nodes": {
-    "anki-editor": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1762518684,
-        "narHash": "sha256-kelfRxHHuYXqPmBuPBqOpGmVlDNwY9LexJ3h3euQtec=",
-        "owner": "anki-editor",
-        "repo": "anki-editor",
-        "rev": "9289601129d42c4621a87fde856e077847314dcc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "anki-editor",
-        "repo": "anki-editor",
-        "type": "github"
-      }
-    },
-    "corg": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1756653989,
-        "narHash": "sha256-uGJZzs6yZWc/4uAYeboB4k6ZkkxmaOi3pJBIfucIb0I=",
-        "owner": "isamert",
-        "repo": "corg.el",
-        "rev": "54c0ed1a38a216b05eca3c7d1f00b28847cd5bb1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "isamert",
-        "repo": "corg.el",
-        "type": "github"
-      }
-    },
     "emacsrc": {
       "inputs": {
-        "anki-editor": "anki-editor",
-        "corg": "corg",
         "home-manager": [
           "home-manager"
         ],
-        "meow-edit": "meow-edit",
+        "link-hint": "link-hint",
         "nextflow-mode": "nextflow-mode",
         "nixpkgs": [
           "nixpkgs"
         ],
         "org-clock-dbus": "org-clock-dbus",
         "org-grader": "org-grader",
-        "org-roam": "org-roam",
-        "ox-ipynb": "ox-ipynb"
+        "org-inline-image-mode": "org-inline-image-mode",
+        "ox-ipynb": "ox-ipynb",
+        "xref-project-history": "xref-project-history"
       },
       "locked": {
-        "lastModified": 1764852626,
-        "narHash": "sha256-4ESJ6E+YYenLhDiwKNYXRm8k7d1qay2kjdAapMK2uj0=",
+        "lastModified": 1780303701,
+        "narHash": "sha256-9/SS5jMLcxKypbiBmQOSwK6rt6xWUkMfSp/I+BnZtp4=",
         "owner": "pjones",
         "repo": "emacsrc",
-        "rev": "316a74248417f186387573a6d2c9d374fcb0a592",
+        "rev": "2847dea9df12f5a11e7d8d5b35c5ff73a6dce4b8",
         "type": "github"
       },
       "original": {
         "owner": "pjones",
-        "ref": "nixos-25.11",
+        "ref": "nixos-26.05",
         "repo": "emacsrc",
         "type": "github"
       }
@@ -71,33 +38,34 @@
         ]
       },
       "locked": {
-        "lastModified": 1764776959,
-        "narHash": "sha256-d+5CGloq7Lo1u2SkzhF8oiOdUc6Z5emh22nTXUB9CFA=",
+        "lastModified": 1779726825,
+        "narHash": "sha256-RUkMrREjKDQrA+dA9+xZviGAxM5W1aVdyOr/bSYpHrE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e1680d594a9281651cbf7d126941a8c8e2396183",
+        "rev": "b179bde238977f7d4454fc770b1a727eaf55111c",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-25.11",
+        "ref": "release-26.05",
         "repo": "home-manager",
         "type": "github"
       }
     },
-    "meow-edit": {
+    "link-hint": {
       "flake": false,
       "locked": {
-        "lastModified": 1757868847,
-        "narHash": "sha256-vXdhvLbYruCXmo3Ej2QWFHCMPrkIcX3qOG3JhBY0o5k=",
-        "owner": "meow-edit",
-        "repo": "meow",
-        "rev": "2246f593552c6208bac533de9af04b085fafa6fa",
+        "lastModified": 1772630619,
+        "narHash": "sha256-ooHmnosujrVWxQg0becFcl6u5FB13pgrp0yhI00FvtI=",
+        "owner": "pjones",
+        "repo": "link-hint.el",
+        "rev": "c1cf875b28322767ba52d3e201fd2afabbe47da0",
         "type": "github"
       },
       "original": {
-        "owner": "meow-edit",
-        "repo": "meow",
+        "owner": "pjones",
+        "ref": "pjones/fix-avy-action",
+        "repo": "link-hint.el",
         "type": "github"
       }
     },
@@ -119,16 +87,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1764677808,
-        "narHash": "sha256-H3lC7knbXOBrHI9hITQ7modLuX20mYJVhZORL5ioms0=",
+        "lastModified": 1780203844,
+        "narHash": "sha256-K5sT4jTpGs15ADhviMKNBH38REpPf5Q6mM1+N6cArVE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1aab89277eb2d87823d5b69bae631a2496cff57a",
+        "rev": "b51242d7d43689db2f3be91bd05d5b24fbb469c4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-25.11",
+        "ref": "nixos-26.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -157,11 +125,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1761557150,
-        "narHash": "sha256-fG6svMEwJkCJkTN1RVq2jUrRT5SmaiVXFUmmHn/IHK4=",
+        "lastModified": 1765371556,
+        "narHash": "sha256-LS5519vuGtfWDl4ZKEFpvgqxMyr8fEfWFgo+Wgxsj/0=",
         "owner": "pjones",
         "repo": "org-clock-dbus",
-        "rev": "2ebfd243078f6749cf57524a9f677c0e6b5203ad",
+        "rev": "7a7b3a963fba36c89bd736b8c7bf534174079f31",
         "type": "github"
       },
       "original": {
@@ -204,20 +172,19 @@
         "type": "github"
       }
     },
-    "org-roam": {
+    "org-inline-image-mode": {
       "flake": false,
       "locked": {
-        "lastModified": 1748153192,
-        "narHash": "sha256-qjWN/+p7z44q0C1iYYDk0S6np/L2DXBuamUq+PS+MgI=",
-        "owner": "org-roam",
-        "repo": "org-roam",
-        "rev": "2ff616fbd8277bd797254befe34d5036b35a7dbf",
+        "lastModified": 1772009777,
+        "narHash": "sha256-2sFRR7WLoDFoUbRwing3R2aql2QQOFjws0i1vamd/3Q=",
+        "owner": "pjones",
+        "repo": "org-inline-image-mode",
+        "rev": "83e7466b02aa916cbcb33417ffd5f0fecc30bd58",
         "type": "github"
       },
       "original": {
-        "owner": "org-roam",
-        "ref": "v2.3.0",
-        "repo": "org-roam",
+        "owner": "pjones",
+        "repo": "org-inline-image-mode",
         "type": "github"
       }
     },
@@ -243,6 +210,22 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "org-clock-dbus": "org-clock-dbus_2"
+      }
+    },
+    "xref-project-history": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1748065393,
+        "narHash": "sha256-CFVo47C8FSRSOeA8GcRAYFbIG5rL0ZMwURQjHyNXVnk=",
+        "ref": "refs/heads/master",
+        "rev": "f2794a3548a49b984ecf099b056e2f147c690ece",
+        "revCount": 5,
+        "type": "git",
+        "url": "https://codeberg.org/imarko/xref-project-history"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://codeberg.org/imarko/xref-project-history"
       }
     }
   },

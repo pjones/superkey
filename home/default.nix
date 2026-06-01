@@ -62,7 +62,6 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       brightnessctl # This program allows you read and control device brightness
-      helvum # A GTK patchbay for pipewire
       jq # A lightweight and flexible command-line JSON processor
       libnotify # A library that sends desktop notifications to a notification daemon
       nautilus # File manager for GNOME
@@ -102,6 +101,7 @@ in
     xdg.userDirs = {
       enable = true;
       createDirectories = false;
+      setSessionVariables = true;
 
       desktop = "$HOME/desktop";
       documents = "$HOME/documents";

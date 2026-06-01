@@ -47,6 +47,9 @@
       gtk3.extraConfig = {
         gtk-key-theme-name = "Emacs";
       };
+
+      # https://stopthemingmy.app/
+      gtk4.theme = null;
     };
 
     home.packages = [
