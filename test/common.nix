@@ -34,16 +34,15 @@
       useUserPackages = true;
 
       users.pjones =
-        { config, ... }:
+        { ... }:
         {
           imports = [
             self.homeManagerModules.vm
-            self.inputs.emacsrc.homeManagerModules.wayland
+            self.inputs.emacsrc.homeModules.emacsrc
           ];
 
           home.username = "pjones";
           home.homeDirectory = "/home/pjones";
-          programs.pjones.emacsrc.enable = true;
           superkey.primaryOutput = "Virtual-1";
         };
     };
