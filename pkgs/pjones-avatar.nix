@@ -13,7 +13,7 @@ stdenvNoCC.mkDerivation rec {
 
   src = fetchurl {
     url = "https://avatars2.githubusercontent.com/u/3737";
-    sha256 = "06h7rnchya4nqq7igaa9j2n9mm2xcmgzlisl418ify8hh8xv3q5r";
+    hash = "sha256-4N+lAlOo39Kz0jQRTZsDFhMarA+d/QkhNB+pA4hlekY=";
   };
 
   installPhase = ''
