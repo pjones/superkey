@@ -208,6 +208,8 @@ in
       in
       lib.mkIf (file != null) { source = file; };
 
+    services.niri-autoselect-portal.enable = true;
+
     xdg.portal = {
       enable = true;
 

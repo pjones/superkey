@@ -7,6 +7,8 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    niri-autoselect-portal.url = "git+https://codeberg.org/debugloop/niri-autoselect-portal.git";
+
     emacsrc.url = "github:pjones/emacsrc/nixos-26.05";
     emacsrc.inputs.nixpkgs.follows = "nixpkgs";
     emacsrc.inputs.home-manager.follows = "home-manager";
@@ -145,7 +147,9 @@
       ##########################################################################
       nixosModules = {
         default = {
-          imports = [ ./nixos ];
+          imports = [
+            ./nixos
+          ];
         };
 
         # A virtual machine running Niri:
@@ -173,7 +177,10 @@
         default =
           { pkgs, ... }:
           {
-            imports = [ ./home ];
+            imports = [
+              self.inputs.niri-autoselect-portal.homeManagerModules.default
+              ./home
+            ];
 
             superkey = {
               theme = self.packages.${pkgs.stdenv.hostPlatform.system}.theme-outrun;
