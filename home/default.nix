@@ -62,10 +62,12 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       brightnessctl # This program allows you read and control device brightness
+      ghostty # Fast, native, feature-rich terminal emulator pushing modern features
       jq # A lightweight and flexible command-line JSON processor
       libnotify # A library that sends desktop notifications to a notification daemon
       nautilus # File manager for GNOME
       networkmanagerapplet # NetworkManager control applet for GNOME
+      nwg-displays # Output management utility for Sway and Hyprland
       pamixer # Pulseaudio command line mixer
       pjones.presenter-mode # Toggle presenter mode.
       pjones.rofirc # Rofi launcher configuration
@@ -74,7 +76,6 @@ in
       rofi # Window switcher, run dialog and dmenu replacement for Wayland
       sushi # Quick previewer for Nautilus
       wayland-utils # Wayland utilities (wayland-info)
-      wdisplays # Graphical application for configuring displays in Wayland compositors
       wev # Wayland event viewer
       wl-clipboard # Command-line copy/paste utilities for Wayland
       wl-mirror # Simple Wayland output mirror client
